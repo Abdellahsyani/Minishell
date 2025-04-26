@@ -19,4 +19,10 @@
 # include <string.h>
 # include <unistd.h>
 
+typedef struct s_token
+{
+	char	*content;
+	struct s_token	*next;
+}	t_token;
+
 #endif
