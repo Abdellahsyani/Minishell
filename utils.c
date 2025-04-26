@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 11:46:19 by abhimi           ###   ########.fr       */
+/*   Created: 2025/04/26 10:53:11 by abhimi            #+#    #+#             */
+/*   Updated: 2025/04/26 11:03:43 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-
-enum e_type
+int strcmp(char *s1, char *s2)
 {
-    redir_output, // >
-    redir_input, // <
-    d_herdoc, // <<
-    redir_o_app, // >>
-    word,
-    pipe,
-};
-
-int strcmp(char *s1, char *s2);
-char* token_type(char *str);
-
-#endif
+    int i;
+    
+    i = 0;
+   while(s1[i] || s2[i])
+   {
+        if(s1[i] != s2[i])
+            return (s1[i] - s2[i]);
+        i++;
+   }
+   return (0);
+}
