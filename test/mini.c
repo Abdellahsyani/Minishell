@@ -12,10 +12,11 @@ int main()
 	char *line;
 	while (1)
 	{
-		line = readline("minishell$ ");
+		line = readline("\033[1;32m minishell $ \033[0m");
 		if (line)
 			add_history(line);
 		printf("%s\n", line);
+		free(line);
 	}
 	return (0);
 }
