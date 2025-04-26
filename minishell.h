@@ -21,8 +21,15 @@
 
 typedef struct s_token
 {
-	char	*content;
+	char	content;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_shell
+{
+	t_token *tokens_list;
+	char	*line;
+	int	i;
+}	t_shell;
 
 #endif
