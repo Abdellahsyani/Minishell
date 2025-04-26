@@ -6,6 +6,7 @@
 
 int main()
 {
+
 	char *line;
 	while (1)
 	{
