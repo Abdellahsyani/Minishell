@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/26 11:45:40 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/27 16:04:57 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char* token_type(char *str)
+t_token_type token_type(char *str)
 {
     char type;
     if (!str)
         return;
     if (!strcmp(str, ">"))
-        type = redir_output;
+        return (redir_output);
     if (!strcmp(str, "<"))
-        type = redir_input;
+        return (redir_input);
     else if (!strcmp(str, "<<"))
-        type = d_herdoc; 
+        return (d_herdoc); 
     else if (!strcmp(str, ">>"))
-        type = redir_o_app;
+        return (redir_o_app);
     else if (!strcmp(str, "|"))
-        type = pipe;
+        return (pipe);
     else
-        type = word;
-    return (type);  
+        return (word);  
 }
+

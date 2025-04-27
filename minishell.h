@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 11:46:19 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/27 16:03:45 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 # include <string.h>
 # include <unistd.h>
 
-enum e_type
+typedef enum e_type
 {
     redir_output, // >
     redir_input, // <
     d_herdoc, // <<
     redir_o_app, // >>
-    word,
-    pipe,
-};
+    word, // command or args
+    pipe, // |
+} t_token_type;
 
 int strcmp(char *s1, char *s2);
-char* token_type(char *str);
+t_token_type token_type(char *str);
 
 #endif
