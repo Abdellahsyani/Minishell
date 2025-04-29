@@ -1,36 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 15:25:59 by abhimi           ###   ########.fr       */
+/*   Created: 2025/04/29 14:54:16 by abhimi            #+#    #+#             */
+/*   Updated: 2025/04/29 14:54:35 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-
-enum e_type
-{
-    redir_output, // >
-    redir_input, // <
-    d_herdoc, // <<
-    redir_o_app, // >>
-    word,
-    pipe,
-};
-
-int strcmp(char *s1, char *s2);
-char* token_type(char *str);
-
-#endif
+// a soon

@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 15:25:59 by abhimi           ###   ########.fr       */
+/*   Created: 2025/04/29 14:51:44 by abhimi            #+#    #+#             */
+/*   Updated: 2025/04/29 16:04:36 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+// int main(int ac, char **arg, char **env)
+// {
+//     //char *s;
+//     (void)arg;
+//     (void)ac;
+    
+//     while (*env)
+//     {
+//         printf("%s",*env);
+//         env++;
+//     }
+//     return (0);
+// }
 
-enum e_type
+int env_builtin(char **env)
 {
-    redir_output, // >
-    redir_input, // <
-    d_herdoc, // <<
-    redir_o_app, // >>
-    word,
-    pipe,
-};
-
-int strcmp(char *s1, char *s2);
-char* token_type(char *str);
-
-#endif
+    while(*env)
+    {
+        printf("%s\n",*env);
+        env++;
+    }
+    return 0;
+}

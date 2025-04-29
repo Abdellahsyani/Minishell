@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_type.c                                       :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/26 15:24:21 by abhimi           ###   ########.fr       */
+/*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
+/*   Updated: 2025/04/29 17:09:47 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char* token_type(char *str)
+char *get_env_value(char *env, char *str)
 {
-    char *type;
-    if (!str)
-        return;
-    if (!strcmp(str, ">"))
-        type = redir_output;
-    if (!strcmp(str, "<"))
-        type = redir_input;
-    else if (!strcmp(str, "<<"))
-        type = d_herdoc; 
-    else if (!strcmp(str, ">>"))
-        type = redir_o_app;
-    else if (!strcmp(str, "|"))
-        type = pipe;
+    int i;
+    char *path;
+}
+char *cd_get_target(char **args, char *env)
+{
+    char *target;
+    
+    if (!args[1])
+    {
+        target= get_env_value(env, "HOME");
+    }
     else
-        type = word;
-    return (type);  
+        target = args[1];
+}
+
+int cd(char **args, char *env)
+{
+    char *target;
+    
+    target = cd_get_target(args,env);
+    if(!target)
+    {
+        return 0;
+    }
+    // ft_update_pwd()
 }
