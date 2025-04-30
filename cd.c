@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/30 11:46:50 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/30 14:59:59 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char *get_env_value(s_env *env, char *str)
     }
     return ("");
 }
-char *cd_get_target(char **args, s_env *env)
+
+static char *cd_get_target(char **args, s_env *env)
 {
     char *target;
     
@@ -44,7 +45,7 @@ char *cd_get_target(char **args, s_env *env)
         target = args[1];
     return (target);
 }
-int cd_update_env(s_env *env, char *str,char *target)
+static int cd_update_env(s_env *env, char *str,char *target)
 {
     char *new;
     
@@ -58,7 +59,7 @@ int cd_update_env(s_env *env, char *str,char *target)
     set_pwd_env(env, "PWD", new); //does not implement yet
     return (1);
 }
-int cd_change_directory(s_env *env, char *target)
+static int cd_change_directory(s_env *env, char *target)
 {
     char *cwd;
     

@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/30 10:24:53 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/30 15:01:57 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ typedef struct t_env
 } s_env;
 
 
-int strcmp(char *s1, char *s2);
+int     strcmp(char *s1, char *s2);
+void    ft_echo(char **arg);
+int     cd(char **args, s_env *env);
+void    ft_pwd(char **args);
+void    ft_env(s_env *env);
 
 #endif
