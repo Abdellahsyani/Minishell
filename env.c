@@ -6,32 +6,22 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:44 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/29 16:04:36 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/30 11:57:43 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int main(int ac, char **arg, char **env)
-// {
-//     //char *s;
-//     (void)arg;
-//     (void)ac;
-    
-//     while (*env)
-//     {
-//         printf("%s",*env);
-//         env++;
-//     }
-//     return (0);
-// }
-
-int env_builtin(char **env)
+void env_builtin(s_env *env)
 {
-    while(*env)
+    s_env *tmp;
+    
+    tmp = env;
+    if (!tmp)
+        return ;
+    while(tmp)
     {
-        printf("%s\n",*env);
-        env++;
+        printf("%s=%s\n",tmp->key,tmp->value);
+        tmp = tmp->next;
     }
-    return 0;
 }

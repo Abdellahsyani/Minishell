@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 15:25:59 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/30 10:24:53 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <limits.h>
 
 enum e_type
 {
@@ -30,7 +31,14 @@ enum e_type
     pipe,
 };
 
+typedef struct t_env
+{
+    char    *key;
+    char    *value;
+    struct t_env *next;
+} s_env;
+
+
 int strcmp(char *s1, char *s2);
-char* token_type(char *str);
 
 #endif
