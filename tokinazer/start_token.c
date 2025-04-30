@@ -12,77 +12,166 @@
 
 #include "../minishell.h"
 
-void	*create_node(char *c)
+char *ft_strlcpy(char *token, char *input, int len, int j)
+{
+	int i;
+	i = 0;
+	token = malloc(sizeof(char) * (len + 1));
+	if (!token)
+		return (NULL);
+	while (i < len)
+	{
+		token[i] = input[j + i];
+		i++;
+	}
+	token[i] = '\0';
+	return (token);
+}
+
+t_token *create_node(char *c)
 {
 	t_token *new_node;
-
-	new_node = gc_malloc(sizeof(t_token));
+	new_node = malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->content = c;
-	new_node->next = NULL:
+	new_node->next = NULL;
 	return (new_node);
 }
 
-void	add_list(t_shell *mini)
+void add_list(t_shell *mini, t_token **list)
 {
-	t_token	*tokens_list;
+	t_token *new_node;
 
-	tokens_list = NULL:
-	if (tokens_list == NULL)
-		tokens_list = new_node;
+	if (!mini->tok)
+		return;
+	new_node = create_node(mini->tok);
+	if (!new_node)
+		return;
+	if (*list == NULL)
+	{
+		*list = new_node;
+	}
 	else
 	{
-		t_list *tmp;
-		tmp = tokens_list;
-		while (tmp->next
+		t_token *tmp;
+		tmp = *list;
+		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
 	}
 }
 
-int	is_operator(char op)
+int create_token(t_shell *mini, t_token **list, char *line)
+{
+	if (mini->len == 0)
+		return (0);
+	mini->tok = ft_strlcpy(mini->tok, line, mini->len, mini->st);
+	if (!mini->tok)
+		return (0);
+	add_list(mini, list);
+	mini->len = 0;
+	mini->tok = NULL;
+	mini->st = mini->i;
+	return (1);
+}
+
+int is_operator(char op)
 {
 	if (op == '>' || op == '<' || op == '|')
 		return (1);
 	return (0);
 }
 
-void	handle_double_op(t_shell *mini, t_token **list, char *line)
+int handle_op(t_shell *mini, t_token **list, char *line)
 {
-	if (is_operator(line[i]))
-	{
-		if ((line[i] == '>' && line[i + 1] == '>')
-			|| (line[i] == '<' && line[i + 1] == '<'))
-		{
-			if (mini->tok == NULL)
-			{
+	if (!is_operator(line[mini->i]))
+		return (0);
 
-			}
-		}
-	}
+	if (mini->len > 0)
+		create_token(mini, list, line);
+	mini->st = mini->i;
+	mini->len = 1;
+	if ((line[mini->i] == '>' && line[mini->i + 1] == '>') ||
+		(line[mini->i] == '<' && line[mini->i + 1] == '<'))
+		mini->len = 2;
+	create_token(mini, list, line);
+	if (mini->len == 2)
+		mini->i++;
+
+	mini->i++;
+	mini->st = mini->i;
+	return (1);
 }
 
-int	get_input(char *line, t_token **tokens_list)
+int handle_quotes(t_shell *mini, t_token **list, char *line)
+{
+	if (line[mini->i] != '"' && line[mini->i] != '\'')
+		return (0);
+	char quote_type = line[mini->i];
+	int start_i = mini->i;
+
+	mini->i++;
+	while (line[mini->i] && line[mini->i] != quote_type)
+		mini->i++;
+	if (line[mini->i] == quote_type)
+		mini->i++;
+	mini->len += mini->i - start_i;
+	return (1);
+}
+
+int handle_blank(t_shell *mini, t_token **list, char *line)
+{
+	if (line[mini->i] != ' ' && line[mini->i] != '\t')
+		return (0);
+
+	if (mini->len > 0)
+		create_token(mini, list, line);
+
+	while (line[mini->i] == ' ' || line[mini->i] == '\t')
+		mini->i++;
+
+	mini->st = mini->i;
+	return (1);
+}
+
+int get_input(char *line, t_token **tokens_list)
 {
 	t_shell mini;
+
 	mini.i = 0;
+	mini.st = 0;
 	mini.len = 0;
 	mini.tok = NULL;
-	while (1)
+
+	while (line[mini.i] != '\0')
 	{
-		if (handle_double_op(&mini.i, tokens_list, line))
-			continue ;
-		if (handle_single_op(&mini, tokens_list, line))
-			continue ;
+		if (handle_op(&mini, tokens_list, line))
+			continue;
 		if (handle_quotes(&mini, tokens_list, line))
-			continue ;
-		if (handle_dollar(&mini, tokens_list, line))
-			continue ;
+			continue;
 		if (handle_blank(&mini, tokens_list, line))
-			continue ;
-		mini->i++;
-		mini->len++;
+			continue;
+		mini.i++;
+		mini.len++;
 	}
+	if (mini.len > 0)
+		create_token(&mini, tokens_list, line);
 	return (0);
+}
+
+int main()
+{
+	t_token *list = NULL;
+	char line[] = "hello \"world\">|>>>man";
+
+	get_input(line, &list);
+
+	t_token *current = list;
+	while (current)
+	{
+		printf("%s\n", current->content);
+		current = current->next;
+	}
+	return 0;
 }
