@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 09:39:18 by asyani           ###   ########.fr       */
+/*   Created: 2025/04/28 17:03:42 by asyani            #+#    #+#             */
+/*   Updated: 2025/04/28 17:04:09 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-
-typedef struct s_token
+char	*ft_strlcpy(char *token, char *input, int len, int j)
 {
-	char	*content;
-	struct s_token	*next;
-}	t_token;
-
-typedef struct s_shell
-{
-	char	*tok;
 	int	i;
-	int	len;
-	int	st;
-}	t_shell;
 
-#endif
+	i = 0;
+	token = malloc(sizeof(char) * len + 1);
+	if (!token)
+		return (NULL);
+	while (i < len)
+	{
+		token[i] = input[j + i];
+		i++;
+	}
+	token[i] = '\0';
+	return (token);
+}

@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-t_token	*create_node(char c)
+void	*create_node(char *c)
 {
 	t_token *new_node;
 
@@ -24,7 +24,7 @@ t_token	*create_node(char c)
 	return (new_node);
 }
 
-void	add_list(char tok)
+void	add_list(t_shell *mini)
 {
 	t_token	*tokens_list;
 
@@ -35,7 +35,7 @@ void	add_list(char tok)
 	{
 		t_list *tmp;
 		tmp = tokens_list;
-		while (tmp->next)
+		while (tmp->next
 			tmp = tmp->next;
 		tmp->next = new_node;
 	}
@@ -48,34 +48,41 @@ int	is_operator(char op)
 	return (0);
 }
 
-void	handle_double_op(t_shell *mini)
+void	handle_double_op(t_shell *mini, t_token **list, char *line)
 {
-	if (mini->tokens_list->next == NULL)
+	if (is_operator(line[i]))
 	{
-		add_list(mini->line[i]);
-		mini->new_node->content = '\0';
-	}
-	else
-	{
-		mini->tokens_list->content = '\0';
-		add_list(mini->line[i]);
+		if ((line[i] == '>' && line[i + 1] == '>')
+			|| (line[i] == '<' && line[i + 1] == '<'))
+		{
+			if (mini->tok == NULL)
+			{
+
+			}
+		}
 	}
 }
 
-void	get_input(t_shell *mini)
+int	get_input(char *line, t_token **tokens_list)
 {
-	mini->i = 0;
-	while (mini->line[i])
+	t_shell mini;
+	mini.i = 0;
+	mini.len = 0;
+	mini.tok = NULL;
+	while (1)
 	{
-		if (mini->line[i] == '<' && mini->line[i + 1] == '<' || maini->line[i] == '>' && mini->line[i + 1] == '>')
-			handle_double_op(mini);
-		if (is_operator(mini->line[i]))
-			handle_single_op(mini);
-		if (mini->line[i] == '"' || mini->line[i] == '\'')
-			handle_quotes(mini);
-		if (mini->line[i] == '$')
-			handle_dollar(mini);
-		if (mini->line[i] == ' ')
-			handle_blank(mini);
+		if (handle_double_op(&mini.i, tokens_list, line))
+			continue ;
+		if (handle_single_op(&mini, tokens_list, line))
+			continue ;
+		if (handle_quotes(&mini, tokens_list, line))
+			continue ;
+		if (handle_dollar(&mini, tokens_list, line))
+			continue ;
+		if (handle_blank(&mini, tokens_list, line))
+			continue ;
+		mini->i++;
+		mini->len++;
 	}
+	return (0);
 }
