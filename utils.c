@@ -6,13 +6,13 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:53:11 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/26 11:03:43 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/01 15:51:34 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int strcmp(char *s1, char *s2)
+int ft_strcmp(char *s1, char *s2)
 {
     int i;
     
