@@ -12,22 +12,6 @@
 
 #include "../minishell.h"
 
-char *ft_strlcpy(char *token, char *input, int len, int j)
-{
-	int i;
-	i = 0;
-	token = malloc(sizeof(char) * (len + 1));
-	if (!token)
-		return (NULL);
-	while (i < len)
-	{
-		token[i] = input[j + i];
-		i++;
-	}
-	token[i] = '\0';
-	return (token);
-}
-
 t_token *create_node(char *c)
 {
 	t_token *new_node;
@@ -74,13 +58,6 @@ int create_token(t_shell *mini, t_token **list, char *line)
 	mini->tok = NULL;
 	mini->st = mini->i;
 	return (1);
-}
-
-int is_operator(char op)
-{
-	if (op == '>' || op == '<' || op == '|')
-		return (1);
-	return (0);
 }
 
 int handle_op(t_shell *mini, t_token **list, char *line)
@@ -133,14 +110,6 @@ int handle_blank(t_shell *mini, t_token **list, char *line)
 	return (1);
 }
 
-int ft_isalpha(char c)
-{
-	if ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
-}
-
 int handle_dollar(t_shell *mini, t_token **list, char *line)
 {
 	int	start_d;
@@ -182,20 +151,4 @@ int get_input(char *line, t_token **tokens_list)
 	if (mini.len > 0)
 		create_token(&mini, tokens_list, line);
 	return (0);
-}
-
-int main()
-{
-	t_token *list = NULL;
-	char *line = readline("Minishell$: ");
-
-	get_input(line, &list);
-
-	t_token *current = list;
-	while (current)
-	{
-		printf("%s\n", current->content);
-		current = current->next;
-	}
-	return 0;
 }

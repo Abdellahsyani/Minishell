@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/26 10:53:11 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/26 11:03:43 by abhimi           ###   ########.fr       */
+/*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
+/*   Updated: 2025/04/26 11:45:40 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int strcmp(char *s1, char *s2)
+char	*token_type(char *str)
 {
-    int i;
-    
-    i = 0;
-   while(s1[i] || s2[i])
-   {
-        if(s1[i] != s2[i])
-            return (s1[i] - s2[i]);
-        i++;
-   }
-   return (0);
+	char	type;
+
+	if (!str)
+		return;
+	if (!ft_strcmp(str, ">"))
+		type = redir_output;
+	if (!ft_strcmp(str, "<"))
+		type = redir_input;
+	else if (!ft_strcmp(str, "<<"))
+		type = d_herdoc; 
+	else if (!ft_strcmp(str, ">>"))
+		type = redir_o_app;
+	else if (!ft_strcmp(str, "|"))
+		type = pipe_line;
+	else
+		type = word;
+	return (type);  
 }
