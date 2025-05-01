@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:58:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/30 11:24:52 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/01 17:11:12 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main() {
     char *cwd;
     cwd = getcwd(NULL,0);
     printf("%s\n",cwd);
-    chdir("..");
+    chdir("/home/himi");
     printf("%s\n", getcwd(NULL,0));
     //free(buf);
     //free(cwd); 
