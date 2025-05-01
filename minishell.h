@@ -41,7 +41,7 @@ enum e_type
     d_herdoc, // <<
     redir_o_app, // >>
     word,
-    pipe_line,
+    pipe_line
 };
 
 t_token	*create_node(char *c);
@@ -56,6 +56,6 @@ int	ft_isalpha(char c);
 int	is_operator(char op);
 char	*ft_strlcpy(char *token, char *input, int len, int j);
 int	ft_strcmp(char *s1, char *s2);
-char*	token_type(char *str);
+char	*token_type(char *str);
 
 #endif

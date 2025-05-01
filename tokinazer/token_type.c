@@ -14,13 +14,13 @@
 
 char	*token_type(char *str)
 {
-	char	type;
+	char	*type;
 
 	if (!str)
-		return;
+		return (NULL);
 	if (!ft_strcmp(str, ">"))
 		type = redir_output;
-	if (!ft_strcmp(str, "<"))
+	else if (!ft_strcmp(str, "<"))
 		type = redir_input;
 	else if (!ft_strcmp(str, "<<"))
 		type = d_herdoc; 

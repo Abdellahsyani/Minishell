@@ -15,6 +15,7 @@
 int main()
 {
 	char	*line;
+	char	type;
 	t_token	*list = NULL;
 	t_token *tmp = NULL;
 
@@ -27,7 +28,8 @@ int main()
 		tmp = list;
 		while (tmp)
 		{
-			printf("%s\n", tmp->content);
+			type = token_type(tmp->content);
+			printf("%c: %s\n", type, tmp->content);
 			tmp = tmp->next;
 		}
 	}
