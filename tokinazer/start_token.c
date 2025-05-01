@@ -87,7 +87,6 @@ int handle_op(t_shell *mini, t_token **list, char *line)
 {
 	if (!is_operator(line[mini->i]))
 		return (0);
-
 	if (mini->len > 0)
 		create_token(mini, list, line);
 	mini->st = mini->i;
@@ -95,10 +94,9 @@ int handle_op(t_shell *mini, t_token **list, char *line)
 	if ((line[mini->i] == '>' && line[mini->i + 1] == '>') ||
 		(line[mini->i] == '<' && line[mini->i + 1] == '<'))
 		mini->len = 2;
-	create_token(mini, list, line);
 	if (mini->len == 2)
 		mini->i++;
-
+	create_token(mini, list, line);
 	mini->i++;
 	mini->st = mini->i;
 	return (1);
@@ -106,17 +104,20 @@ int handle_op(t_shell *mini, t_token **list, char *line)
 
 int handle_quotes(t_shell *mini, t_token **list, char *line)
 {
+	char	quote_type;
+	int	start_i;
+
 	if (line[mini->i] != '"' && line[mini->i] != '\'')
 		return (0);
-	char quote_type = line[mini->i];
-	int start_i = mini->i;
-
+	quote_type = line[mini->i];
+	start_i = mini->i + 1;
 	mini->i++;
 	while (line[mini->i] && line[mini->i] != quote_type)
 		mini->i++;
 	if (line[mini->i] == quote_type)
 		mini->i++;
-	mini->len += mini->i - start_i;
+	mini->len += (mini->i - 1) - start_i;
+	mini->st = start_i;
 	return (1);
 }
 
@@ -124,14 +125,35 @@ int handle_blank(t_shell *mini, t_token **list, char *line)
 {
 	if (line[mini->i] != ' ' && line[mini->i] != '\t')
 		return (0);
-
 	if (mini->len > 0)
 		create_token(mini, list, line);
-
 	while (line[mini->i] == ' ' || line[mini->i] == '\t')
 		mini->i++;
-
 	mini->st = mini->i;
+	return (1);
+}
+
+int ft_isalpha(char c)
+{
+	if ((c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
+int handle_dollar(t_shell *mini, t_token **list, char *line)
+{
+	int	start_d;
+
+	if (line[mini->i] != '$')
+		return (0);
+	if (mini->len > 0)
+		create_token(mini, list, line);
+	start_d = mini->i;
+	mini->i++;
+	while ((ft_isalpha(line[mini->i]) != 0) || line[mini->i] == '_')
+		mini->i++;
+	mini->len += mini->i - start_d;
 	return (1);
 }
 
@@ -152,6 +174,8 @@ int get_input(char *line, t_token **tokens_list)
 			continue;
 		if (handle_blank(&mini, tokens_list, line))
 			continue;
+		if (handle_dollar(&mini, tokens_list, line))
+			continue;
 		mini.i++;
 		mini.len++;
 	}
@@ -163,7 +187,7 @@ int get_input(char *line, t_token **tokens_list)
 int main()
 {
 	t_token *list = NULL;
-	char line[] = "hello \"world\">|>>>man";
+	char *line = readline("Minishell$: ");
 
 	get_input(line, &list);
 
