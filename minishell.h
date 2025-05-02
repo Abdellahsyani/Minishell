@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/01 16:55:27 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:24:11 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ enum e_type
     pipe,
 };
 
-typedef struct t_env
+typedef struct s_env
 {
     char    *key;
     char    *value;
     struct t_env *next;
-} s_env;
+} t_env;
 
 
 int     ft_strcmp(char *s1, char *s2);

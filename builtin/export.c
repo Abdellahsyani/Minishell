@@ -6,15 +6,15 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/01 18:38:17 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:35:01 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    print_export(s_env *env)
+void    print_export(t_env *env)
 {
-    s_env *tmp;
+    t_env *tmp;
 
     tmp = env;
     while (tmp)
@@ -23,8 +23,19 @@ void    print_export(s_env *env)
         tmp = tmp->next;
     }
 }
-
-int check_arg(char *str,s_env *env)
+void    alloce_env(char *key, char *value, t_env **env)
+{
+    t_env *cur;
+    
+    cur = *env;
+    
+    while (cur)
+    {
+        //instructions
+    }
+    
+}
+int check_arg(char *str,t_env *env)
 {
     int i;
     char *key;
@@ -52,7 +63,7 @@ int check_arg(char *str,s_env *env)
     }
 }
 
-int ft_export(char **arg, s_env *env)
+int ft_export(char **arg, t_env *env)
 {
     int i;
     

@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/01 16:52:26 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:26:21 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int is_valid(char *str)
     }
     return (1);
 }
-void delete_key_value(char *key, s_env **env)
+void delete_key_value(char *key, t_env **env)
 {
-    s_env *prev;
-    s_env *cur;
+    t_env *prev;
+    t_env *cur;
     
     prev = NULL;
     cur = *env;
@@ -55,7 +55,7 @@ void delete_key_value(char *key, s_env **env)
     }
 }
 
-int ft_unset(char **arg, s_env *env)
+int ft_unset(char **arg, t_env *env)
 {
     int i;
 

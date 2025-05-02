@@ -6,15 +6,15 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/30 14:59:59 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/02 09:25:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *get_env_value(s_env *env, char *str)
+char *get_env_value(t_env *env, char *str)
 {
-    s_env *tmp;
+    t_env *tmp;
     
     tmp = env;
     if (!str || !*str)
@@ -28,7 +28,7 @@ char *get_env_value(s_env *env, char *str)
     return ("");
 }
 
-static char *cd_get_target(char **args, s_env *env)
+static char *cd_get_target(char **args, t_env *env)
 {
     char *target;
     
@@ -45,7 +45,7 @@ static char *cd_get_target(char **args, s_env *env)
         target = args[1];
     return (target);
 }
-static int cd_update_env(s_env *env, char *str,char *target)
+static int cd_update_env(t_env *env, char *str,char *target)
 {
     char *new;
     
@@ -59,7 +59,7 @@ static int cd_update_env(s_env *env, char *str,char *target)
     set_pwd_env(env, "PWD", new); //does not implement yet
     return (1);
 }
-static int cd_change_directory(s_env *env, char *target)
+static int cd_change_directory(t_env *env, char *target)
 {
     char *cwd;
     
@@ -81,7 +81,7 @@ static int cd_change_directory(s_env *env, char *target)
     
 }
 
-int cd(char **args, s_env *env)
+int cd(char **args, t_env *env)
 {
     char *target;
     
