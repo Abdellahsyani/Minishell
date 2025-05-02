@@ -3,39 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/02 09:35:01 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/01 15:59:06 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    print_export(t_env *env)
+t_env *find(t_env *env, char *key)
+{
+    while (env)
+    {
+        if (!ft_strcmp(env->key, key))
+            return (env);
+        env = env->next;  
+    }
+    return (NULL);
+}
+void    print_export(t_env **env)
 {
     t_env *tmp;
 
-    tmp = env;
+    tmp = *env;
     while (tmp)
     {
-        printf("declare -x %s=%s",tmp->key,tmp->value);
+        if (!tmp->value)
+        {
+            printf("declare -x %s\n",tmp->key);
+        }
+        else
+            printf("declare -x %s=%s\n",tmp->key,tmp->value);
         tmp = tmp->next;
     }
 }
 void    alloce_env(char *key, char *value, t_env **env)
 {
-    t_env *cur;
+    t_env *exist;
+    t_env *create;
     
-    cur = *env;
-    
-    while (cur)
+    exist = find(*env, key);
+    if (exist)
     {
-        //instructions
+        free(exist->value);
+        exist->value = ft_strdup(value);
+        return ;
     }
-    
+    else
+    {
+        create = malloc(sizeof(t_env));
+        create->key = ft_strdup(key);
+        free(key);
+        create->value= ft_strdup(value);
+        free(value);
+        create->next = *env;
+        *env = create;
+    }
 }
-int check_arg(char *str,t_env *env)
+int check_arg(char *str,t_env **env)
 {
     int i;
     char *key;
@@ -44,32 +70,34 @@ int check_arg(char *str,t_env *env)
     
     l = ft_strlen(str);
     i = 0;
-    while (str[i] != '\0' || str[i] != '=')
+    while (str[i] != '\0' && str[i] != '=')
         i++;
     
     key = ft_substr(str, 0, i);
     if (str[i] == '=')
     {
-        i++;
-        value = ft_substr(str, i, l);
+        value = ft_substr(str, i + 1, l - i - 1);
         
     }
     if (!is_valid(key))
         return (free(key), free(value), 0);
     else
     {
-          alloce_env(key, value,env);//no implement yet
+          alloce_env(key, value,env);
           return (1);
     }
 }
 
-int ft_export(char **arg, t_env *env)
+int ft_export(char **arg, t_env **env)
 {
     int i;
     
     i = 1;
     if (!arg[1])
+    {
         print_export(env);
+        return (1);
+    }
     else
     {
         while (arg[i])

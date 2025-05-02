@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/02 09:25:58 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/02 18:46:51 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char *get_env_value(t_env *env, char *str)
 {
@@ -35,15 +35,32 @@ static char *cd_get_target(char **args, t_env *env)
     if (!args[1])
     {
         target= get_env_value(env, "HOME");
-        if(!*target)
+        if(!target)
         {
-            //insert
+            printf("cd: HOME not set\n");
             return (NULL);
         }
     }
     else
         target = args[1];
     return (target);
+}
+
+void    set_pwd_env(t_env **env, char *key,char *value)
+{
+    t_env *list;
+    
+    list = find(*env, key);
+    if (list)
+    {
+        free(list->value);
+        list->value = ft_strdup(value);
+    }
+    else
+    {
+        printf("key not exist\n");
+        return ;
+    }
 }
 static int cd_update_env(t_env *env, char *str,char *target)
 {
@@ -52,11 +69,11 @@ static int cd_update_env(t_env *env, char *str,char *target)
     new = getcwd(NULL, 0);
     if(!new)
     {
-        pritnf ("cd: getcwd failed\n");
-        free(new);
+        printf("cd: getcwd failed\n");
         return (0);
     }
-    set_pwd_env(env, "PWD", new); //does not implement yet
+    set_pwd_env(&env, "PWD", new);
+    free(new);
     return (1);
 }
 static int cd_change_directory(t_env *env, char *target)
@@ -67,14 +84,13 @@ static int cd_change_directory(t_env *env, char *target)
     if (!cwd)
     {
         printf("cd: getcwd failed\n");
-        free(cwd);
         return 0;
     }
-    set_pwd_env(env,"OLDPWD",cwd);// does not impliment yet
+    set_pwd_env(&env,"OLDPWD",cwd);
+    free(cwd);
     if (chdir(target) != 0)
     {
-        printf("cd : chdir failed\n");
-        free(cwd);
+        printf("cd : %s : %s\n",target,strerror(errno));
         return (0);
     }
     return (cd_update_env(env,"PWD", target));
