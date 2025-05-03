@@ -31,7 +31,7 @@ char	*ft_strlcpy(char *token, char *input, int len, int j)
 	int	i;
 
 	i = 0;
-	token = malloc(sizeof(char) * len + 1);
+	token = gc_malloc(sizeof(char) * len + 1);
 	if (!token)
 		return (NULL);
 	while (i < len)

@@ -15,7 +15,7 @@
 t_token *create_node(char *c)
 {
 	t_token *new_node;
-	new_node = malloc(sizeof(t_token));
+	new_node = gc_malloc(sizeof(t_token));
 	if (!new_node)
 		return (NULL);
 	new_node->content = c;
