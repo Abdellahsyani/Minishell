@@ -13,9 +13,12 @@ int main()
 	while (1)
 	{
 		line = readline("\033[1;32m minishell $ \033[0m");
-		if (line)
+		if (line && *line)
+		{
 			add_history(line);
-		printf("%s\n", line);
+			printf("%s\n", line);
+		}
+		//ft_split();
 		free(line);
 	}
 	return (0);

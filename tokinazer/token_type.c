@@ -3,32 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/26 11:45:40 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/27 16:04:57 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*token_type(char *str)
+t_token_type token_type(char *str)
 {
-	char	*type;
-
-	if (!str)
-		return (NULL);
-	if (!ft_strcmp(str, ">"))
-		type = redir_output;
-	else if (!ft_strcmp(str, "<"))
-		type = redir_input;
-	else if (!ft_strcmp(str, "<<"))
-		type = d_herdoc; 
-	else if (!ft_strcmp(str, ">>"))
-		type = redir_o_app;
-	else if (!ft_strcmp(str, "|"))
-		type = pipe_line;
-	else
-		type = word;
-	return (type);  
+    if (!str)
+        return;
+    if (!strcmp(str, ">"))
+        return (redir_output);
+    if (!strcmp(str, "<"))
+        return (redir_input);
+    else if (!strcmp(str, "<<"))
+        return (d_herdoc); 
+    else if (!strcmp(str, ">>"))
+        return (redir_o_app);
+    else if (!strcmp(str, "|"))
+        return (pipe);
+    else
+        return (word);  
 }
+

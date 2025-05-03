@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/26 11:46:19 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/04/27 16:03:45 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_shell
 	int	st;
 }	t_shell;
 
-enum e_type
+typedef enum e_type
 {
     redir_output, // >
     redir_input, // <
@@ -57,5 +57,13 @@ int	is_operator(char op);
 char	*ft_strlcpy(char *token, char *input, int len, int j);
 int	ft_strcmp(char *s1, char *s2);
 char	*token_type(char *str);
+=======
+    word, // command or args
+    pipe, // |
+} t_token_type;
+
+int strcmp(char *s1, char *s2);
+t_token_type token_type(char *str);
+>>>>>>> efcbda8db5d0ccedd7ad5585c6e9decb1757ad16
 
 #endif
