@@ -12,21 +12,24 @@
 
 #include "../minishell.h"
 
-t_token_type token_type(char *str)
+char	*token_type(char *str)
 {
-    if (!str)
-        return;
-    if (!strcmp(str, ">"))
-        return (redir_output);
-    if (!strcmp(str, "<"))
-        return (redir_input);
-    else if (!strcmp(str, "<<"))
-        return (d_herdoc); 
-    else if (!strcmp(str, ">>"))
-        return (redir_o_app);
-    else if (!strcmp(str, "|"))
-        return (pipe);
-    else
-        return (word);  
+	char *type;
+
+	if (!str)
+		return (NULL);
+	if (!ft_strcmp(str, ">"))
+		type = ft_strdup("redir_output");
+	else if (!ft_strcmp(str, "<"))
+		type = ft_strdup("redir_input");
+	else if (!ft_strcmp(str, "<<"))
+		type = ft_strdup("d_herdoc"); 
+	else if (!ft_strcmp(str, ">>"))
+		type = ft_strdup("redir_o_app");
+	else if (!ft_strcmp(str, "|"))
+		type = ft_strdup("pipe_line");
+	else
+		type = ft_strdup("word");  
+	return (type);
 }
 

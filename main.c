@@ -12,10 +12,30 @@
 
 #include "minishell.h"
 
+char	*ft_strdup(const char *s1)
+{
+	char		*dup;
+	size_t		len;
+	size_t		i;
+
+	len = strlen(s1);
+	i = 0;
+	dup = malloc(sizeof(char) * len + 1);
+	if (!dup)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		dup[i] = s1[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}
+
 int main()
 {
 	char	*line;
-	char	type;
+	char	*type;
 	t_token	*list = NULL;
 	t_token *tmp = NULL;
 
@@ -29,9 +49,10 @@ int main()
 		while (tmp)
 		{
 			type = token_type(tmp->content);
-			printf("%c: %s\n", type, tmp->content);
+			printf("%s: %s\n", type, tmp->content);
 			tmp = tmp->next;
 		}
+		list = NULL;
 	}
 	return (0);
 }

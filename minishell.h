@@ -20,6 +20,13 @@
 # include <string.h>
 # include <unistd.h>
 
+/* struct for gc_collector */
+typedef struct s_list
+{
+	void			*data;
+	struct s_list	*next;
+}	t_list;
+
 typedef struct s_token
 {
 	char	*content;
@@ -42,7 +49,11 @@ typedef enum e_type
     redir_o_app, // >>
     word,
     pipe_line
-};
+} t_token_type;
+
+void	ft_free_gc(void);
+void	*gc_malloc(size_t size);
+char	*ft_strdup(const char *s1);
 
 t_token	*create_node(char *c);
 void	add_list(t_shell *mini, t_token **list);

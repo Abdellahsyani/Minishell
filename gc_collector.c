@@ -16,13 +16,12 @@ static t_list	*head;
 
 void	ft_free_gc(void)
 {
-	t_list	*tmp;
-	t_list	*next;
+	t_list			*tmp;
 
 	tmp = head;
 	while (tmp)
 	{
-		next = tmp->next;
+		t_list *next = tmp->next;
 		free(tmp->data); 
 		free(tmp);
 		tmp = next;
