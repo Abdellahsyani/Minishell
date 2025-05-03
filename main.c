@@ -52,6 +52,7 @@ int main()
 			printf("%s: %s\n", type, tmp->content);
 			tmp = tmp->next;
 		}
+		/*start_parsing(list);*/
 		list = NULL;
 	}
 	return (0);

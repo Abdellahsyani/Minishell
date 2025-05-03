@@ -32,4 +32,3 @@ char	*token_type(char *str)
 		type = ft_strdup("word");  
 	return (type);
 }
-
