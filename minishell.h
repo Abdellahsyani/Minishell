@@ -30,6 +30,7 @@ typedef struct s_list
 typedef struct s_token
 {
 	char	*content;
+	int	type;
 	struct s_token	*next;
 }	t_token;
 
@@ -67,6 +68,6 @@ int	ft_isalpha(char c);
 int	is_operator(char op);
 char	*ft_strlcpy(char *token, char *input, int len, int j);
 int	ft_strcmp(char *s1, char *s2);
-char	*token_type(char *str);
+char	*token_type(t_token *list);
 
 #endif
