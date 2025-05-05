@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:50:39 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/30 14:58:03 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:17:52 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void ft_pwd(char **args)
+int ft_pwd(char **args)
 {
     int i;
     char *path;
@@ -27,7 +27,7 @@ void ft_pwd(char **args)
         if (args[i][0] != ' ' && args[i][0] != '\0')
         {
             printf("pwd : too many arguments\n");
-            return ;
+            return (0);
         }
         i++;
     }
@@ -36,10 +36,11 @@ void ft_pwd(char **args)
     {
         printf("pwd: getcwd failed\n");
         free(path);
-        return ;
+        return (0);
     }
     printf("%s\n", path);
     free(path);
+    return (1)
 }
 
 // int main(int ac,char **arg)

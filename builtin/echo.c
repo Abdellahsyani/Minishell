@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/04/30 18:15:16 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/05 13:45:13 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void    ft_handle_n(char **arg)
     }
 }
 
-void    ft_echo(char **arg)
+int    ft_echo(char **arg)
 {
     int i;
     int flag;
@@ -60,7 +60,7 @@ void    ft_echo(char **arg)
     if (!arg[1])
     {
         printf("\n");
-        return ;
+        return (0);
     }
     flag = ft_check_flag(arg);
     if (flag)
@@ -79,6 +79,7 @@ void    ft_echo(char **arg)
             i++;
         }
     }
+    return (0)
 }
 
 int main(int ac, char **arg)

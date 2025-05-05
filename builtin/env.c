@@ -6,22 +6,32 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:51:44 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/02 09:25:29 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/05 15:35:59 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void ft_env(t_env *env)
+int ft_env(t_env **env)
 {
     t_env *tmp;
     
-    tmp = env;
+    tmp = *env;
     if (!tmp)
-        return ;
+        return (1);
     while(tmp)
     {
         printf("%s=%s\n",tmp->key,tmp->value);
         tmp = tmp->next;
     }
+    return (0);
 }
+// int main(int ac, char **args, char **env)
+// {
+//     (void)ac;
+//     (void)args;
+//     t_env **envp;
+
+//     envp = get_env(env);
+//     return (ft_env(envp));
+// }
