@@ -20,6 +20,7 @@ t_token *create_node(char *c)
 		return (NULL);
 	new_node->content = c;
 	new_node->next = NULL;
+	new_node->type = -1;
 	return (new_node);
 }
 
