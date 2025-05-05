@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/05 12:31:46 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/05 13:28:38 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,18 @@ t_env   **get_env(char **list)
     return (tmp);
 }
 
+// int main(int ac, char **arg, char **env)
+// {
+//     (void)ac;
+//     (void)arg;
+//     t_env **cur;
 
-
-int main(int ac, char **arg, char **env)
-{
-    (void)ac;
-    (void)arg;
-    t_env **cur;
-
-    cur = get_env(env);
-    while (*cur)
-    {
-        printf("%s=%s\n",(*cur)->key,(*cur)->value);
-        (*cur) = (*cur)->next;
-    }
-    return 0;
-}
+//     cur = get_env(env);
+//     while (*cur)
+//     {
+//         printf("%s=%s\n",(*cur)->key,(*cur)->value);
+//         free()
+//         (*cur) = (*cur)->next;
+//     }
+//     return 0;
+// }
