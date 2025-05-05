@@ -16,11 +16,14 @@ int	start_parsing(t_token *list)
 {
 	while (list)
 	{
-		if (!ft_strcmp(token_type(list->content), "pipe_line"))
+		if (list->type == pipe_line)
 		{
-	   		printf("syntax error\n");
+	   		printf("bash: syntax error near unexpected token %s\n", list->content);
 	   		return (0);
 	   	}
-		else if (!ft_strcmp(token_type(list->content), "))
+		else if (list->type == redir_input)
+		{
+		}
 	}
+	   return (0);
 }
