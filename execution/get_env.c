@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/03 18:59:49 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/05 12:31:46 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ char    *ft_key(char *str)
     key = malloc(sizeof(char) * (i + 1));
     if (!key)
         return (NULL);
-    while (j <= i)
+    while (j < i)
     {
-        str[j] = key[j];
+        key[j] = str[j];
         j++;
     }
     key[j] = '\0';
@@ -39,7 +39,6 @@ char    *get_value(char *str)
     char *value;
     int j = 0;
     i = 0;
-    printf("%s\n", str);
     int l= strlen(str);
     while (str[i] && str[i] != '=')
         i++;
@@ -56,32 +55,51 @@ char    *get_value(char *str)
     value[j] = '\0';
     return (value);
 }
-t_env   *get_env(char **list)
-{
-    t_env *env;
 
-    while (*list != NULL)
+t_env *new_node(char *key, char *value)
+{
+    t_env *new;
+
+    new = malloc(sizeof(t_env));
+    if(!new)
+        return (NULL);
+    new->key = key;
+    new->value = value;
+    new->next = NULL;
+    return (new);
+}
+t_env   **get_env(char **list)
+{
+    int i = 0;
+    t_env **tmp;
+
+    t_env *cur;
+    
+    cur = new_node(ft_key(*list), get_value(*list));
+    list++;
+    *tmp = cur;
+    while (*list)
     {
-        env = malloc(sizeof(t_env));
-        env->key = ft_key(*list);
-        env->value = get_value(*list);
-        env = env->next;
+        cur->next = new_node(ft_key(*list), get_value(*list));
+        cur = cur->next;
         list++;
     }
-    return (env);
+    return (tmp);
 }
+
+
 
 int main(int ac, char **arg, char **env)
 {
     (void)ac;
     (void)arg;
-    t_env *cur;
+    t_env **cur;
 
     cur = get_env(env);
-    while (cur)
+    while (*cur)
     {
-        printf("%s = %s\n",cur->key,cur->value);
-        cur = cur->next;
+        printf("%s=%s\n",(*cur)->key,(*cur)->value);
+        (*cur) = (*cur)->next;
     }
     return 0;
 }
