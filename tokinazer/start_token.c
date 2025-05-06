@@ -34,9 +34,7 @@ void add_list(t_shell *mini, t_token **list)
 	if (!new_node)
 		return;
 	if (*list == NULL)
-	{
 		*list = new_node;
-	}
 	else
 	{
 		t_token *tmp;

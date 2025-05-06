@@ -49,10 +49,10 @@ int main()
 		while (tmp)
 		{
 			type = token_type(tmp);
-			printf("%s[%d]: %s\n", type, tmp->type, tmp->content);
+			/*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
 			tmp = tmp->next;
 		}
-		/*start_parsing(list);*/
+		start_parsing(list);
 		list = NULL;
 	}
 	return (0);
