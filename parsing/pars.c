@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int	print_error(char *str)
+static int	print_error(char *str)
 {
 	printf("bash: syntax error near unexpected token `%s`\n", str);
 	return (0);
@@ -34,16 +34,18 @@ int	op_error_syntax(t_token *list)
 	else if (list && list->type == pipe_line)
 	{
 		if (list->next != NULL)
-				return (print_error(list->content));
+			return (print_error(list->content));
 	}
 	return (1);
 }
 
 int	start_parsing(t_token *list)
 {
-	t_token *current = list;
-	int error = 1;
+	t_token	*current;
+	int	error;
 
+	current = list;
+	error = 1;
 	if (!list)
 		return (0);
 	if (list->type == pipe_line)
