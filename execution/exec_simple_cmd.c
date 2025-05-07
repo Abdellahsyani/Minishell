@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 11:28:55 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:48:48 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ int simple_cmd(t_command *cmd)
             return (1);
         }
         else if (pid == 0)
-        {
             return (ft_child_process(cmd));  
-        }
         else 
         {
             wait(&status);

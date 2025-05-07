@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/07 11:17:59 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:59:06 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int     ft_unset(char **arg, t_env *env);
 int     ft_exit(char **arg,int last_status);
 
 //***************Execution**************
-int exec_builtin(char *cmd, char **args, char **envp);
+int     exec_builtin(char *cmd, char **args, char **envp);
+char    *find_path(char *cmd, t_env **env);
 
 #endif
