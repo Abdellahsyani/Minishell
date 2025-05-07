@@ -20,6 +20,7 @@ t_token *create_node(char *c)
 		return (NULL);
 	new_node->content = c;
 	new_node->next = NULL;
+	new_node->type = -1;
 	return (new_node);
 }
 
@@ -33,9 +34,7 @@ void add_list(t_shell *mini, t_token **list)
 	if (!new_node)
 		return;
 	if (*list == NULL)
-	{
 		*list = new_node;
-	}
 	else
 	{
 		t_token *tmp;

@@ -30,12 +30,6 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef struct s_token
-{
-	char	*content;
-	struct s_token	*next;
-}	t_token;
-
 typedef struct s_shell
 {
 	char	*tok;
@@ -43,6 +37,13 @@ typedef struct s_shell
 	int	len;
 	int	st;
 }	t_shell;
+
+typedef struct s_token
+{
+	char	*content;
+	int	type;
+	struct s_token	*next;
+}	t_token;
 
 typedef enum e_type
 {
@@ -70,7 +71,8 @@ int	ft_isalpha(char c);
 int	is_operator(char op);
 char	*ft_strlcpy(char *token, char *input, int len, int j);
 int	ft_strcmp(char *s1, char *s2);
-char	*token_type(char *str);
+char	*token_type(t_token *list);
+int	start_parsing(t_token *list);
 
 typedef struct s_env
 {
