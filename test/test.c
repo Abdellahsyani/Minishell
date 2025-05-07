@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:58:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 09:51:52 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/07 10:33:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main() {
     
     int pid;
     int pid2;
-    int *status;
+    int status;
     
     pid = fork();
    // pid2 = fork();
@@ -32,9 +32,14 @@ int main() {
     }
     else if (pid > 0)
     {
-        wait(status);
+        wait(&status);
         printf("parent process.\n");
-        if (WEXITSTATUS(status) == EXIT_SUCCESS)
+        printf("%d",WEXITSTATUS(status));
+    }
+    else
+    {
+        printf("child process.\n");
+        return (1);
     }
     return 0;
 }

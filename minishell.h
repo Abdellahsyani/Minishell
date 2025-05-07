@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/07 10:11:35 by abhimi           ###   ########.fr       */
-/*   Updated: 2025/05/06 15:10:59 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:17:59 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -86,6 +86,7 @@ typedef struct s_command
     char *name;
     char **arg;
     t_env **env;
+    char   *status;
 } t_command;
 
 int     ft_strcmp(char *s1, char *s2);
