@@ -30,6 +30,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+/*** struct for tokinization ***/
 typedef struct s_shell
 {
 	char	*tok;
@@ -45,6 +46,7 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+/*** enum struct for get type of tokens ****/
 typedef enum e_type
 {
     redir_output, // >
@@ -55,25 +57,7 @@ typedef enum e_type
     pipe_line
 } t_token_type;
 
-void	ft_free_gc(void);
-void	*gc_malloc(size_t size);
-char	*ft_strdup(const char *s1);
-
-t_token	*create_node(char *c);
-void	add_list(t_shell *mini, t_token **list);
-int	handle_blank(t_shell *mini, t_token **list, char *line);
-int	handle_quotes(t_shell *mini, t_token **list, char *line);
-int	handle_op(t_shell *mini, t_token **list, char *line);
-int	create_token(t_shell *mini, t_token **list, char *line);
-int	handle_dollar(t_shell *mini, t_token **list, char *line);
-int	get_input(char *line, t_token **tokens_list);
-int	ft_isalpha(char c);
-int	is_operator(char op);
-char	*ft_strlcpy(char *token, char *input, int len, int j);
-int	ft_strcmp(char *s1, char *s2);
-char	*token_type(t_token *list);
-int	start_parsing(t_token *list);
-
+/**** struct for execution ***/
 typedef struct s_env
 {
     char    *key;
@@ -88,11 +72,32 @@ typedef struct s_command
     t_env **env;
 } t_command;
 
+/***** parsing functions *****/
+
+t_token	*create_node(char *c);
+void	add_list(t_shell *mini, t_token **list);
+int	handle_blank(t_shell *mini, t_token **list, char *line);
+int	handle_quotes(t_shell *mini, t_token **list, char *line);
+int	handle_op(t_shell *mini, t_token **list, char *line);
+int	create_token(t_shell *mini, t_token **list, char *line);
+int	handle_dollar(t_shell *mini, t_token **list, char *line);
+int	get_input(char *line, t_token **tokens_list);
+char	*ft_strlcpy(char *token, char *input, int len, int j);
+char	*token_type(t_token *list);
+int	start_parsing(t_token *list);
+
+/******** helper functions ************/
+
+void	ft_free_gc(void);
+void	*gc_malloc(size_t size);
+char	*ft_strdup(const char *s1);
+int	is_operator(char op);
+int	ft_isalpha(char c);
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
 t_env   *find(t_env *env, char *key);
 t_env   **get_env(char **list);
-int ft_strncmp(char *s1, char *s2, int l);
+int	ft_strncmp(char *s1, char *s2, int l);
 
 //**************Builtin****************
 
