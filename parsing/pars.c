@@ -64,3 +64,13 @@ int	start_parsing(t_token *list)
 	}
 	return (0);
 }
+
+int	pars_command(t_token *list, t_command **cmd)
+{
+	while (list)
+	{
+		if (list->type == word)
+		{
+		}
+	}
+}
