@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec1.c                                            :+:      :+:    :+:   */
+/*   exec_simple_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 11:48:48 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:28:23 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 char *find_path(char *cmd, t_env **env)
 {
     int i;
-    t_env *cur;
-    char **paths;
+    t_env   *cur;
+    char    **paths;
+    char    *ppth;
     char    *path;
 
     i = 0;
@@ -26,13 +27,11 @@ char *find_path(char *cmd, t_env **env)
     paths = ft_split(cur->value, ':');
     while (paths[i])
     {
-        paths[i] = ft_strjoin(paths[i], "/");
-        path = ft_strjoin(paths[i], cmd);
+        ppth = ft_strjoin(paths[i], "/");
+        path = ft_strjoin(ppth, cmd);
+        free(ppth);
         if (!access(path, X_OK))
-        {
-            ft_free(paths);
             return (path);
-        }
         free(paths[i]);
         free(path);
         i++;

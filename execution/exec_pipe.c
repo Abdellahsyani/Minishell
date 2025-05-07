@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 12:27:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/07 14:30:34 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,4 @@ int ft_pipe(t_command *cmd)
         return (ft_child_p(cmd));
     else
         return (ft_parent_p(cmd));
-
 }
