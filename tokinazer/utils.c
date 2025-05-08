@@ -12,11 +12,7 @@
 
 #include "../minishell.h"
 
-<<<<<<< HEAD:tokinazer/utils.c
-int	ft_strcmp(char *s1, char *s2)
-=======
 int ft_strcmp(char *s1, char *s2)
->>>>>>> builtin:utils.c
 {
     int i;
     
@@ -30,7 +26,6 @@ int ft_strcmp(char *s1, char *s2)
    return (0);
 }
 
-<<<<<<< HEAD:tokinazer/utils.c
 char	*ft_strlcpy(char *token, char *input, int len, int j)
 {
 	int	i;
@@ -62,7 +57,7 @@ int	ft_isalpha(char c)
 		return (1);
 	return (0);
 }
-=======
+
 int ft_strncmp(char *s1, char *s2, int l)
 {
     int i;
@@ -76,4 +71,3 @@ int ft_strncmp(char *s1, char *s2, int l)
     }
     return (0);
 }
->>>>>>> builtin:utils.c

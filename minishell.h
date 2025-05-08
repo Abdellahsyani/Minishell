@@ -67,10 +67,19 @@ typedef struct s_env
 
 typedef struct s_command
 {
-    char *name;
-    char **arg;
-    t_env **env;
+    /*char	*name;*/
+    char	**argv;
+    char	*infile;
+    char	*outfile;
+    int		append;
+    struct s_command *next;
+    t_env	**env;
 } t_command;
+
+
+/*test*/
+int	pars_command(t_token *list, t_command **cmd_list);
+
 
 /***** parsing functions *****/
 
