@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 16:28:23 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/08 13:54:18 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int ft_child_process(t_command *cmd)
     path = find_path(cmd,cmd->env);
     if (execve(path, cmd->arg, cmd->env) == -1)
     {
-        printf("Error : execve failed.\n");
+        perror("Execve");
         free (path);
         return(1);
     }
@@ -70,6 +70,7 @@ int simple_cmd(t_command *cmd)
         }
         else if (pid == 0)
             return (ft_child_process(cmd));  
+            
         else 
         {
             wait(&status);
