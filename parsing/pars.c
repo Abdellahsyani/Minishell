@@ -33,7 +33,7 @@ int	op_error_syntax(t_token *list)
 	}
 	else if (list && list->type == pipe_line)
 	{
-		if (list->next != NULL)
+		if (list->next != NULL && list->type == word)
 			return (print_error(list->content));
 	}
 	return (1);
@@ -68,7 +68,7 @@ int	start_parsing(t_token *list)
 int	count_word_tokens(t_token *list)
 {
 	int count = 0;
-	while (list)
+	while (list && list->type != pipe_line)
 	{
 		if (list->type == word)
 			count++;
@@ -77,14 +77,15 @@ int	count_word_tokens(t_token *list)
 	return count;
 }
 
-t_command	*create_cmd_node(void)
+t_command	*create_cmd_node(t_token *list)
 {
 	t_command	*new_node;
 
 	new_node = gc_malloc(sizeof(t_command));
 	/*if (!new_node)*/
 	/*	return (NULL);*/
-	new_node->argv[0] = NULL;
+	new_node->argv = NULL;
+	new_node->argv = malloc(sizeof(char *) * (count_word_tokens(list) + 1));
 	new_node->infile = NULL;
 	new_node->outfile = NULL;
 	new_node->append = 0;
@@ -92,11 +93,11 @@ t_command	*create_cmd_node(void)
 	return (new_node);
 }
 
-void	add_cmd_list(t_command **cmd)
+void	add_cmd_list(t_token *list, t_command **cmd)
 {
 	t_command	*new_node;
 
-	new_node = create_cmd_node();
+	new_node = create_cmd_node(list);
 	if (*cmd == NULL)
 		*cmd = new_node;
 	else
@@ -118,7 +119,6 @@ void	add_to_argv(t_command *cmd, char *str)
 	while (cmd->argv && cmd->argv[i])
 		i++;
 	cmd->argv[i] = ft_strdup(str);
-	printf("%s\n", cmd->argv[i]);
 	cmd->argv[i + 1] = NULL;
 }
 
@@ -140,7 +140,7 @@ int pars_command(t_token *list, t_command **cmd_list)
     {
         if (current_cmd == NULL)
         {
-            add_cmd_list(cmd_list);
+            add_cmd_list(list, cmd_list);
             current_cmd = get_last_cmd(*cmd_list);
             if (!current_cmd)
                 return (0);
