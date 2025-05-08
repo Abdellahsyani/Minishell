@@ -32,111 +32,64 @@ char	*ft_strdup(const char *s1)
 	return (dup);
 }
 
-/*int main()*/
-/*{*/
-/*	char	*line;*/
-/*	char	*type;*/
-/*	t_token	*list = NULL;*/
-/*	t_token *tmp = NULL;*/
-/*	t_command	*cmd_list = NULL;*/
-/**/
-/*	while (1)*/
-/*	{*/
-/*		line = readline("\033[1;32m minishell $ \033[0m");*/
-/*		if (line)*/
-/*			add_history(line);*/
-/*		get_input(line, &list);*/
-/*		tmp = list;*/
-/*		while (tmp)*/
-/*		{*/
-/*			type = token_type(tmp);*/
-/*			tmp = tmp->next;*/
-/*		}*/
-/*		start_parsing(list);*/
-/*		pars_command(list, &cmd_list);*/
-/*		while (cmd_list)*/
-/*		{*/
-/*			int i = 0;*/
-/**/
-/*			// Print argv*/
-/*			while (cmd_list->argv && cmd_list->argv[i])*/
-/*			{*/
-/*				printf("argv[%d]: %s\n", i, cmd_list->argv[i]);*/
-/*				i++;*/
-/*			}*/
-/**/
-/*			// Print redirection info*/
-/*			if (cmd_list->infile)*/
-/*				printf("infile: %s\n", cmd_list->infile);*/
-/*			if (cmd_list->outfile)*/
-/*				printf("outfile: %s\n", cmd_list->outfile);*/
-/**/
-/*			printf("append: %d\n", cmd_list->append);*/
-/*			printf("------------\n");*/
-/**/
-/*			cmd_list = cmd_list->next;*/
-/*		}*/
-/*		list = NULL;*/
-/*	}*/
-/*	return (0);*/
-/*}*/
 
 int main()
 {
-    char        *line;
-    char        *type;
-    t_token     *list = NULL;
-    t_token     *tmp = NULL;
-    t_command   *cmd_list = NULL;
-    t_command   *cmd_tmp = NULL;
-    int         parse_status;
-    
-    while (1)
-    {
-        // Reset pointers at the start of each iteration
-        list = NULL;
-        cmd_list = NULL;
-        
-        line = readline("\033[1;32m minishell $ \033[0m");
-        if (!line)  // Handle Ctrl+D (EOF)
-        {
-            printf("exit\n");
-            break;
-        }
-        if (*line)  // Only add non-empty lines to history
-            add_history(line);
-        get_input(line, &list);
-        tmp = list;
-        while (tmp)
-        {
-            type = token_type(tmp);
-            /*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
-            tmp = tmp->next;
-        }
-        parse_status = start_parsing(list);
-        if (parse_status == 1)
-        {
-            pars_command(list, &cmd_list);
-            cmd_tmp = cmd_list;
-            while (cmd_list)
-            {
-                int i = 0;
-                while (cmd_list->argv && cmd_list->argv[i])
-                {
-                    printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
-                    i++;
-                }
-                if (cmd_list->infile)
-                    printf("infile: %s\n", cmd_list->infile);
-                if (cmd_list->outfile)
-                    printf("outfile: %s\n", cmd_list->outfile);
-                printf("append: %d\n", cmd_list->append);
-                printf("------------\n");
-                cmd_list = cmd_list->next;
-            }
-            cmd_list = cmd_tmp;
-        }
-        free(line);
-    }
-    return (0);
+	char        *line;
+	char        *type;
+	t_token     *list = NULL;
+	t_token     *tmp = NULL;
+	t_command   *cmd_list = NULL;
+	t_command   *cmd_tmp = NULL;
+	int         parse_status;
+
+	while (1)
+	{
+		list = NULL;
+		cmd_list = NULL;
+
+		line = readline("\033[1;32m minishell $ \033[0m");
+		if (!line)
+		{
+			printf("exit\n");
+			break;
+		}
+		if (*line)
+			add_history(line);
+		get_input(line, &list);
+		tmp = list;
+		while (tmp)
+		{
+			type = token_type(tmp);
+			/*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
+			tmp = tmp->next;
+		}
+		parse_status = start_parsing(list);
+		if (parse_status == 1)
+		{
+			int ex = pars_command(list, &cmd_list);
+			if (ex == 0)
+				return (0);
+			cmd_tmp = cmd_list;
+			while (cmd_list)
+			{
+				int i = 0;
+				while (cmd_list->argv && cmd_list->argv[i])
+				{
+					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
+					i++;
+				}
+				if (cmd_list->infile)
+					printf("infile: %s\n", cmd_list->infile);
+				if (cmd_list->outfile)
+					printf("outfile: %s\n", cmd_list->outfile);
+				printf("append: %d\n", cmd_list->append);
+				printf("------------\n");
+				cmd_list = cmd_list->next;
+			}
+			cmd_list = cmd_tmp;
+		}
+		free(line);
+	}
+	return (0);
 }
