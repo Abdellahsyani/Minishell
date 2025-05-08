@@ -82,8 +82,8 @@ t_command	*create_cmd_node(t_token *list)
 	t_command	*new_node;
 
 	new_node = gc_malloc(sizeof(t_command));
-	/*if (!new_node)*/
-	/*	return (NULL);*/
+	if (!new_node)
+		return (NULL);
 	new_node->argv = NULL;
 	new_node->argv = malloc(sizeof(char *) * (count_word_tokens(list) + 1));
 	new_node->infile = NULL;
