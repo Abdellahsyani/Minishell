@@ -61,35 +61,35 @@ int main()
 		while (tmp)
 		{
 			type = token_type(tmp);
-			/*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
+			printf("%s[%d]: %s\n", type, tmp->type, tmp->content);
 			tmp = tmp->next;
 		}
-		parse_status = start_parsing(list);
-		if (parse_status == 1)
-		{
-			int ex = pars_command(list, &cmd_list);
-			if (ex == 0)
-				return (0);
-			cmd_tmp = cmd_list;
-			while (cmd_list)
-			{
-				int i = 0;
-				while (cmd_list->argv && cmd_list->argv[i])
-				{
-					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
-					i++;
-				}
-				if (cmd_list->infile)
-					printf("infile: %s\n", cmd_list->infile);
-				if (cmd_list->outfile)
-					printf("outfile: %s\n", cmd_list->outfile);
-				printf("append: %d\n", cmd_list->append);
-				printf("------------\n");
-				cmd_list = cmd_list->next;
-			}
-			cmd_list = cmd_tmp;
-		}
-		free(line);
+		/*parse_status = start_parsing(list);*/
+		/*if (parse_status == 1)*/
+		/*{*/
+		/*	int ex = pars_command(list, &cmd_list);*/
+		/*	if (ex == 0)*/
+		/*		return (0);*/
+		/*	cmd_tmp = cmd_list;*/
+		/*	while (cmd_list)*/
+		/*	{*/
+		/*		int i = 0;*/
+		/*		while (cmd_list->argv && cmd_list->argv[i])*/
+		/*		{*/
+		/*			printf("argv[%d]: %s\n", i, cmd_list->argv[i]);*/
+		/*			i++;*/
+		/*		}*/
+		/*		if (cmd_list->infile)*/
+		/*			printf("infile: %s\n", cmd_list->infile);*/
+		/*		if (cmd_list->outfile)*/
+		/*			printf("outfile: %s\n", cmd_list->outfile);*/
+		/*		printf("append: %d\n", cmd_list->append);*/
+		/*		printf("------------\n");*/
+		/*		cmd_list = cmd_list->next;*/
+		/*	}*/
+		/*	cmd_list = cmd_tmp;*/
+		/*}*/
+		/*free(line);*/
 	}
 	return (0);
 }

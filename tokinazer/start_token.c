@@ -90,9 +90,9 @@ int handle_quotes(t_shell *mini, t_token **list, char *line)
 	mini->i++;
 	while (line[mini->i] && line[mini->i] != quote_type)
 		mini->i++;
+	mini->len += (mini->i) - start_i;
 	if (line[mini->i] == quote_type)
 		mini->i++;
-	mini->len += (mini->i - 1) - start_i;
 	mini->st = start_i;
 	return (1);
 }
