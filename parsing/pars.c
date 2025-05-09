@@ -67,7 +67,9 @@ int	start_parsing(t_token *list)
 
 int	count_word_tokens(t_token *list)
 {
-	int count = 0;
+	int	count;
+
+	count = 0;
 	while (list && list->type != pipe_line)
 	{
 		if (list->type == word)
@@ -80,11 +82,13 @@ int	count_word_tokens(t_token *list)
 t_command	*create_cmd_node(t_token *list)
 {
 	t_command	*new_node;
+	int	count;
 
+	count = count_word_tokens(list);
 	new_node = gc_malloc(sizeof(t_command));
 	if (!new_node)
 		return (NULL);
-	new_node->argv = malloc(sizeof(char *) * (count_word_tokens(list) + 2));
+	new_node->argv = gc_malloc(sizeof(char *) * (count + 1));
 	if (!new_node->argv)
 		return (NULL);
 	new_node->argv[0] = NULL;
@@ -133,6 +137,33 @@ t_command	*get_last_cmd(t_command *cmd_list)
 	return (cmd_list);
 }
 
+void	fill_operation(t_command *cmd, t_token **cur, int i)
+{
+	if (i == 0)
+	{
+		if (cmd->outfile)
+			free(cmd->outfile);
+		cmd->outfile = ft_strdup((*cur)->next->content);
+		cmd->append = 0;
+		*cur = (*cur)->next;
+	}
+	if (i == 1)
+	{
+		if (cmd->outfile)
+			free(cmd->outfile);
+		cmd->outfile = ft_strdup((*cur)->next->content);
+		cmd->append = 1;
+		*cur = (*cur)->next;
+	}
+	if (i == 2)
+	{
+		if (cmd->infile)
+			free(cmd->infile);
+		cmd->infile = ft_strdup((*cur)->next->content);
+		*cur = (*cur)->next;
+	}
+}
+
 int pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command *current_cmd = NULL;
@@ -150,28 +181,11 @@ int pars_command(t_token *list, t_command **cmd_list)
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
 		else if (current->type == redir_output && current->next)
-		{
-			if (current_cmd->outfile)
-				free(current_cmd->outfile);
-			current_cmd->outfile = ft_strdup(current->next->content);
-			current_cmd->append = 0;
-			current = current->next;
-		}
+				fill_operation(current_cmd, &current, 0);
 		else if (current->type == redir_input && current->next)
-		{
-			if (current_cmd->infile)
-				free(current_cmd->infile);
-			current_cmd->infile = ft_strdup(current->next->content);
-			current = current->next;
-		}
+				fill_operation(current_cmd, &current, 2);
 		else if (current->type == redir_o_app && current->next)
-		{
-			if (current_cmd->outfile)
-				free(current_cmd->outfile);
-			current_cmd->outfile = ft_strdup(current->next->content);
-			current_cmd->append = 1;
-			current = current->next;
-		}
+			fill_operation(current_cmd, &current, 1);
 		else if (current->type == pipe_line)
 			current_cmd = NULL;
 		if (current)
