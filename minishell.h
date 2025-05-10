@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/07 11:59:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:58:34 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <limits.h>
+# include <fcntl.h>
 
 /* struct for gc_collector */
 typedef struct s_list
@@ -81,6 +82,7 @@ typedef struct s_env
     struct s_env *next;
 } t_env;
 
+
 typedef struct s_command
 {
     char *name;
@@ -88,6 +90,13 @@ typedef struct s_command
     t_env **env;
     char   *status;
 } t_command;
+
+typedef struct s_redi
+{
+    char *file;
+    t_token_type redir;
+    struct s_redi *next;
+}t_redi;
 
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
@@ -108,5 +117,8 @@ int     ft_exit(char **arg,int last_status);
 //***************Execution**************
 int     exec_builtin(char *cmd, char **args, char **envp);
 char    *find_path(char *cmd, t_env **env);
+t_env   **get_env(char **list);
+int     simple_cmd(t_command *cmd);
+int     exec_builtin(char *cmd, char **args, char **envp);
 
 #endif

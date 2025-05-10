@@ -6,16 +6,13 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 16:55:08 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:58:25 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int child_p(t_command *cmd)
-{
-    if ()
-}
+
 
 int ft_pipe(t_command *cmd)
 {
