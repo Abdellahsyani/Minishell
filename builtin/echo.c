@@ -79,7 +79,7 @@ int    ft_echo(char **arg)
             i++;
         }
     }
-    return (0)
+    return (0);
 }
 
 int main(int ac, char **arg)

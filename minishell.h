@@ -67,7 +67,6 @@ typedef struct s_env
 
 typedef struct s_command
 {
-    char	**var;
     char	**argv;
     char	*infile;
     char	*outfile;
@@ -80,6 +79,8 @@ typedef struct s_command
 /*test*/
 int	pars_command(t_token *list, t_command **cmd_list);
 
+/** expand functions **/
+void	expand_var(t_token *list, t_command *cmd);
 
 /***** parsing functions *****/
 
