@@ -6,12 +6,24 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/10 10:02:46 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 11:00:24 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int is_builtin(t_command *cmd)
+{
+    if (!ft_strcmp(cmd->arg[0], "echo") || !ft_strcmp(cmd->arg[0], "cd"))
+        return (1);
+    else if (!ft_strcmp(cmd->arg[0], "export") || !ft_strcmp(cmd->arg[0], "unset"))
+        return (1);
+    else if (!ft_strcmp(cmd->arg[0], "env") || !ft_strcmp(cmd->arg[0], "pwd"))
+        return (1);
+    else if (!ft_strcmp(cmd->arg[0], "exit"))
+        return (1);
+    return (0);
+}
 char *find_path(char *cmd, t_env **env)
 {
     int i;
@@ -58,8 +70,8 @@ int simple_cmd(t_command *cmd)
     int pid;
     int status;
     
-    if (is_builtin(cmd->name))
-        return (exec_builtin(cmd->name,cmd->arg, cmd->env));
+    if (is_builtin(cmd))
+        return (exec_builtin(cmd->arg[0],cmd->arg, cmd->env));
     else
     {
         pid = fork();

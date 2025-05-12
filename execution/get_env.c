@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 10:31:25 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:46:04 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char    *get_value(char *str)
     int l= strlen(str);
     while (str[i] && str[i] != '=')
         i++;
-    // if (str[i] != '=')
-    //     return(NULL);
     i++;
     value = malloc(sizeof(char) * (l - i + 1));
     if (!value)

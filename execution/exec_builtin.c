@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:32:15 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/05 15:37:13 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:48:14 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int exec_builtin(char *cmd, char **args, char **envp)
         return (ft_unset(args, env));
     else if (!ft_strcmp(cmd, "env"))
         return (ft_env(env));
-    else
+    else if (!ft_strcmp(cmd, "exit"))
         return (ft_exit(args, 0));
-    
+    return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 10:25:58 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 11:16:27 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    print_export(t_env **env)
         tmp = tmp->next;
     }
 }
-void    alloce_env(char *key, char *value, t_env **env)
+void    set_new_env(char *key, char *value, t_env **env)
 {
     t_env *exist;
     t_env *create;
@@ -54,9 +54,7 @@ void    alloce_env(char *key, char *value, t_env **env)
     {
         create = malloc(sizeof(t_env));
         create->key = ft_strdup(key);
-        //free(key);
         create->value= ft_strdup(value);
-        //free(value);
         create->next = *env;
         *env = create;
     }
@@ -78,7 +76,7 @@ int check_arg(char *str,t_env **env)
         return (free(key), 0);
     if (str[i] == '=')
         value = ft_substr(str, i + 1, l - i - 1);
-    alloce_env(key, value,env);
+    set_new_env(key, value,env);
     return (1);
 }
 

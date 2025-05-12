@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/10 14:48:43 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 11:16:57 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int     is_valid(char *str);
 t_env   *find(t_env *env, char *key);
 t_env   **get_env(char **list);
 // int ft_strncmp(char *s1, char *s2, int l);
+void    set_new_env(char *key, char *value, t_env **env);
 
 //**************Builtin****************
 
