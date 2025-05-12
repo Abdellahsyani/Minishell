@@ -26,6 +26,28 @@ int	extract_var(char *str)
 	return (0);
 }
 
+char	*stcopy(char *var, char *content, char del)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (content[i])
+	{
+		if (content[i] == del)
+		{
+			i++;
+			continue;
+		}
+		var[count] = content[i];
+		count++;
+		i++;
+	}
+	var[count] = '\0';
+	return (var);
+}
+
 char	*get_var(char *str)
 {
 	char	*var;
@@ -53,46 +75,26 @@ char	*get_var(char *str)
 char	*single_qoute(char *content)
 {
 	int	i;
-	int	len;
-	int	start;
+	int	count;
 	char	*var;
 
 	i = 0;
-	len = 0;
-	start = i;
 	while (content[i])
 	{
 		if (content[i] == '\'')
-			break ;
-		i++;
-	}
-	len = i;
-	var = ft_strlcpy(var, content, len, start);
-	printf("var_': %s\n", var);
-	return (var);
-}
-
-char	*stcopy(char *var, char *content, char del)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (content[i])
-	{
-		if (content[i] == del)
 		{
 			i++;
 			continue;
 		}
-		var[count] = content[i];
-		count++;
 		i++;
+		count++;
 	}
-	var[count] = '\0';
+	var = gc_malloc(sizeof(char) * (count + 1));
+	var = stcopy(var, content, '\'');
+	printf("var_': %s\n", var);
 	return (var);
 }
+
 
 char	*double_quote(char *content)
 {
