@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 10:46:04 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 15:26:31 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char    *ft_key(char *str)
 char    *get_value(char *str)
 {
     int i;
-    char *value;
+    char *value = NULL;
     int j = 0;
     i = 0;
     int l= strlen(str);
@@ -64,19 +64,42 @@ t_env *new_node(char *key, char *value)
     if(!new)
         return (NULL);
     new->key = key;
-    // free(key);
+    free(key);
     new->value = value;
-    // if(value)
-    //     free(value);
+    if(value)
+         free(value);
     new->next = NULL;
     return (new);
 }
+
+char **chr_envirment(t_env **env)
+{
+    char **envp;
+    t_env   *tmp;
+    char    *str;
+    int i = 0;
+    
+    tmp = *env;
+    while (tmp)
+    {
+        str = ft_strjoin(tmp->key, "=");
+        envp[i] = ft_strjoin(str, tmp->value);
+        i++;
+        tmp = tmp->next;
+    }
+    envp[i] = NULL;
+    return (envp);
+}
+
 t_env   **get_env(char **list)
 {
     int i = 0;
     t_env **tmp;
     t_env *cur;
     
+    tmp = malloc(sizeof(t_env*));
+    if (!tmp)
+        return (NULL);
     cur = new_node(ft_key(*list), get_value(*list));
     list++;
     *tmp = cur;
@@ -89,17 +112,21 @@ t_env   **get_env(char **list)
     return (tmp);
 }
 
-// int main(int ac, char **arg, char **env)
-// {
-//     (void)ac;
-//     (void)arg;
-//     t_env **cur;
+int main(int ac, char **arg, char **env)
+{
+    (void)ac;
+    (void)arg;
+    char **envp;
+    t_env **cur;
 
-//     cur = get_env(env);
-//     while (*cur)
-//     {
-//         printf("%s=%s\n",(*cur)->key,(*cur)->value);
-//         (*cur) = (*cur)->next;
-//     }
-//     return 0;
-// }
+    cur = get_env(env);
+    envp = chr_envirment(cur);
+    free(cur);
+    while (*envp)
+    {
+        printf("%s\n", *envp);
+        free(*envp);
+        envp++;
+    }
+    return 0;
+}
