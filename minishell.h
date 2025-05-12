@@ -108,6 +108,7 @@ int     is_valid(char *str);
 t_env   *find(t_env *env, char *key);
 t_env   **get_env(char **list);
 int	ft_strncmp(char *s1, char *s2, int l);
+int	ft_strlen(char *str);
 
 //**************Builtin****************
 
