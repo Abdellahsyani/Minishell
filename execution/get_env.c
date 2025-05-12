@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/07 18:55:32 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 10:31:25 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ char    *get_value(char *str)
     int l= strlen(str);
     while (str[i] && str[i] != '=')
         i++;
-    i += 1;
+    // if (str[i] != '=')
+    //     return(NULL);
+    i++;
     value = malloc(sizeof(char) * (l - i + 1));
     if (!value)
         return NULL;
@@ -64,7 +66,10 @@ t_env *new_node(char *key, char *value)
     if(!new)
         return (NULL);
     new->key = key;
+    // free(key);
     new->value = value;
+    // if(value)
+    //     free(value);
     new->next = NULL;
     return (new);
 }
@@ -72,7 +77,6 @@ t_env   **get_env(char **list)
 {
     int i = 0;
     t_env **tmp;
-
     t_env *cur;
     
     cur = new_node(ft_key(*list), get_value(*list));
@@ -87,17 +91,17 @@ t_env   **get_env(char **list)
     return (tmp);
 }
 
-int main(int ac, char **arg, char **env)
-{
-    (void)ac;
-    (void)arg;
-    t_env **cur;
+// int main(int ac, char **arg, char **env)
+// {
+//     (void)ac;
+//     (void)arg;
+//     t_env **cur;
 
-    cur = get_env(env);
-    while (*cur)
-    {
-        printf("%s=%s\n",(*cur)->key,(*cur)->value);
-        (*cur) = (*cur)->next;
-    }
-    return 0;
-}
+//     cur = get_env(env);
+//     while (*cur)
+//     {
+//         printf("%s=%s\n",(*cur)->key,(*cur)->value);
+//         (*cur) = (*cur)->next;
+//     }
+//     return 0;
+// }

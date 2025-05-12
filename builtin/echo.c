@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/05 13:45:13 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/10 10:06:02 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ int    ft_echo(char **arg)
             i++;
         }
     }
-    return (0)
+    return (0);
 }
 
 int main(int ac, char **arg)
 {
     (void)ac;
     
-    ft_echo(arg);
+    if(ft_echo(arg))
+        return (1);
     return 0;
 }

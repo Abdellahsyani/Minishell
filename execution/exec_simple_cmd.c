@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/08 13:54:18 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/10 10:02:46 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ int simple_cmd(t_command *cmd)
     }
 }
 
-// int main(int ac, char **arg, char **envp)
-// {
-//     (void)ac;
+int main(int ac, char **arg, char **env)
+{
+    (void)ac;
+    t_env **envp;
     
-//     printf("%s\n", find_path(arg[1],envp));
-//     return (0);
+    envp = get_env(env);
+    printf("%s\n", find_path(arg[1],envp));
+    return (0);
     
-// }
+}

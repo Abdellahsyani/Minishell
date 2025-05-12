@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/09 16:58:34 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/10 14:48:43 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@
 # include <errno.h>
 # include <limits.h>
 # include <fcntl.h>
+# include "libft/libft.h"
 
 /* struct for gc_collector */
-typedef struct s_list
-{
-	void			*data;
-	struct s_list	*next;
-}	t_list;
+// typedef struct s_list
+// {
+// 	void			*data;
+// 	struct s_list	*next;
+// }	t_list;
 
 typedef struct s_shell
 {
@@ -68,9 +69,8 @@ int	handle_op(t_shell *mini, t_token **list, char *line);
 int	create_token(t_shell *mini, t_token **list, char *line);
 int	handle_dollar(t_shell *mini, t_token **list, char *line);
 int	get_input(char *line, t_token **tokens_list);
-int	ft_isalpha(char c);
 int	is_operator(char op);
-char	*ft_strlcpy(char *token, char *input, int len, int j);
+char	*ft_strlcp(char *token, char *input, int len, int j);
 int	ft_strcmp(char *s1, char *s2);
 char	*token_type(t_token *list);
 int	start_parsing(t_token *list);
@@ -98,11 +98,12 @@ typedef struct s_redi
     struct s_redi *next;
 }t_redi;
 
+
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
 t_env   *find(t_env *env, char *key);
 t_env   **get_env(char **list);
-int ft_strncmp(char *s1, char *s2, int l);
+// int ft_strncmp(char *s1, char *s2, int l);
 
 //**************Builtin****************
 

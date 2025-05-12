@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:58:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/08 17:06:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/10 14:26:24 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,27 @@ int main() {
     int status;
     int pipefd[2];
     char str[10];
-    char s[10] = "hello man\n";
+    char s[10] = "hello man";
     
-    pid = fork();
+
 
    if (pipe(pipefd) == -1)
    {
         perror("pipe");
         return (1);
    }
+   pid = fork();
     if (pid < 0)
     {
         printf("fork faild.\n");
         return (1);
     }
-    else if (pid > 0)
+    else if (pid == 0)
     {
         close(pipefd[0]);
         printf("I am writing now in pipe from child process.\n");
         write(pipefd[1],s, 11);
         close(pipefd[1]);
-        wait(NULL);
 
     }
     else
@@ -52,7 +52,7 @@ int main() {
         
         close(pipefd[1]);
         read(pipefd[0],str, 10);
-        printf("I read from pipe:%s\n",str);
+        printf("I read from pipe: %s\n",str);
         close(pipefd[0]);
     }
     return 0;
