@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/13 16:09:21 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 01:27:03 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 # include "libft/libft.h"
 
 /* struct for gc_collector */
@@ -88,7 +89,7 @@ typedef struct s_command
     char *name;
     char **arg;
     t_env **env;
-    char   *status;
+    int fd;
     t_token_type type;
     struct s_command *next;
 } t_command;

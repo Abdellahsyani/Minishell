@@ -3,75 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   ft_herdoc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/13 17:10:00 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 03:46:34 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    write_in_file(int fd, char **cmd, char *limiter)
+void    write_in_file(int fd, t_env *env, char *limiter)
 {
     char *line;
-    int i;
+    int l;
     while (1)
     {
-        
-        write(fd, "> ", 2);
-        line = readline(cmd[1]);
-       
-        i = 0;
-        i  = ft_strlen(line);
-        write(fd, line, i);
-        write(fd,"\n", 1);
-        if (!ft_strcmp(limiter, line))
-        break;
+        line = readline("> ");
+        if (ft_strcmp(line, limiter))
+        {
+            free(limiter);
+            free(line);
+            break;
+        }
+        helper_herdoc(line,fd,env);
+        free(line);
     }
 }
 
-int ft_handle_herdoc(char **cmd) //int ft_handle_herdoc(char **cmd, t_redi *in)
+void write_to_herdoc(int fd, t_env *env, char *limiter)
 {
+    char *delimiter;
+
+    //signal(??)
+    if (*limiter == '\0')
+        delimiter = ft_strjoin(limiter, "\n");
+    else
+        delimiter = ft_strjoin(limiter, "\n");
+    write_to_file(fd,delimiter, env);
+    close(fd);
+    exit(0);
+}
+
+int ft_handle_herdoc(char *value, t_env *env) //int ft_handle_herdoc(char **cmd, t_redi *in)
+{
+    pid_t pid;
     int fd;
-    char    *limiter;
-    // if (in->file == NULL)
-    //     return (1);
-    limiter = ft_strdup(cmd[1]);
-    fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0640);
-    if (fd == -1)
-    {
-        printf("open failed\n");
-        return (1);
-    }
-    write_in_file(fd,cmd, limiter);
-    return (0);
+    int status;
+    
+    pid = fork();
+    fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0774);
+    if (pid < 0)
+        ft_error("fork failed.\n");
+    else if  (pid  == 0)
+        write_to_herdoc(fd,env, value);
+    else
+        waitpid(pid, &status,0);
+    return (fd);
 }
 
-// void    ft_herdoc(t_command **cmd, t_extra *ptr)
-// {
-//     t_command *tmp;
-//     t_redi *in;
-
-
-//     while (tmp)
-//     {
-//         in = tmp->type;
-//         while (in)
-//         {
-//             if (in->type = d_herdoc)
-//                 ptr->fd = ft_handle_herdoc(cmd,in);
-//             in = in->next;
-//         }
-//         tmp = tmp->next;
-//     }
-// }
-
-int main(int ac, char **arg)
+void    ft_herdoc(t_command **cmd,t_env *env)
 {
-    if (ac < 2)
-        return (1);
-    if (ft_handle_herdoc(arg))
-        return (1);
-    return 0;
+    t_command *tmp;
+    t_redi *in;
+
+
+    while (tmp)
+    {
+        in = tmp->type;
+        while (in)
+        {
+            if (in->type = d_herdoc)
+                tmp->fd = ft_handle_herdoc(in->file,env);
+            in = in->next;
+        }
+        tmp = tmp->next;
+    }
 }
