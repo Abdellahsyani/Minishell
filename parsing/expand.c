@@ -12,6 +12,48 @@
 
 #include "../minishell.h"
 
+static	char	*helper(char *concat, char const *s1, char const *s2)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (s1[i] != '\0')
+	{
+		concat[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+	{
+		concat[i + j] = s2[j];
+		j++;
+	}
+	concat[i + j] = '\0';
+	return (concat);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*concat;
+	int		s1_size;
+	int		s2_size;
+
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	if (s2 == NULL)
+		return (ft_strdup(s1));
+	s1_size = ft_strlen(s1);
+	s2_size = ft_strlen(s2);
+	concat = malloc(sizeof(char) * (s1_size + s2_size) + 1);
+	if (!concat)
+		return (NULL);
+	helper(concat, s1, s2);
+	return (concat);
+}
+
 int	extract_var(char *str)
 {
 	int	i;
@@ -55,7 +97,7 @@ char	*get_var(char *str)
 	int	start;
 	int	len;
 
-	i = 0;
+	i = 1;
 	len = 0;
 	start = 0;
 	var = NULL;
@@ -111,6 +153,11 @@ char	*double_quote(char *content)
 			i++;
 			continue;
 		}
+		if (content[i] == '$')
+		{
+			get_var(&content[i]);
+
+		}
 		i++;
 		count++;
 	}
@@ -142,74 +189,30 @@ char	*copy_var(char *content)
 	return (var);
 }
 
+
 void	expand_var(t_token *list, t_command *cmd)
 {
 	int	i;
 	char	*var;
+	char	*all_cmd;
 
+	all_cmd = NULL;
 	i = 0;
 	while (cmd->argv[i])
 	{
-		if (list->content[0] == '\'')
+		/*printf("argv: %s[%d]\n", cmd->argv[i], i);*/
+		if (cmd->argv[i][0] == '\'')
 			var = single_qoute(cmd->argv[i]);
-		else if (list->content[0] == '"')
+		else if (cmd->argv[i][0] == '"')
 			var = double_quote(cmd->argv[i]);
-		else if (list->content[i] == '$')
-			var = get_var(&list->content[i + 1]);
-		/*else*/
-		/*	var = copy_var(&list->content[i]);*/
-		/*if ((extract_var(list->content)) == 1)*/
-		/*{*/
-		/*	int	i = 0;*/
-		/*	int	j = 0;*/
-		/*	int	len = 0;*/
-		/*	int	skip = 0;*/
-		/*	char *var1 = NULL;*/
-		/**/
-		/*	while (list && list->content[i])*/
-		/*	{*/
-		/*		if (list->content[i] == '\'' || list->content[i] == '"')*/
-		/*			skip++;*/
-		/*		i++;*/
-		/*	}*/
-		/*	i = 0;*/
-		/*	len = ft_strlen(list->content);*/
-		/*	var1 = gc_malloc(sizeof(char) * ((len - skip) + 1));*/
-		/*	while (list && list->content[i])*/
-		/*	{*/
-		/*		if (list->content[i] == '\'' || list->content[i] == '"')*/
-		/*			i++;*/
-		/*		else*/
-		/*		{*/
-		/*			var1[j] = list->content[i];*/
-		/*			i++;*/
-		/*			j++;*/
-		/*		}*/
-		/*	}*/
-		/*	var1[i] = '\0';*/
-		/*	printf("%s", var1);*/
-		/*}*/
-		/*else*/
-		/*{*/
-		/*	printf(" %s", list->content);*/
-		/*	int	i = 0;*/
-		/*	while (list->content[i])*/
-		/*	{*/
-		/*		if (list->content[i] == ' ')*/
-		/*			i++;*/
-		/*	}*/
-		/*}*/
-		/*if (list->content[0] == '$')*/
-		/*{*/
-		/*	if (getenv(list->content + 1) == NULL)*/
-		/*		var = ft_strdup("");*/
-		/*	else*/
-		/*		var = ft_strdup(getenv(list->content + 1));*/
-		/*	printf("%s ", var);*/
-		/*}*/
-		/*else*/
-		/*	printf("%s ", list->content);*/
+		else if (cmd->argv[i][0] == '$')
+			var = getenv(get_var(cmd->argv[i]));
+		else
+			var = copy_var(cmd->argv[i]);
+		all_cmd = ft_strjoin(all_cmd, var);
 		i++;
 	}
+	printf("\n---all_cmd---: %s\n", all_cmd);
 	printf("\n");
 }
+
