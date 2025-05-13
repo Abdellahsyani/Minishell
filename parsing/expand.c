@@ -136,11 +136,14 @@ char	*double_quote(char *content)
 	int	len;
 	int	len1;
 	char	**env;
+	char	**env_var;
 	int	coun;
 	int	*track_size;
+	int	*track_s;
 
 	i = 0;
 	j = 0;
+	len1 = 0;
 	coun = 0;
 	var = NULL;
 	while (content[i])
@@ -151,19 +154,22 @@ char	*double_quote(char *content)
 	}
 	i = 0;
 	env = gc_malloc(sizeof(char *) * (coun + 1));
+	env_var = gc_malloc(sizeof(char *) * (coun + 1));
 	env[0] = NULL;
-	coun = 0;
+	env_var[0] = NULL;
+	int counts = 0;
 	while (content[i])
 	{
 		if (content[i] == '$')
 		{
 			get_v = get_var(&content[i]);
+			env_var[counts] = ft_strdup(get_v);
 			exp = getenv(get_v);
 			if (exp)
-				env[coun] = ft_strdup(exp);
+				env[counts] = ft_strdup(exp);
 			else
-				env[coun] = ft_strdup("");
-			coun++;
+				env[counts] = ft_strdup("");
+			counts++;
 		}
 		if (content[i] == '"')
 		{
@@ -174,14 +180,29 @@ char	*double_quote(char *content)
 		count++;
 	}
 	printf("\n------------\n");
-	printf("\nvar-->%s\n", env[0]);
-	printf("\nvar-->%s\n", env[1]);
+	printf("env-->%s\n", env[0]);
+	printf("env-->%s\n", env[1]);
+	printf("env_var-->%s\n", env_var[0]);
+	printf("env_var-->%s\n", env_var[1]);
 	printf("\n------------\n");
 	i = 0;
-	track_size = gc_malloc(sizeof(int) * 2);
+	track_size = gc_malloc(sizeof(int) * coun + 1);
+	track_s = gc_malloc(sizeof(int) * coun + 1);
 	while (env[i])
 	{
 		track_size[i] = ft_strlen(env[i]);
+		i++;
+	}
+	i = 0;
+	while (env_var[i])
+	{
+		track_s[i] = ft_strlen(env_var[i]);
+		i++;
+	}
+	i = 0;
+	while (track_s[i])
+	{
+		len1 += track_s[i];
 		i++;
 	}
 	i = 0;
@@ -191,14 +212,14 @@ char	*double_quote(char *content)
 		i++;
 	}
 
-	printf("len: -->%d\n", len);
 	var = gc_malloc(sizeof(char) * (count + 1));
 	var = stcopy(var, content, '"');
-	printf("\nvar-->%s\n", var);
-	len1 = ft_strlen(get_v);
+	printf("\nvar--> %s\n", var);
 	i = 0;
 	int k = 0;
-	var1 = gc_malloc(sizeof(char) * (count + len - 8 + 1));
+	var1 = gc_malloc(sizeof(char) * (count + len - len1 + 1));
+	if (!var1)
+		return (NULL);
 	while (var[i])
 	{
 		if (var[i] != '$')
@@ -208,16 +229,18 @@ char	*double_quote(char *content)
 		else
 		{
 			var1 = ft_strjoin(var1, env[k]);
+			int s = ft_strlen(env[k]);
+			int c = ft_strlen(env_var[k]);
 			k++;
-			i += len1 + 1;
-			j += len;
+			i += c + 1;
+			j += s;
 			continue;
 		}
 		j++;
 		i++;
 	}
 	printf("var_\": %s\n", var1);
-	return (var);
+	return (var1);
 }
 
 	
