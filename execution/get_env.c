@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 15:26:31 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:57:55 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ t_env *new_node(char *key, char *value)
     if(!new)
         return (NULL);
     new->key = key;
-    free(key);
     new->value = value;
-    if(value)
-         free(value);
     new->next = NULL;
     return (new);
 }
@@ -116,17 +113,16 @@ int main(int ac, char **arg, char **env)
 {
     (void)ac;
     (void)arg;
-    char **envp;
+   
     t_env **cur;
 
     cur = get_env(env);
-    envp = chr_envirment(cur);
-    free(cur);
-    while (*envp)
+
+    while (*cur)
     {
-        printf("%s\n", *envp);
-        free(*envp);
-        envp++;
+        printf("%s=%s\n", (*cur)->key, (*cur)->value);
+        (*cur)=(*cur)->next;
     }
+    
     return 0;
 }

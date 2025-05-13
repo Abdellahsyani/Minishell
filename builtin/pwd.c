@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:50:39 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/08 13:50:43 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/12 17:54:44 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int ft_pwd(char **args)
     }
     printf("%s\n", path);
     free(path);
-    return (1)
+    return (1);
 }
 
 int main(int ac,char **arg)

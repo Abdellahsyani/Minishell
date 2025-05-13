@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/09 17:03:51 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/13 09:54:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int input_handle(t_redi *redir, int fd)
 
     tmp = redir;
 
-    if (tmp->redir == redir_input && (!access(tmp->file, R_OK)))
+    if (tmp->type == redir_input && (!access(tmp->file, R_OK)))
     {
         dup2(fd,0);
         close(fd);
@@ -39,7 +39,7 @@ int output_handle(t_redi *redir)
 
     tmp = redir;
     
-    if (tmp->redir = redir_output)
+    if (tmp->type = redir_output)
     {
         fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
     }

@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 11:16:27 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:47:40 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void    print_export(t_env **env)
             printf("declare -x %s\n",tmp->key);
         }
         else
-            printf("declare -x %s=%s\n",tmp->key,tmp->value);
+            printf("declare -x %s=\"%s\"\n",tmp->key,tmp->value);
         tmp = tmp->next;
     }
 }

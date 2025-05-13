@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pipe.c                                        :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/09 16:58:25 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/13 14:02:44 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-
-int ft_pipe(t_command *cmd)
+int ft_cmd_size(t_command **cmd)
 {
-    int pid;
-    int stat;
-    int fd[2];
+    t_command *tmp;
+    int count;
+    if (!*cmd)
+        return (0);
+    tmp = *cmd;
+    while (tmp)
+    {
+        count++;
+        tmp = tmp->next;
+    }
+    return(count);
+}
 
-    if (pipe(fd) == -1)
-    {
-        perror("pipe\n");
-        return (1);
-    }
-    pid = fork();
-    if (pid < 0)
-    {
-        perror("fork");
-        return (1);
-    }
-    else if (pid == 0)
-        return (ft_child_p(cmd));
-    else
-        return (ft_parent_p(cmd));
+int ft_exec(t_command **cmd)
+{
+    t_extra ptr;
+    t_command *str;
+    
+    ptr.size = ft_cmd_size(cmd);
+    ptr.i = 0;
+    ft_herdoc(cmd, &ptr);
+    
 }

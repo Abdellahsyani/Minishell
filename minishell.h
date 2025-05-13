@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/12 15:35:31 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:09:21 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,25 @@ typedef struct s_command
     char **arg;
     t_env **env;
     char   *status;
+    t_token_type type;
+    struct s_command *next;
 } t_command;
 
 typedef struct s_redi
 {
     char *file;
-    t_token_type redir;
+    t_token_type type;
     struct s_redi *next;
 }t_redi;
+
+typedef struct s_extra
+{
+    int i;
+    int size;
+    int fd;
+    pid_t pid;
+    struct s_extra *next;
+} t_extra;
 
 
 int     ft_strcmp(char *s1, char *s2);
@@ -121,6 +132,5 @@ int     exec_builtin(char *cmd, char **args, char **envp);
 char    *find_path(char *cmd, t_env **env);
 t_env   **get_env(char **list);
 int     simple_cmd(t_command *cmd);
-int     exec_builtin(char *cmd, char **args, char **envp);
 
 #endif
