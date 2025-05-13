@@ -47,25 +47,11 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s1));
 	s1_size = ft_strlen(s1);
 	s2_size = ft_strlen(s2);
-	concat = malloc(sizeof(char) * (s1_size + s2_size) + 1);
+	concat = gc_malloc(sizeof(char) * (s1_size + s2_size) + 1);
 	if (!concat)
 		return (NULL);
 	helper(concat, s1, s2);
 	return (concat);
-}
-
-int	extract_var(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 char	*stcopy(char *var, char *content, char del)
@@ -108,7 +94,7 @@ char	*get_var(char *str)
 			break;
 		i++;
 	}
-	len = i;
+	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
 	printf("var_$: %s\n", var);
 	return (var);
@@ -141,33 +127,100 @@ char	*single_qoute(char *content)
 char	*double_quote(char *content)
 {
 	int	i;
+	int	j;
 	char	*var;
-	int count = 0;
+	int	count = 0;
+	char	*exp;
+	char	*get_v;
+	char	*var1;
+	int	len;
+	int	len1;
+	char	**env;
+	int	coun;
+	int	*track_size;
 
 	i = 0;
+	j = 0;
+	coun = 0;
 	var = NULL;
 	while (content[i])
 	{
+		if (content[i] == '$')
+			coun++;
+		i++;
+	}
+	i = 0;
+	env = gc_malloc(sizeof(char *) * (coun + 1));
+	env[0] = NULL;
+	coun = 0;
+	while (content[i])
+	{
+		if (content[i] == '$')
+		{
+			get_v = get_var(&content[i]);
+			exp = getenv(get_v);
+			if (exp)
+				env[coun] = ft_strdup(exp);
+			else
+				env[coun] = ft_strdup("");
+			coun++;
+		}
 		if (content[i] == '"')
 		{
 			i++;
 			continue;
 		}
-		if (content[i] == '$')
-		{
-			get_var(&content[i]);
-
-		}
 		i++;
 		count++;
 	}
-	var = gc_malloc(sizeof(char) * count + 1);
+	printf("\n------------\n");
+	printf("\nvar-->%s\n", env[0]);
+	printf("\nvar-->%s\n", env[1]);
+	printf("\n------------\n");
+	i = 0;
+	track_size = gc_malloc(sizeof(int) * 2);
+	while (env[i])
+	{
+		track_size[i] = ft_strlen(env[i]);
+		i++;
+	}
+	i = 0;
+	while (track_size[i])
+	{
+		len += track_size[i];
+		i++;
+	}
+
+	printf("len: -->%d\n", len);
+	var = gc_malloc(sizeof(char) * (count + 1));
 	var = stcopy(var, content, '"');
-	printf("var_\": %s\n", var);
+	printf("\nvar-->%s\n", var);
+	len1 = ft_strlen(get_v);
+	i = 0;
+	int k = 0;
+	var1 = gc_malloc(sizeof(char) * (count + len - 8 + 1));
+	while (var[i])
+	{
+		if (var[i] != '$')
+		{
+			var1[j] = var[i];
+		}
+		else
+		{
+			var1 = ft_strjoin(var1, env[k]);
+			k++;
+			i += len1 + 1;
+			j += len;
+			continue;
+		}
+		j++;
+		i++;
+	}
+	printf("var_\": %s\n", var1);
 	return (var);
 }
 
-
+	
 char	*copy_var(char *content)
 {
 	int	i;
