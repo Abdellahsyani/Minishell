@@ -6,13 +6,13 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/13 16:47:40 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:36:30 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_env *find(t_env *env, char *key)
+t_env *ft_find(t_env *env, char *key)
 {
     while (env)
     {

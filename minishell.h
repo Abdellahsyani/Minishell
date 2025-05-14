@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/12 01:27:03 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/14 16:36:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_extra
 
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
-t_env   *find(t_env *env, char *key);
+t_env   *ft_find(t_env *env, char *key);
 t_env   **get_env(char **list);
 void    set_new_env(char *key, char *value, t_env **env);
 char    **chr_envirment(t_env **env);
