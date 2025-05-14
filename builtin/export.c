@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/14 16:36:30 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/14 18:16:10 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void    set_new_env(char *key, char *value, t_env **env)
     t_env *exist;
     t_env *create;
  
-    exist = find(*env, key);
+    exist = ft_find(*env, key);
     if (exist)
     {
         free(exist->value);
@@ -105,15 +105,15 @@ int ft_export(char **arg, t_env **env)
     return (1);
 }
 
-int main(int ac, char **arg, char **env)
-{
-    t_env **envp;
+// int main(int ac, char **arg, char **env)
+// {
+//     t_env **envp;
     
-    envp = get_env(env);
-    if (!ft_export(arg,envp))
-    {
-        return (1);
-    }
-    print_export(envp);
-    return (0);
-}
+//     envp = get_env(env);
+//     if (!ft_export(arg,envp))
+//     {
+//         return (1);
+//     }
+//     print_export(envp);
+//     return (0);
+// }

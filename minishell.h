@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/14 16:36:17 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/14 18:29:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef enum e_type
 
 void	ft_free_gc(void);
 void	*gc_malloc(size_t size);
-char	*ft_strdup(const char *s1);
+// char	*ft_strdup(char *s1);
 
 t_token	*create_node(char *c);
 void	add_list(t_shell *mini, t_token **list);
