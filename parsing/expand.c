@@ -15,25 +15,23 @@
 static	char	*helper(char *concat, char const *s1, char const *s2)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (s1[i] != '\0')
 	{
 		concat[i] = s1[i];
 		i++;
 	}
-	while (s2[j] != '\0')
+	while (s2[i] != '\0')
 	{
-		concat[i + j] = s2[j];
-		j++;
+		concat[i + i] = s2[i];
+		i++;
 	}
-	concat[i + j] = '\0';
+	concat[i + i] = '\0';
 	return (concat);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strioin(char *s1, char *s2)
 {
 	char	*concat;
 	int		s1_size;
@@ -127,7 +125,6 @@ char	*single_qoute(char *content)
 char	*double_quote(char *content)
 {
 	int	i;
-	int	j;
 	char	*var;
 	int	count = 0;
 	char	*exp;
@@ -142,7 +139,6 @@ char	*double_quote(char *content)
 	int	*track_s;
 
 	i = 0;
-	j = 0;
 	len1 = 0;
 	coun = 0;
 	var = NULL;
@@ -224,19 +220,19 @@ char	*double_quote(char *content)
 	{
 		if (var[i] != '$')
 		{
-			var1[j] = var[i];
+			var1[i] = var[i];
 		}
 		else
 	{
-			var1 = ft_strjoin(var1, env[k]);
+			var1 = ft_strioin(var1, env[k]);
 			int s = ft_strlen(env[k]);
 			int c = ft_strlen(env_var[k]);
 			k++;
 			i += c + 1;
-			j += s;
+			i += s;
 			continue;
 		}
-		j++;
+		i++;
 		i++;
 	}
 	printf("var_\": %s\n", var1);
@@ -278,28 +274,25 @@ void	expand_var(t_token *list, t_command *cmd)
 	if (!cmd->argv)
 		return ;
 	all_cmd = NULL;
-	i = 0;
-	int	j = 0;
 	while (cmd)
 	{
 		i = 0;
-		j = 0;
-		add_cmd_list(list, &cmd_list);
 		while (cmd->argv_t[i])
 		{
+			printf("\n-- %s[%d] --\n", cmd->argv_t[i], i);
 			if (cmd->argv_t[i][0] == '\'')
-				cmd_list->argv[j] = ft_strdup(single_qoute(cmd->argv_t[i]));
+				cmd->argv[i] = ft_strdup(single_qoute(cmd->argv_t[i]));
 			else if (cmd->argv_t[i][0] == '"')
-				cmd_list->argv[j] = ft_strdup(double_quote(cmd->argv_t[i]));
+				cmd->argv[i] = ft_strdup(double_quote(cmd->argv_t[i]));
 			else if (cmd->argv_t[i][0] == '$')
-				cmd_list->argv[j] = ft_strdup(getenv(get_var(cmd->argv_t[i])));
+				cmd->argv[i] = ft_strdup(getenv(get_var(cmd->argv_t[i])));
 			else
-				cmd_list->argv[j] = ft_strdup(copy_var(cmd->argv_t[i]));
-			all_cmd = ft_strjoin(all_cmd, var);
+				cmd->argv[i] = ft_strdup(copy_var(cmd->argv_t[i]));
+			all_cmd = ft_strioin(all_cmd, var);
 			if (cmd->argv_t[i + 1] != NULL)
-				all_cmd = ft_strjoin(all_cmd, " ");
+				all_cmd = ft_strioin(all_cmd, " ");
+			cmd->argv[i + 1] = NULL;
 			i++;
-			j++;
 		}
 		cmd = cmd->next;
 	}
