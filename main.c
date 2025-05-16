@@ -71,24 +71,24 @@ int main()
 			if (ex == 0)
 				return (0);
 			expand_var(list, cmd_list);
-			/*cmd_tmp = cmd_list;*/
-			/*while (cmd_list)*/
-			/*{*/
-			/*	int i = 0;*/
-			/*	while (cmd_list->argv && cmd_list->argv[i])*/
-			/*	{*/
-			/*		printf("argv[%d]: %s\n", i, cmd_list->argv[i]);*/
-			/*		i++;*/
-			/*	}*/
-			/*	if (cmd_list->infile)*/
-			/*		printf("infile: %s\n", cmd_list->infile);*/
-			/*	if (cmd_list->outfile)*/
-			/*		printf("outfile: %s\n", cmd_list->outfile);*/
-			/*	printf("append: %d\n", cmd_list->append);*/
-			/*	printf("------------\n");*/
-			/*	cmd_list = cmd_list->next;*/
-			/*}*/
-			/*cmd_list = cmd_tmp;*/
+			cmd_tmp = cmd_list;
+			while (cmd_list)
+			{
+				int i = 0;
+				while (cmd_list->argv && cmd_list->argv[i])
+				{
+					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
+					i++;
+				}
+				if (cmd_list->infile)
+					printf("infile: %s\n", cmd_list->infile);
+				if (cmd_list->outfile)
+					printf("outfile: %s\n", cmd_list->outfile);
+				printf("append: %d\n", cmd_list->append);
+				printf("------------\n");
+				cmd_list = cmd_list->next;
+			}
+			cmd_list = cmd_tmp;
 		}
 		free(line);
 	}

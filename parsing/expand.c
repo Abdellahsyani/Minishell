@@ -243,7 +243,6 @@ char	*double_quote(char *content)
 	return (var1);
 }
 
-	
 char	*copy_var(char *content)
 {
 	int	i;
@@ -276,7 +275,6 @@ void	expand_var(t_token *list, t_command *cmd)
 	i = 0;
 	while (cmd->argv[i])
 	{
-		/*printf("argv: %s[%d]\n", cmd->argv[i], i);*/
 		if (cmd->argv[i][0] == '\'')
 			var = single_qoute(cmd->argv[i]);
 		else if (cmd->argv[i][0] == '"')
@@ -286,6 +284,8 @@ void	expand_var(t_token *list, t_command *cmd)
 		else
 			var = copy_var(cmd->argv[i]);
 		all_cmd = ft_strjoin(all_cmd, var);
+		if (cmd->argv[i + 1] != NULL)
+			all_cmd = ft_strjoin(all_cmd, " ");
 		i++;
 	}
 	printf("\n---all_cmd---: %s\n", all_cmd);

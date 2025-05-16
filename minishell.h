@@ -67,6 +67,7 @@ typedef struct s_env
 
 typedef struct s_command
 {
+    char	**argv_t;
     char	**argv;
     char	*infile;
     char	*outfile;
