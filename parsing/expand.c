@@ -227,7 +227,7 @@ char	*double_quote(char *content)
 			var1[j] = var[i];
 		}
 		else
-		{
+	{
 			var1 = ft_strjoin(var1, env[k]);
 			int s = ft_strlen(env[k]);
 			int c = ft_strlen(env_var[k]);
@@ -270,25 +270,39 @@ void	expand_var(t_token *list, t_command *cmd)
 	int	i;
 	char	*var;
 	char	*all_cmd;
+	int	count;
+	t_command *cmd_list;
 
+	count = count_word_tokens(list);
+	cmd->argv = malloc(sizeof(char *) * (count + 1));
+	if (!cmd->argv)
+		return ;
 	all_cmd = NULL;
 	i = 0;
-	while (cmd->argv[i])
+	int	j = 0;
+	while (cmd)
 	{
-		if (cmd->argv[i][0] == '\'')
-			var = single_qoute(cmd->argv[i]);
-		else if (cmd->argv[i][0] == '"')
-			var = double_quote(cmd->argv[i]);
-		else if (cmd->argv[i][0] == '$')
-			var = getenv(get_var(cmd->argv[i]));
-		else
-			var = copy_var(cmd->argv[i]);
-		all_cmd = ft_strjoin(all_cmd, var);
-		if (cmd->argv[i + 1] != NULL)
-			all_cmd = ft_strjoin(all_cmd, " ");
-		i++;
+		i = 0;
+		j = 0;
+		add_cmd_list(list, &cmd_list);
+		while (cmd->argv_t[i])
+		{
+			if (cmd->argv_t[i][0] == '\'')
+				cmd_list->argv[j] = ft_strdup(single_qoute(cmd->argv_t[i]));
+			else if (cmd->argv_t[i][0] == '"')
+				cmd_list->argv[j] = ft_strdup(double_quote(cmd->argv_t[i]));
+			else if (cmd->argv_t[i][0] == '$')
+				cmd_list->argv[j] = ft_strdup(getenv(get_var(cmd->argv_t[i])));
+			else
+				cmd_list->argv[j] = ft_strdup(copy_var(cmd->argv_t[i]));
+			all_cmd = ft_strjoin(all_cmd, var);
+			if (cmd->argv_t[i + 1] != NULL)
+				all_cmd = ft_strjoin(all_cmd, " ");
+			i++;
+			j++;
+		}
+		cmd = cmd->next;
 	}
 	printf("\n---all_cmd---: %s\n", all_cmd);
 	printf("\n");
 }
-

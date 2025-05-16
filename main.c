@@ -72,6 +72,7 @@ int main()
 				return (0);
 			expand_var(list, cmd_list);
 			cmd_tmp = cmd_list;
+			printf("\n<-------------------->\n");
 			while (cmd_list)
 			{
 				int i = 0;
@@ -88,6 +89,7 @@ int main()
 				printf("------------\n");
 				cmd_list = cmd_list->next;
 			}
+			printf("\n<-------------------->\n");
 			cmd_list = cmd_tmp;
 		}
 		free(line);

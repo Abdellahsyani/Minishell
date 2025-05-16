@@ -88,10 +88,9 @@ t_command	*create_cmd_node(t_token *list)
 	new_node = gc_malloc(sizeof(t_command));
 	if (!new_node)
 		return (NULL);
-	new_node->argv = gc_malloc(sizeof(char *) * (count + 1));
-	if (!new_node->argv)
+	new_node->argv_t = gc_malloc(sizeof(char *) * (count + 1));
+	if (!new_node->argv_t)
 		return (NULL);
-	new_node->argv[0] = NULL;
 	new_node->infile = NULL;
 	new_node->outfile = NULL;
 	new_node->append = 0;
@@ -122,10 +121,10 @@ void	add_to_argv(t_command *cmd, char *str)
 	i = 0;
 	if (!cmd || !str)
 		return ;
-	while (cmd->argv[i])
+	while (cmd->argv_t[i])
 		i++;
-	cmd->argv[i] = ft_strdup(str);
-	cmd->argv[i + 1] = NULL;
+	cmd->argv_t[i] = ft_strdup(str);
+	cmd->argv_t[i + 1] = NULL;
 }
 
 t_command	*get_last_cmd(t_command *cmd_list)

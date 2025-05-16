@@ -99,6 +99,7 @@ int	start_parsing(t_token *list);
 
 /******** helper functions ************/
 
+void	add_cmd_list(t_token *list, t_command **cmd);
 void	ft_free_gc(void);
 void	*gc_malloc(size_t size);
 char	*ft_strdup(const char *s1);
@@ -110,6 +111,7 @@ t_env   *find(t_env *env, char *key);
 t_env   **get_env(char **list);
 int	ft_strncmp(char *s1, char *s2, int l);
 int	ft_strlen(char *str);
+int	count_word_tokens(t_token *list);
 
 //**************Builtin****************
 
