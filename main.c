@@ -76,6 +76,13 @@ int main()
 			while (cmd_list)
 			{
 				int i = 0;
+				while (cmd_list->argv_t && cmd_list->argv_t[i])
+				{
+					printf("argv[%d]: %s\n", i, cmd_list->argv_t[i]);
+					i++;
+				}
+				printf("\n<---------<->---------->\n");
+				i = 0;
 				while (cmd_list->argv && cmd_list->argv[i])
 				{
 					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);

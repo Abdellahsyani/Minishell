@@ -121,6 +121,7 @@ void	add_to_argv(t_command *cmd, char *str)
 	i = 0;
 	if (!cmd || !str)
 		return ;
+	/*printf("argv[0] = %s\n",cmd->argv_t[i]);*/
 	while (cmd->argv_t[i])
 		i++;
 	cmd->argv_t[i] = ft_strdup(str);
