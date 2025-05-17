@@ -217,7 +217,7 @@ char	*double_quote(char *content)
 	i = 0;
 	int k = 0;
 	int	j = 0;
-	var1 = gc_malloc(sizeof(char) * (count + len - len1 + 1));
+	var1 = gc_malloc(sizeof(char) * ((count + len - len1 + 1) - coun));
 	if (!var1)
 		return (NULL);
 	while (var[i])
