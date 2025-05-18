@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/14 18:29:17 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/18 01:46:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_command
     char **arg;
     t_env **env;
     int fd;
+    t_redi *in;
+    t_redi *out;
     t_token_type type;
     struct s_command *next;
 } t_command;
@@ -105,11 +107,11 @@ typedef struct s_extra
 {
     int i;
     int size;
-    int fd;
-    pid_t pid;
+    pid_t *pid;
+    int **pipline;
+    t_env **env;
     struct s_extra *next;
 } t_extra;
-
 
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
@@ -129,9 +131,12 @@ int     ft_unset(char **arg, t_env *env);
 int     ft_exit(char **arg,int last_status);
 
 //***************Execution**************
-int     exec_builtin(char *cmd, char **args, char **envp);
+int     ft_exec_builtin(char *cmd, char **args, t_env **env);
 char    *find_path(char *cmd, t_env **env);
 t_env   **get_env(char **list);
 int     simple_cmd(t_command *cmd);
+int     is_builtin(t_command *cmd);
+void    update_exit_status(t_env **env,int status);
+int     redirect_handler(int fd, t_command **cmd , t_env **env);
 
 #endif

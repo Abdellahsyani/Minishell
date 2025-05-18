@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/13 14:02:44 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/18 02:27:01 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,90 @@ int ft_cmd_size(t_command **cmd)
     }
     return(count);
 }
+void exec_builtins(t_command **cmd, t_env **env)
+{
+    int fd;
+    int status;
+    t_command *tmp;
 
-int ft_exec(t_command **cmd)
+    tmp = *cmd;
+    if (!redirect_handler(fd, cmd, env))
+        return ;
+    status = ft_exec_builtin(tmp->arg[0], tmp->arg, env);
+    update_exit_status(env, status);
+    if(fd == -2)
+    {
+        dup2(fd, 1);
+        close(fd);
+    }
+}
+
+int **allocate_tube(size)
+{
+    int **tube;
+    int i;
+
+    i = 0;
+    tube = gc_malloc(size);
+    if (!tube)
+        return (0);
+    while (i < size)
+    {
+        tube[i] = gc_malloc(2);
+        if(!tube[i])
+            return (0);
+        i++;
+    }
+    return (tube);
+} 
+int set_pipes(int **tube, int size)
+{
+    int i;
+
+    i = 0;
+    while (i < size)
+    {
+        if(pipe(tube[i]) == -1)
+            return (0); //need to close fds
+        i++;
+    }
+    return (1);
+}
+int **built_pipline(t_command **cmd ,t_env **env, int size)
+{
+    t_command *tmp;
+    int **tube;
+    
+    tmp  = *cmd;
+    if (size = 0 && tmp->arg && is_builtin(tmp))
+    {
+        exec_builtins(cmd, env);
+        return (NULL);
+    }
+    tube = allocate_tube(size);
+    if(!tube || !set_pipes(tube, size))
+    {
+        ft_error("Error: pipe failed or allocation.\n");
+        update_exit_status(env, 1);
+        //need close fds;
+        return (NULL);
+    }
+    return (tube);
+}
+
+void ft_exec(t_command **cmd, t_env **env)
 {
     t_extra ptr;
     t_command *str;
     
-    ptr.size = ft_cmd_size(cmd);
+    ptr.size = ft_cmd_size(cmd) - 1;
     ptr.i = 0;
+    ptr.pipline = built_pipline(cmd, env, ptr.size);
+    if (!ptr.pipline)
+        return ;
+    ptr.env = env;
+    ptr.pid = gc_malloc(ptr.size);
     ft_herdoc(cmd, &ptr);
     
+    //fork
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_herdoc2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:22:45 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/14 18:47:24 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/15 01:29:01 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void helper_herdoc(char *line, int fd, t_env *env)
     }
 }
 
-int main(int ac, char **arg, char **env)
-{
-    t_env **envp;
+// int main(int ac, char **arg, char **env)
+// {
+//     t_env **envp;
 
-    envp = get_env(env);
+//     envp = get_env(env);
     
-    helper_herdoc(arg[1], 1, *envp);
-    write(1,"\n", 1);
+//     helper_herdoc(arg[1], 1, *envp);
+//     write(1,"\n", 1);
     
-    return 0;
-}
+//     return 0;
+// }

@@ -3,20 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:32:15 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 10:48:14 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/18 01:46:58 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int exec_builtin(char *cmd, char **args, char **envp)
+int ft_exec_builtin(char *cmd, char **args, t_env **env)
 {
-    t_env **env;
-
-    env = get_env(envp);
     if (!ft_strcmp(cmd, "cd"))
         return (cd(args, env));
     else if (!ft_strcmp(cmd, "echo"))
