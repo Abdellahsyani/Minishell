@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/18 02:27:01 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/18 03:40:08 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
 void ft_exec(t_command **cmd, t_env **env)
 {
     t_extra ptr;
-    t_command *str;
+    t_command *tmp;
     
+    tmp = *cmd;
     ptr.size = ft_cmd_size(cmd) - 1;
     ptr.i = 0;
     ptr.pipline = built_pipline(cmd, env, ptr.size);
@@ -110,6 +111,14 @@ void ft_exec(t_command **cmd, t_env **env)
     ptr.env = env;
     ptr.pid = gc_malloc(ptr.size);
     ft_herdoc(cmd, &ptr);
-    
-    //fork
+    ptr.pid = gc_malloc(ptr.size);
+    while (ptr.i < ptr.size)
+    {
+        ptr.pid[ptr.i] = fork();
+        if (!ptr.pid[ptr.i])
+            handle_child(tmp,env,ptr);
+        ptr.i++;
+        tmp = tmp->next;
+    }
+    wait_and_free();
 }
