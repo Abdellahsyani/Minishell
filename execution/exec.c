@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/19 15:20:28 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:12:59 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ void    closingfds(int **tube, int pos)
 }
 void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
 {
+    char *path;
+
+    path = find_path(cmd, env);
     if (!cmd->in)
     {
         if (ptr.i != ptr.size)
@@ -123,7 +126,20 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
         }
    }
    output_handle(cmd->out);
-   
+   if (is_builtin(cmd))
+   {
+        exec_builtins(cmd, env);
+        exit(0);
+   }
+   else
+   {
+        if (execve(path, cmd->arg, env) == -1)
+        {
+            perror("execve failed");
+            return ;
+        }
+   }
+   closingfds(ptr.pipline, ptr.i);
 }
 
 void ft_exec(t_command **cmd, t_env **env)
