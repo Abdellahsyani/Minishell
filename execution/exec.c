@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/19 13:45:21 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/19 15:20:28 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,16 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
     return (tube);
 }
 
-
+void    closingfds(int **tube, int pos)
+{
+    while (pos > 0)
+    {
+        close(tube[pos - 1][0]);
+        close(tube[pos - 1][1]);
+        pos--;
+    }
+    free(tube);
+}
 void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
 {
     if (!cmd->in)
