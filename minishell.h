@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/18 01:46:30 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/19 10:34:47 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,7 @@ int     simple_cmd(t_command *cmd);
 int     is_builtin(t_command *cmd);
 void    update_exit_status(t_env **env,int status);
 int     redirect_handler(int fd, t_command **cmd , t_env **env);
+int     input_handle(t_redi *redir);
+int     output_handle(t_redi *redir);
 
 #endif

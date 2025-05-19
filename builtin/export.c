@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/14 18:16:10 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:02:16 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void    set_new_env(char *key, char *value, t_env **env)
     }
     else
     {
-        create = malloc(sizeof(t_env));
+        create = malloc(sizeof(t_env));//??
         create->key = ft_strdup(key);
         create->value= ft_strdup(value);
         create->next = *env;
