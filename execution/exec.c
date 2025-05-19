@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/19 11:41:40 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:45:21 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,15 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
             dup2(ptr.pipline[ptr.i - 1][0], 0);
     }
    input_handle(cmd->in);
+   if(!cmd->out)
+   {
+        if (ptr.i != ptr.size)
+        {
+            dup2(ptr.pipline[ptr.i][1], 1);
+        }
+   }
+   output_handle(cmd->out);
    
-    
-        
-    
-    
-    
 }
 
 void ft_exec(t_command **cmd, t_env **env)
