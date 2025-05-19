@@ -82,6 +82,38 @@ char	*get_var(char *str)
 	int	i;
 	int	start;
 	int	len;
+	char	*quote;
+	char	*var1;
+
+	i = 1;
+	len = 0;
+	start = 0;
+	var = NULL;
+	start = i;
+	while (ft_isalpha(str[i]) || str[i] == '_')
+	{
+		if (str[i] == ' ' || str[i] == '"')
+			break;
+		i++;
+	}
+	if (str[i] == '"')
+		quote = double_quote(&str[i]);
+	len = i - 1;
+	var = ft_strlcpy(var, str, len, start);
+	var1 = getenv(var);
+	printf("\nvar_quote: %s\n", quote);
+	if (quote)
+		var1 = ft_strjoin(var1, quote);
+	printf("\nvar_$: %s\n", var1);
+	return (var1);
+}
+
+char	*get_var1(char *str)
+{
+	char	*var;
+	int	i;
+	int	start;
+	int	len;
 
 	i = 1;
 	len = 0;
@@ -96,7 +128,7 @@ char	*get_var(char *str)
 	}
 	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
-	printf("\nvar_$: %s\n", var);
+	printf("\nvar1_$: %s\n", var);
 	return (var);
 }
 
@@ -152,13 +184,19 @@ char	*double_quote(char *content)
 	}
 	i = 0;
 	env = gc_malloc(sizeof(char *) * (coun + 1));
+	if (!env)
+		return NULL;
+	env[0] = NULL;
 	env_var = gc_malloc(sizeof(char *) * (coun + 1));
+	if (!env_var)
+		return NULL;
+	env_var[0] = NULL;
 	int counts = 0;
 	while (content[i])
 	{
 		if (content[i] == '$')
 		{
-			get_v = get_var(&content[i]);
+			get_v = get_var1(&content[i]);
 			env_var[counts] = ft_strdup(get_v);
 			exp = getenv(get_v);
 			if (exp)
@@ -175,27 +213,33 @@ char	*double_quote(char *content)
 		i++;
 		count++;
 	}
-	printf("\n------------\n");
-	printf("env-->%s\n", env[0]);
-	printf("env-->%s\n", env[1]);
-	printf("env_var-->%s\n", env_var[0]);
-	printf("env_var-->%s\n", env_var[1]);
-	printf("count--> %d\n", count);
-	printf("\n------------\n");
+	env[counts] = NULL;
+	env_var[counts] = NULL;
+	/*printf("\n------------\n");*/
+	/*printf("env-->%s\n", env[0]);*/
+	/*printf("env-->%s\n", env[1]);*/
+	/*printf("env_var-->%s\n", env_var[0]);*/
+	/*printf("env_var-->%s\n", env_var[1]);*/
+	/*printf("count--> %d\n", count);*/
+	/*printf("\n------------\n");*/
 	i = 0;
 	track_size = gc_malloc(sizeof(int) * (coun + 1));
+	if (!track_size)
+		return (NULL);
+	track_size[0] = '\0';
 	track_s = gc_malloc(sizeof(int) * (coun + 1));
+	if (!track_s)
+		return (NULL);
+	track_s[0] = '\0';
 	while (env[i])
 	{
 		track_size[i] = ft_strlen(env[i]);
-		printf("size of expand var: %d\n", track_size[i]);
 		i++;
 	}
 	i = 0;
 	while (env_var[i])
 	{
 		track_s[i] = ft_strlen(env_var[i]);
-		printf("size of non_expand var: %d\n", track_s[i]);
 		i++;
 	}
 	i = 0;
@@ -237,7 +281,7 @@ char	*double_quote(char *content)
 		j++;
 		i++;
 	}
-	printf("var_\": %s\n", var1);
+	/*printf("var_\": %s\n", var1);*/
 	return (var1);
 }
 
@@ -288,7 +332,7 @@ void	expand_var(t_token *list, t_command *cmd)
 			else if (cmd->argv_t[i][0] == '"')
 				cmd->argv[i] = ft_strdup(double_quote(cmd->argv_t[i]));
 			else if (cmd->argv_t[i][0] == '$')
-				cmd->argv[i] = ft_strdup(getenv(get_var(cmd->argv_t[i])));
+				cmd->argv[i] = ft_strdup(get_var(cmd->argv_t[i]));
 			else
 				cmd->argv[i] = ft_strdup(copy_var(cmd->argv_t[i]));
 			all_cmd = ft_strjoin(all_cmd, cmd->argv[i]);

@@ -15,7 +15,7 @@
 char	*ft_strdup(const char *s1)
 {
 	char		*dup;
-	size_t		len;
+	size_t		len = 0;
 	size_t		i;
 
 	len = strlen(s1);
@@ -61,7 +61,7 @@ int main()
 		while (tmp)
 		{
 			type = token_type(tmp);
-			/*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
+			printf("%s[%d]: %s\n", type, tmp->type, tmp->content);
 			tmp = tmp->next;
 		}
 		parse_status = start_parsing(list);
@@ -83,6 +83,12 @@ int main()
 				/*}*/
 				/*printf("\n<---------<->---------->\n");*/
 				/*i = 0;*/
+				t_redi *r = cmd_list->redi;
+				while (r)
+				{
+    					printf("==== %s == %d =\n", r->file, r->type);
+    					r = r->next;
+				}
 				while (cmd_list->argv && cmd_list->argv[i])
 				{
 					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
@@ -99,6 +105,10 @@ int main()
 			printf("\n<-------------------->\n");
 			cmd_list = cmd_tmp;
 		}
+		/*while (cmd_list->redi)*/
+		/*{*/
+		/*	cmd_list->redi = cmd_list->redi->next;*/
+		/*}*/
 		free(line);
 	}
 	return (0);

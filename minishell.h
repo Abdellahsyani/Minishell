@@ -91,6 +91,7 @@ int	pars_command(t_token *list, t_command **cmd_list);
 
 /** expand functions **/
 void	expand_var(t_token *list, t_command *cmd);
+char	*double_quote(char *str);
 
 /***** parsing functions *****/
 
