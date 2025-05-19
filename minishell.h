@@ -65,6 +65,14 @@ typedef struct s_env
     struct s_env *next;
 } t_env;
 
+/** struct for redir**/
+typedef struct s_redi
+{
+    char *file;
+    t_token_type type;
+    struct s_redi *next;
+}	t_redi;
+
 typedef struct s_command
 {
     char	**argv_t;
@@ -74,6 +82,7 @@ typedef struct s_command
     int		append;
     struct s_command *next;
     t_env	**env;
+	t_redi *redi;
 } t_command;
 
 
