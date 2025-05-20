@@ -97,7 +97,7 @@ int ft_export(char **arg, t_env **env)
             if (!check_arg(arg[i],env))
             {
                 printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
-                return (0);
+                // return (0);
             }
             i++;    
         }
@@ -105,15 +105,26 @@ int ft_export(char **arg, t_env **env)
     return (1);
 }
 
-// int main(int ac, char **arg, char **env)
-// {
-//     t_env **envp;
+int main(int ac, char **arg, char **env)
+{
+    t_env **envp;
     
-//     envp = get_env(env);
-//     if (!ft_export(arg,envp))
-//     {
-//         return (1);
-//     }
-//     print_export(envp);
-//     return (0);
-// }
+    envp = get_env(env);
+    // if (!ft_export(arg,envp))
+    // {
+    //     return (1);
+    // }
+    char    *line;
+    char    **args;
+    while (1)
+    {
+        line = readline("minishell$ ");
+        args = ft_split(line, ' ');
+        if (ft_strcmp(args[0], "export") == 0)
+            ft_export(args, &envp);
+        else if (ft_strcmp(args[0], "unset") == 0)
+            ft_unset(args, *envp);
+    }
+    print_export(envp);
+    return (0);
+}

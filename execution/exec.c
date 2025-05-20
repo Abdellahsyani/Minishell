@@ -103,10 +103,12 @@ void    closingfds(int **tube, int pos)
     {
         close(tube[pos - 1][0]);
         close(tube[pos - 1][1]);
+        free(tube[pos - 1]);
         pos--;
     }
     free(tube);
 }
+
 void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
 {
     char *path;
@@ -144,25 +146,25 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
 
 void ft_exec(t_command **cmd, t_env **env)
 {
-    t_extra ptr;
-    t_command *tmp;
-    
-    tmp = *cmd;
-    ptr.size = ft_cmd_size(cmd) - 1;
-    ptr.i = 0;
-    ptr.pipline = built_pipline(cmd, env, ptr.size);
-    if (!ptr.pipline)
-        return ;
-    ptr.env = env;
-    ptr.pid = gc_malloc(ptr.size);
-    ft_herdoc(cmd, &ptr);
-    while (ptr.i < ptr.size)
-    {
-        ptr.pid[ptr.i] = fork();
-        if (!ptr.pid[ptr.i])
-            handle_child(tmp,env,ptr);
-        ptr.i++;
-        tmp = tmp->next;
-    }
-    wait_and_free();
+	t_extra ptr;
+	t_command *tmp;
+	
+	tmp = *cmd;
+	ptr.size = ft_cmd_size(cmd) - 1;
+	ptr.i = 0;
+	ptr.pipline = built_pipline(cmd, env, ptr.size);
+	if (!ptr.pipline)
+		return ;
+	ptr.env = env;
+	ptr.pid = gc_malloc(ptr.size);
+	ft_herdoc(cmd, &ptr);
+	while (ptr.i < ptr.size)
+	{
+		ptr.pid[ptr.i] = fork();
+		if (!ptr.pid[ptr.i])
+			handle_child(tmp,env,ptr);
+		ptr.i++;
+		tmp = tmp->next;
+	}
+	wait_and_free();
 }

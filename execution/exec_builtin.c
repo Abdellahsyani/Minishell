@@ -30,3 +30,16 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
         return (ft_exit(args, 0));
     return (1);
 }
+
+int is_builtin(t_command *cmd)
+{
+    if (!ft_strcmp(cmd->arg[0], "echo") || !ft_strcmp(cmd->arg[0], "cd"))
+        return (1);
+    else if (!ft_strcmp(cmd->arg[0], "export") || !ft_strcmp(cmd->arg[0], "unset"))
+        return (1);
+    else if (!ft_strcmp(cmd->arg[0], "env") || !ft_strcmp(cmd->arg[0], "pwd"))
+        return (1);
+    else if (!ft_strcmp(cmd->arg[0], "exit"))
+        return (1);
+    return (0);
+}

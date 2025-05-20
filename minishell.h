@@ -84,6 +84,13 @@ typedef struct s_env
 } t_env;
 
 
+typedef struct s_redi
+{
+    char *file;
+    t_token_type type;
+    struct s_redi *next;
+}t_redi; 
+
 typedef struct s_command
 {
     char *name;
@@ -96,12 +103,6 @@ typedef struct s_command
     struct s_command *next;
 } t_command;
 
-typedef struct s_redi
-{
-    char *file;
-    t_token_type type;
-    struct s_redi *next;
-}t_redi;
 
 typedef struct s_extra
 {
