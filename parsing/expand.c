@@ -96,14 +96,16 @@ char	*get_var(char *str)
 			break;
 		i++;
 	}
-	if (str[i] == '"')
-		quote = double_quote(&str[i]);
+	/*if (str[i] == '"')*/
+	/*	quote = double_quote(&str[i]);*/
 	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
 	var1 = getenv(var);
-	printf("\nvar_quote: %s\n", quote);
-	if (quote)
-		var1 = ft_strjoin(var1, quote);
+	if (!var1)
+		var1 = ft_strdup("");
+	/*printf("\nvar_quote: %s\n", quote);*/
+	/*if (quote)*/
+	/*	var1 = ft_strjoin(var1, quote);*/
 	printf("\nvar_$: %s\n", var1);
 	return (var1);
 }
@@ -169,8 +171,8 @@ char	*double_quote(char *content)
 	char	**env;
 	char	**env_var;
 	int	coun;
-	int	*track_size;
-	int	*track_s;
+	int	*track_size = NULL;
+	int	*track_s = NULL;
 
 	i = 0;
 	len1 = 0;
@@ -264,12 +266,14 @@ char	*double_quote(char *content)
 	var1 = gc_malloc(sizeof(char) * ((count + len - len1 + 1) - coun));
 	if (!var1)
 		return (NULL);
+	var1[0] = '\0';
 	while (var[i])
 	{
 		if (var[i] != '$')
 			var1[j] = var[i];
 		else
 		{
+			var1[j] = '\0';
 			var1 = ft_strjoin(var1, env[k]);
 			int s = ft_strlen(env[k]);
 			int c = ft_strlen(env_var[k]);
@@ -281,7 +285,8 @@ char	*double_quote(char *content)
 		j++;
 		i++;
 	}
-	/*printf("var_\": %s\n", var1);*/
+	var1[j] = '\0';
+	printf("var_\": %s\n", var1);
 	return (var1);
 }
 
@@ -289,7 +294,7 @@ char	*copy_var(char *content)
 {
 	int	i;
 	int	len;
-	char	*var;
+	char	*var = NULL;
 	int	start;
 
 	i = 0;
@@ -336,7 +341,7 @@ void	expand_var(t_token *list, t_command *cmd)
 			else
 				cmd->argv[i] = ft_strdup(copy_var(cmd->argv_t[i]));
 			all_cmd = ft_strjoin(all_cmd, cmd->argv[i]);
-			if (i <= count)
+			if (cmd->argv_t[i + 1] != NULL && ft_isalpha(cmd->argv[i][0]))
 				all_cmd = ft_strjoin(all_cmd, " ");
 			i++;
 		}

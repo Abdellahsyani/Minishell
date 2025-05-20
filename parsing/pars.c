@@ -96,6 +96,8 @@ t_command	*create_cmd_node(t_token *list)
 	new_node->outfile = NULL;
 	new_node->append = 0;
 	new_node->next = NULL;
+	for (int i = 0; i < count + 1; i++)
+        new_node->argv_t[i] = NULL;
 	return (new_node);
 }
 
@@ -165,6 +167,7 @@ void	add_lis(t_redi **list, t_redi *new_node)
 
 void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
+	cmd->redi = NULL;
 	if (!(*cur) || !(*cur)->next)
 		return;
 	t_redi *new_redi = create_nod();

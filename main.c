@@ -61,7 +61,7 @@ int main()
 		while (tmp)
 		{
 			type = token_type(tmp);
-			printf("%s[%d]: %s\n", type, tmp->type, tmp->content);
+			/*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
 			tmp = tmp->next;
 		}
 		parse_status = start_parsing(list);
