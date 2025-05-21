@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 15:30:42 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/21 15:39:28 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,20 @@ void    closingfds(int **tube, int pos)
     }
     free(tube);
 }
-
+void pass_in(t_redi *tmp, int fd)
+{
+    if (fd  == -3)
+        fd = open(tmp->file, O_RDONLY);
+    if (fd  == -1)
+    {
+        perror("open failed");
+        return ;
+    }
+    if (tmp->next)
+        close(fd);
+    else
+        dup2(fd, 0);
+}
 void input_handle(t_redi *in, t_extra ptr, int fd)
 {
     if (!in)
