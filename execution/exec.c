@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 15:51:35 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/21 16:23:25 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,10 @@ void pass_out(t_redi *tmp ,int fd)
         perror("open failed");
         return ;
     }
+    if (tmp->next)
+        close(fd);
+    else
+        dup2(fd, 1);
 }
 
 void pass_in(t_redi *tmp, int fd)
