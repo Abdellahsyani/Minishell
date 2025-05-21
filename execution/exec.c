@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/19 17:12:59 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/21 10:29:42 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
     if (size = 0 && tmp->arg && is_builtin(tmp))
     {
         exec_builtins(cmd, env);
-        return (NULL);
+        exit(0) ;
     }
     tube = allocate_tube(size);
     if(!tube || !set_pipes(tube, size))
@@ -109,6 +109,31 @@ void    closingfds(int **tube, int pos)
     free(tube);
 }
 
+void input_handle(t_redi *in, t_extra ptr, int fd)
+{
+    
+}
+void exec_cmd(t_command *cmd, char *path,  t_env **env)
+{
+    int status;
+    char    **envp;
+    
+    envp = chr_envirment(env);
+    if (is_builtin(cmd->arg[0]))
+    {
+        status = ft_exec_builtin(cmd->arg[0], cmd->arg, env);
+        update_exit_status(env, status);
+        return ;
+    }
+    else
+    {
+        if (execve(path, cmd->arg, envp) == -1)
+        {
+            perror("execve failed.");
+            return ;
+        }
+    }
+}
 void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
 {
     char *path;
@@ -116,10 +141,10 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
     path = find_path(cmd, env);
     if (!cmd->in)
     {
-        if (ptr.i != ptr.size)
+        if (ptr.i != 0)
             dup2(ptr.pipline[ptr.i - 1][0], 0);
     }
-   input_handle(cmd->in);
+   //input_handle(cmd->in);
    if(!cmd->out)
    {
         if (ptr.i != ptr.size)
@@ -127,20 +152,9 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
             dup2(ptr.pipline[ptr.i][1], 1);
         }
    }
-   output_handle(cmd->out);
-   if (is_builtin(cmd))
-   {
-        exec_builtins(cmd, env);
-        exit(0);
-   }
+  // output_handle(cmd->out);
    else
-   {
-        if (execve(path, cmd->arg, env) == -1)
-        {
-            perror("execve failed");
-            return ;
-        }
-   }
+        exec_cmd(cmd, path,ptr.env);
    closingfds(ptr.pipline, ptr.i);
 }
 

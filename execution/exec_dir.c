@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/18 01:34:14 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/21 10:19:13 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int output_handle(t_redi *redir)
     if (!tmp)
         return (-2);
     if (tmp->type = redir_output)
-    {
         fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
-    }
     else if (tmp->file = redir_o_app)
         fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND,  0640);
     else 

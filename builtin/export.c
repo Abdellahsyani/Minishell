@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/19 12:02:16 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:36:25 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ int main(int ac, char **arg, char **env)
         if (ft_strcmp(args[0], "export") == 0)
             ft_export(args, &envp);
         else if (ft_strcmp(args[0], "unset") == 0)
-            ft_unset(args, *envp);
+            ft_unset(args, envp);
+        else if (!ft_strcmp(args[0], "echo"))
+            ft_echo(arg);
     }
     print_export(envp);
     return (0);

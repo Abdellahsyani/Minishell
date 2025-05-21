@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/10 14:51:32 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:29:45 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void delete_key_value(char *key, t_env **env)
     }
 }
 
-int ft_unset(char **arg, t_env *env)
+int ft_unset(char **arg, t_env **env)
 {
     int i;
 
@@ -72,7 +72,7 @@ int ft_unset(char **arg, t_env *env)
             printf("unset: %s:invalid parameter name\n", arg[i]);
             return (1);
         }
-        delete_key_value(arg[i],&env);
+        delete_key_value(arg[i],env);
         i++;
     }
     return (0);

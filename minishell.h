@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/19 10:34:47 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:32:10 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,15 @@ char    **chr_envirment(t_env **env);
 int    ft_echo(char **arg);
 int     cd(char **args, t_env *env);
 int    ft_pwd(char **args);
-int    ft_env(t_env **env);
+int     ft_env(t_env **env);
 int     ft_export(char **arg, t_env **env);
-int     ft_unset(char **arg, t_env *env);
+int     ft_unset(char **arg, t_env **env);
 int     ft_exit(char **arg,int last_status);
 
 //***************Execution**************
 int     ft_exec_builtin(char *cmd, char **args, t_env **env);
 char    *find_path(char *cmd, t_env **env);
 t_env   **get_env(char **list);
-int     simple_cmd(t_command *cmd);
 int     is_builtin(t_command *cmd);
 void    update_exit_status(t_env **env,int status);
 int     redirect_handler(int fd, t_command **cmd , t_env **env);
