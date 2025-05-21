@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 16:23:25 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/21 17:28:50 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,21 +109,48 @@ void    closingfds(int **tube, int pos)
     free(tube);
 }
 
-void pass_out(t_redi *tmp ,int fd)
+int pass_out(t_redi *tmp ,int *fd)
 {
     if (tmp->type == redir_output)
-        fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
+        *fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
     else if (tmp->type == redir_o_app)
-        fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
-    if (fd == -1)
+        *fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
+    if (*fd == -1)
     {
         perror("open failed");
-        return ;
+        return 0;
     }
     if (tmp->next)
-        close(fd);
+        close(*fd);
     else
-        dup2(fd, 1);
+        dup2(*fd, 1);
+    return (1);
+}
+
+void output_handle1(t_redi *tmp, t_extra ptr, int fd)
+{
+    if(!tmp)
+   {
+        if (ptr.i != ptr.size)
+        {
+            dup2(ptr.pipline[ptr.i][1], 1);
+        }
+   }
+   while (tmp)
+   {
+        if (tmp->type == redir_input && tmp->type == redir_o_app && pass_out(tmp, &fd))
+        {
+            if (tmp->next)
+                close (fd);
+            else
+            {
+                dup2(fd, 1);
+                close(fd);
+            }     
+        }
+        tmp = tmp->next; 
+   }
+
 }
 
 void pass_in(t_redi *tmp, int fd)
@@ -140,7 +167,7 @@ void pass_in(t_redi *tmp, int fd)
     else
         dup2(fd, 0);
 }
-void input_handle(t_redi *in, t_extra ptr, int fd)
+void input_handle1(t_redi *in, t_extra ptr, int fd)
 {
     if (!in)
     {
@@ -183,18 +210,11 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
     char *path;
 
     path = find_path(cmd, env);
-   //input_handle(cmd->in);
-   if(!cmd->out)
-   {
-        if (ptr.i != ptr.size)
-        {
-            dup2(ptr.pipline[ptr.i][1], 1);
-        }
-   }
-  // output_handle(cmd->out);
-   else
+    input_handle1(cmd->in,ptr,  cmd->fd);
+    output_handle1(cmd->out, ptr, cmd->fd);
+    if (!path)
         exec_cmd(cmd, path,ptr.env);
-   closingfds(ptr.pipline, ptr.i);
+    closingfds(ptr.pipline, ptr.i);
 }
 
 void ft_exec(t_command **cmd, t_env **env)
