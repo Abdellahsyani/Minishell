@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 10:29:42 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/21 15:30:42 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,20 @@ void    closingfds(int **tube, int pos)
 
 void input_handle(t_redi *in, t_extra ptr, int fd)
 {
-    
+    if (!in)
+    {
+        if (ptr.i != 0)
+            dup2(ptr.pipline[ptr.i - 1][0], 0);
+        return ;
+    }
+    while (in)
+    {
+        if (in->type ==  redir_input)
+            pass_in(in, -3);
+        else if (in->type == d_herdoc && !in->next)
+            pass_in(in, fd);
+        in = in->next;
+    }
 }
 void exec_cmd(t_command *cmd, char *path,  t_env **env)
 {
@@ -139,11 +152,6 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
     char *path;
 
     path = find_path(cmd, env);
-    if (!cmd->in)
-    {
-        if (ptr.i != 0)
-            dup2(ptr.pipline[ptr.i - 1][0], 0);
-    }
    //input_handle(cmd->in);
    if(!cmd->out)
    {
