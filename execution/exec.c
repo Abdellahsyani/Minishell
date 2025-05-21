@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 15:39:28 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/21 15:51:35 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,20 @@ void    closingfds(int **tube, int pos)
     }
     free(tube);
 }
+
+void pass_out(t_redi *tmp ,int fd)
+{
+    if (tmp->type == redir_output)
+        fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
+    else if (tmp->type == redir_o_app)
+        fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
+    if (fd == -1)
+    {
+        perror("open failed");
+        return ;
+    }
+}
+
 void pass_in(t_redi *tmp, int fd)
 {
     if (fd  == -3)
