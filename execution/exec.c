@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/22 16:32:33 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/22 16:36:33 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
     {
         ft_error("Error: pipe failed or allocation.\n");
         update_exit_status(env, 1);
-        //need close fds;
+        //closingfds(tube, size);
         return (NULL);
     }
     return (tube);

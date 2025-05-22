@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/22 16:08:24 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/22 16:42:55 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ typedef struct s_redi
 
 typedef struct s_command
 {
-    char *name;
     char **arg;
     t_env **env;
     int fd;
