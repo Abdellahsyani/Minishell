@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 17:28:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/22 15:34:43 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,6 @@ int pass_out(t_redi *tmp ,int *fd)
         perror("open failed");
         return 0;
     }
-    if (tmp->next)
-        close(*fd);
-    else
-        dup2(*fd, 1);
     return (1);
 }
 
@@ -140,13 +136,8 @@ void output_handle1(t_redi *tmp, t_extra ptr, int fd)
    {
         if (tmp->type == redir_input && tmp->type == redir_o_app && pass_out(tmp, &fd))
         {
-            if (tmp->next)
-                close (fd);
-            else
-            {
-                dup2(fd, 1);
-                close(fd);
-            }     
+            dup2(fd, 1);
+            close(fd);   
         }
         tmp = tmp->next; 
    }
@@ -162,10 +153,8 @@ void pass_in(t_redi *tmp, int fd)
         perror("open failed");
         return ;
     }
-    if (tmp->next)
-        close(fd);
-    else
-        dup2(fd, 0);
+    dup2(fd, 0);
+    close(fd);
 }
 void input_handle1(t_redi *in, t_extra ptr, int fd)
 {

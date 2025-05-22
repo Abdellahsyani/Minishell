@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 03:46:34 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/22 15:42:04 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@ void    ft_herdoc(t_command **cmd,t_env *env)
     t_command *tmp;
     t_redi *in;
 
-
+    tmp = *cmd;
+    tmp->fd = -1;
     while (tmp)
     {
         in = tmp->type;
+        tmp->fd = -1;
         while (in)
         {
             if (in->type = d_herdoc)
