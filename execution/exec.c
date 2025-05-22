@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/22 15:34:43 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/22 16:32:33 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int set_pipes(int **tube, int size)
     while (i < size)
     {
         if(pipe(tube[i]) == -1)
-            return (0); //need to close fds
+        {
+            closingfds(tube, i);
+            return (0);
+        }
         i++;
     }
     return (1);
@@ -123,8 +126,9 @@ int pass_out(t_redi *tmp ,int *fd)
     return (1);
 }
 
-void output_handle1(t_redi *tmp, t_extra ptr, int fd)
+void output_handle1(t_redi *tmp, t_extra ptr)
 {
+    int fd;
     if(!tmp)
    {
         if (ptr.i != ptr.size)
@@ -141,7 +145,6 @@ void output_handle1(t_redi *tmp, t_extra ptr, int fd)
         }
         tmp = tmp->next; 
    }
-
 }
 
 void pass_in(t_redi *tmp, int fd)
@@ -199,8 +202,8 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
     char *path;
 
     path = find_path(cmd, env);
-    input_handle1(cmd->in,ptr,  cmd->fd);
-    output_handle1(cmd->out, ptr, cmd->fd);
+    input_handle1(cmd->in,ptr, cmd->fd);
+    output_handle1(cmd->out, ptr);
     if (!path)
         exec_cmd(cmd, path,ptr.env);
     closingfds(ptr.pipline, ptr.i);
