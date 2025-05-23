@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/10 10:06:02 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:30:28 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "minishell.h"
-
-#include <stdio.h>
+#include "../minishell.h"
 
 static int ft_check_flag(char **arg)
 {
@@ -82,11 +80,11 @@ int    ft_echo(char **arg)
     return (0);
 }
 
-int main(int ac, char **arg)
-{
-    (void)ac;
+// int main(int ac, char **arg)
+// {
+//     (void)ac;
     
-    if(ft_echo(arg))
-        return (1);
-    return 0;
-}
+//     if(ft_echo(arg))
+//         return (1);
+//     return 0;
+// }

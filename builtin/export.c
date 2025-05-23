@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 11:36:25 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:44:45 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,17 @@ int main(int ac, char **arg, char **env)
         line = readline("minishell$ ");
         args = ft_split(line, ' ');
         if (ft_strcmp(args[0], "export") == 0)
-            ft_export(args, &envp);
+            ft_export(args, envp);
         else if (ft_strcmp(args[0], "unset") == 0)
             ft_unset(args, envp);
-        else if (!ft_strcmp(args[0], "echo"))
-            ft_echo(arg);
+        else if (ft_strcmp(args[0], "echo")== 0)
+            ft_echo(args);
+        else if (ft_strcmp(args[0], "pwd")== 0)
+            ft_pwd(args);
+        else if (ft_strcmp(args[0], "env")== 0)
+            ft_env(envp);
+        else if (ft_strcmp(args[0], "cd")== 0)
+            ft_cd(args,*envp);
     }
     print_export(envp);
     return (0);

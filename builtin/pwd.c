@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:50:39 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/12 17:54:44 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:38:02 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "minishell.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "../minishell.h"
 
 int ft_pwd(char **args)
 {
@@ -41,11 +38,4 @@ int ft_pwd(char **args)
     printf("%s\n", path);
     free(path);
     return (1);
-}
-
-int main(int ac,char **arg)
-{
-    (void) ac;
-    ft_pwd(arg);
-    return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/23 15:13:41 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/23 17:42:04 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char    **chr_envirment(t_env **env);
 //**************Builtin****************
 
 int    ft_echo(char **arg);
-int     cd(char **args, t_env *env);
+int     ft_cd(char **args, t_env *env);
 int    ft_pwd(char **args);
 int     ft_env(t_env **env);
 int     ft_export(char **arg, t_env **env);
