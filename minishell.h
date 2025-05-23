@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/22 16:42:55 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/23 15:13:41 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,6 @@ void    update_exit_status(t_env **env,int status);
 int     redirect_handler(int fd, t_command **cmd , t_env **env);
 int     input_handle(t_redi *redir);
 int     output_handle(t_redi *redir);
+void    closingfds(int **tube, int pos);
 
 #endif

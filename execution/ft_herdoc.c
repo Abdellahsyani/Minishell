@@ -6,13 +6,13 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/22 16:07:29 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/22 16:55:38 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    write_in_file(int fd, t_env *env, char *limiter)
+void    write_in_file(int fd, t_env **env, char *limiter)
 {
     char *line;
     int l;
@@ -30,7 +30,7 @@ void    write_in_file(int fd, t_env *env, char *limiter)
     }
 }
 
-void write_to_herdoc(int fd, t_env *env, char *limiter)
+void write_to_herdoc(int fd, t_env **env, char *limiter)
 {
     char *delimiter;
 
@@ -44,7 +44,7 @@ void write_to_herdoc(int fd, t_env *env, char *limiter)
     exit(0);
 }
 
-int ft_handle_herdoc(char *value, t_env *env) //int ft_handle_herdoc(char **cmd, t_redi *in)
+int ft_handle_herdoc(char *value, t_env **env)
 {
     pid_t pid;
     int fd;
@@ -61,7 +61,7 @@ int ft_handle_herdoc(char *value, t_env *env) //int ft_handle_herdoc(char **cmd,
     return (fd);
 }
 
-void    ft_herdoc(t_command **cmd,t_env *env)
+void    ft_herdoc(t_command **cmd,t_env **env)
 {
     t_command *tmp;
     t_redi *in;
