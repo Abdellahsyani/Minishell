@@ -6,24 +6,24 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/02 09:26:21 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:29:45 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int is_valid(char *str)
 {
     int i;
 
     i = 1;
-    if (!str[0] || (!is_alpha(str[0]) && str[0] != '_'))
+    if (!str[0] || (!ft_isalpha(str[0]) && str[0] != '_'))
     {
         return (0);
     }
     while (str[i])
     {
-        if (!is_alnum(str[i]) && str[i] != '_' )
+        if (!ft_isalnum(str[i]) && str[i] != '_' )
             return (0);
         i++;
     }
@@ -55,7 +55,7 @@ void delete_key_value(char *key, t_env **env)
     }
 }
 
-int ft_unset(char **arg, t_env *env)
+int ft_unset(char **arg, t_env **env)
 {
     int i;
 
@@ -72,7 +72,7 @@ int ft_unset(char **arg, t_env *env)
             printf("unset: %s:invalid parameter name\n", arg[i]);
             return (1);
         }
-        delete_key_value(arg[i],&env);
+        delete_key_value(arg[i],env);
         i++;
     }
     return (0);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/01 15:59:06 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/24 09:57:30 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-t_env *find(t_env *env, char *key)
+t_env *ft_find(t_env *env, char *key)
 {
     while (env)
     {
@@ -34,16 +34,16 @@ void    print_export(t_env **env)
             printf("declare -x %s\n",tmp->key);
         }
         else
-            printf("declare -x %s=%s\n",tmp->key,tmp->value);
+            printf("declare -x %s=\"%s\"\n",tmp->key,tmp->value);
         tmp = tmp->next;
     }
 }
-void    alloce_env(char *key, char *value, t_env **env)
+void    set_new_env(char *key, char *value, t_env **env)
 {
     t_env *exist;
     t_env *create;
-    
-    exist = find(*env, key);
+ 
+    exist = ft_find(*env, key);
     if (exist)
     {
         free(exist->value);
@@ -52,11 +52,9 @@ void    alloce_env(char *key, char *value, t_env **env)
     }
     else
     {
-        create = malloc(sizeof(t_env));
+        create = malloc(sizeof(t_env));//??
         create->key = ft_strdup(key);
-        free(key);
         create->value= ft_strdup(value);
-        free(value);
         create->next = *env;
         *env = create;
     }
@@ -65,7 +63,7 @@ int check_arg(char *str,t_env **env)
 {
     int i;
     char *key;
-    char *value;
+    char *value = NULL;
     int l;
     
     l = ft_strlen(str);
@@ -74,18 +72,12 @@ int check_arg(char *str,t_env **env)
         i++;
     
     key = ft_substr(str, 0, i);
-    if (str[i] == '=')
-    {
-        value = ft_substr(str, i + 1, l - i - 1);
-        
-    }
     if (!is_valid(key))
-        return (free(key), free(value), 0);
-    else
-    {
-          alloce_env(key, value,env);
-          return (1);
-    }
+        return (free(key), 0);
+    if (str[i] == '=')
+        value = ft_substr(str, i + 1, l - i - 1);
+    set_new_env(key, value,env);
+    return (1);
 }
 
 int ft_export(char **arg, t_env **env)
@@ -104,11 +96,43 @@ int ft_export(char **arg, t_env **env)
         {
             if (!check_arg(arg[i],env))
             {
-                printf("minishell:export: %s : not a valid identifier", arg[i]);
-                return (0);
+                printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
+                // return (0);
             }
             i++;    
         }
     }
     return (1);
+}
+
+int main(int ac, char **arg, char **env)
+{
+    t_env **envp;
+    
+    envp = get_env(env);
+    // if (!ft_export(arg,envp))
+    // {
+    //     return (1);
+    // }
+    char    *line;
+    char    **args;
+    while (1)
+    {
+        line = readline("/033 minishell/00$ ");
+        args = ft_split(line, ' ');
+        if (ft_strcmp(args[0], "export") == 0)
+            ft_export(args, envp);
+        else if (ft_strcmp(args[0], "unset") == 0)
+            ft_unset(args, envp);
+        else if (ft_strcmp(args[0], "echo")== 0)
+            ft_echo(args);
+        else if (ft_strcmp(args[0], "pwd")== 0)
+            ft_pwd(args);
+        else if (ft_strcmp(args[0], "env")== 0)
+            ft_env(envp);
+        else if (ft_strcmp(args[0], "cd")== 0)
+            ft_cd(args,*envp);
+    }
+    print_export(envp);
+    return (0);
 }

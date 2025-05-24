@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/02 18:46:51 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/23 17:42:14 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void    set_pwd_env(t_env **env, char *key,char *value)
 {
     t_env *list;
     
-    list = find(*env, key);
+    list = ft_find(*env, key);
     if (list)
     {
         free(list->value);
@@ -97,7 +97,7 @@ static int cd_change_directory(t_env *env, char *target)
     
 }
 
-int cd(char **args, t_env *env)
+int ft_cd(char **args, t_env *env)
 {
     char *target;
     

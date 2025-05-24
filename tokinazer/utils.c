@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:53:11 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/06 15:08:50 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/10 14:49:16 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@ int ft_strcmp(char *s1, char *s2)
    return (0);
 }
 
-char	*ft_strlcpy(char *token, char *input, int len, int j)
+char	*ft_strlcp(char *token, char *input, int len, int j)
 {
 	int	i;
 
-	i = 0;
-	token = gc_malloc(sizeof(char) * len + 1);
-	if (!token)
-		return (NULL);
-	while (i < len)
-	{
-		token[i] = input[j + i];
-		i++;
-	}
-	token[i] = '\0';
-	return (token);
+ 	i = 0;
+ 	token = gc_malloc(sizeof(char) * len + 1);
+ 	if (!token)
+ 		return (NULL);
+ 	while (i < len)
+ 	{
+ 		token[i] = input[j + i];
+ 		i++;
+ 	}
+ 	token[i] = '\0';
+ 	return (token);
 }
 
 int	is_operator(char op)
@@ -50,24 +50,3 @@ int	is_operator(char op)
 	return (0);
 }
 
-int	ft_isalpha(char c)
-{
-	if ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z'))
-		return (1);
-	return (0);
-}
-
-int ft_strncmp(char *s1, char *s2, int l)
-{
-    int i;
-    
-    i = 0;
-    while (s1[i] && i != l)
-    {
-        if (s1[i] != s2[i])
-            return (s1[i] - s2[i]);
-        i++;
-    }
-    return (0);
-}
