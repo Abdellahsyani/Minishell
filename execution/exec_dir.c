@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 10:19:13 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/24 11:56:38 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int output_handle(t_redi *redir)
     return (ret);
 }
 
-int redirect_handler(int fd, t_command **cmd , t_env **env)
+int redirect_handler(int *fd, t_command **cmd , t_env **env)
 {
     t_command *tmp;
     
@@ -79,8 +79,8 @@ int redirect_handler(int fd, t_command **cmd , t_env **env)
         update_exit_status(env, 1);
         return (0);
     }
-    fd = output_handle(tmp->out);
-    if (fd = -1)
+    *fd = output_handle(tmp->out);
+    if (*fd = -1)
     {
         update_exit_status(env, 1);
         return (0);

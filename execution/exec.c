@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/24 11:45:04 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/24 11:57:57 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void exec_builtins(t_command **cmd, t_env **env)
     t_command *tmp;
 
     tmp = *cmd;
-    if (!redirect_handler(fd, cmd, env))
+    if (!redirect_handler(&fd, cmd, env))
         return ;
     status = ft_exec_builtin(tmp->arg[0], tmp->arg, env);
     update_exit_status(env, status);
