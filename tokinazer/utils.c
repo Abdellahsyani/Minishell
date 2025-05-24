@@ -26,7 +26,7 @@ int ft_strcmp(char *s1, char *s2)
    return (0);
 }
 
-char	*ft_strlcp(char *token, char *input, int len, int j)
+char	*ft_strlcpy(char *token, char *input, int len, int j)
 {
 	int	i;
 

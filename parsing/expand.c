@@ -34,7 +34,20 @@ char	*stcopy(char *var, char *content, char del)
 	return (var);
 }
 
-char	*get_var(char *str)
+char *ft_get(t_env **env, char *key)
+{
+	t_env *tmp;
+	tmp = *env;
+    while (tmp)
+    {
+        if (!ft_strcmp((tmp)->key, key))
+            return (tmp->value);
+        (tmp) = (tmp)->next;
+    }
+    return (NULL);
+}
+
+char	*get_var(char *str, t_env **env)
 {
 	char	*var;
 	int	i;
@@ -55,10 +68,10 @@ char	*get_var(char *str)
 	}
 	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
-	var1 = getenv(var);
+	var1 = ft_get(env, var);
 	if (!var1)
 		var1 = ft_strdup("");
-	printf("\nvar_$: %s\n", var1);
+	/*printf("\nvar_$: %s\n", var1);*/
 	return (var1);
 }
 
@@ -82,7 +95,7 @@ char	*get_var1(char *str)
 	}
 	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
-	printf("\nvar1_$: %s\n", var);
+	/*printf("\nvar1_$: %s\n", var);*/
 	return (var);
 }
 
@@ -105,12 +118,11 @@ char	*single_qoute(char *content)
 	}
 	var = gc_malloc(sizeof(char) * (count + 1));
 	var = stcopy(var, content, '\'');
-	printf("var_': %s\n", var);
+	/*printf("var_': %s\n", var);*/
 	return (var);
 }
 
-
-char	*double_quote(char *content)
+char	*double_quote(char *content, t_env **env_t)
 {
 	int	i;
 	char	*var = NULL;
@@ -152,7 +164,7 @@ char	*double_quote(char *content)
 		{
 			get_v = get_var1(&content[i]);
 			env_var[counts] = ft_strdup(get_v);
-			exp = getenv(get_v);
+			exp = ft_get(env_t, get_v);
 			if (exp)
 				env[counts] = ft_strdup(exp);
 			else
@@ -259,12 +271,12 @@ char	*copy_var(char *content)
 	}
 	len = i;
 	var = ft_strlcpy(var, content, len, start);
-	printf("var_all: %s", var);
+	/*printf("var_all: %s", var);*/
 	return (var);
 }
 
 
-void	expand_var(t_token *list, t_command *cmd)
+void	expand_var(t_token *list, t_command *cmd, t_env **env)
 {
 	int	i;
 	char	*all_cmd;
@@ -286,9 +298,9 @@ void	expand_var(t_token *list, t_command *cmd)
 			if (cmd->argv_t[i][0] == '\'')
 				cmd->argv[i] = ft_strdup(single_qoute(cmd->argv_t[i]));
 			else if (cmd->argv_t[i][0] == '"')
-				cmd->argv[i] = ft_strdup(double_quote(cmd->argv_t[i]));
+				cmd->argv[i] = ft_strdup(double_quote(cmd->argv_t[i], env));
 			else if (cmd->argv_t[i][0] == '$')
-				cmd->argv[i] = ft_strdup(get_var(cmd->argv_t[i]));
+				cmd->argv[i] = ft_strdup(get_var(cmd->argv_t[i], env));
 			else
 				cmd->argv[i] = ft_strdup(copy_var(cmd->argv_t[i]));
 			all_cmd = ft_strjoin(all_cmd, cmd->argv[i]);

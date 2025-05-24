@@ -84,7 +84,6 @@ typedef struct s_command
     t_redi	*in;
     t_redi	*out;
     struct s_command *next;
-    t_env	**env;
     t_redi	*redi;
 } t_command;
 
@@ -102,8 +101,8 @@ typedef struct s_extra
 int	pars_command(t_token *list, t_command **cmd_list);
 
 /** expand functions **/
-void	expand_var(t_token *list, t_command *cmd);
-char	*double_quote(char *str);
+void	expand_var(t_token *list, t_command *cmd, t_env **env);
+char	*double_quote(char *str, t_env **env);
 
 /***** parsing functions *****/
 void	ft_free_gc(void);
@@ -141,7 +140,7 @@ char    **chr_envirment(t_env **env);
 //**************Builtin****************
 
 int    ft_echo(char **arg);
-int     ft_cd(char **args, t_env *env);
+int     ft_cd(char **args, t_env **env);
 int    ft_pwd(char **args);
 int     ft_env(t_env **env);
 int     ft_export(char **arg, t_env **env);
@@ -149,12 +148,18 @@ int     ft_unset(char **arg, t_env **env);
 int     ft_exit(char **arg,int last_status);
 
 //***************Execution**************
+int ft_exec(t_command **cmd, t_env **env);
+int	wait_and_free(t_extra ptr);
+void	helper_herdoc(char *line, int fd, t_env **env);
+int	ft_handle_herdoc(char *value, t_env **env);
+void    write_in_file(int fd, t_env **env, char *limiter);
+void    ft_herdoc(t_command **cmd,t_env **env);
 int     ft_exec_builtin(char *cmd, char **args, t_env **env);
 char    *find_path(char *cmd, t_env **env);
 t_env   **get_env(char **list);
 int     is_builtin(t_command *cmd);
 void    update_exit_status(t_env **env,int status);
-int     redirect_handler(int fd, t_command **cmd , t_env **env);
+int     redirect_handler(int *fd, t_command **cmd , t_env **env);
 int     input_handle(t_redi *redir);
 int     output_handle(t_redi *redir);
 void    closingfds(int **tube, int pos);

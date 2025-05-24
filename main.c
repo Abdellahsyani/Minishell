@@ -12,16 +12,20 @@
 
 #include "minishell.h"
 
-int main()
+
+int main(int ac, char **argv, char **envp)
 {
 	char        *line;
-	/*char	*type;*/
 	t_token     *list = NULL;
 	t_token     *tmp = NULL;
 	t_command   *cmd_list = NULL;
-	t_command   *cmd_tmp = NULL;
 	int         parse_status;
+	t_env **env;
+	(void)ac;
+	(void)argv;
 
+
+	env = get_env(envp);
 	while (1)
 	{
 		list = NULL;
@@ -40,47 +44,17 @@ int main()
 		while (tmp)
 		{
 			token_type(tmp);
-			/*printf("%s[%d]: %s\n", type, tmp->type, tmp->content);*/
 			tmp = tmp->next;
 		}
 		parse_status = start_parsing(list);
 		if (parse_status == 1)
-
 		{
-
 			int ex = pars_command(list, &cmd_list);
 			if (ex == 0)
 				return (0);
-			expand_var(list, cmd_list);
-			cmd_tmp = cmd_list;
-			printf("\n<-------------------->\n");
-			while (cmd_list)
-			{
-				int i = 0;
-				/*while (cmd_list->argv_t && cmd_list->argv_t[i])*/
-				/*{*/
-				/*	printf("argv_t[%d]: %s\n", i, cmd_list->argv_t[i]);*/
-				/*	i++;*/
-				/*}*/
-				/*printf("\n<---------<->---------->\n");*/
-				/*i = 0;*/
-				/*t_redi *r = cmd_list->redi;*/
-				/*while (r)*/
-				/*{*/
-				/*					printf("==== %s == %d =\n", r->file, r->type);*/
-				/*					r = r->next;*/
-				/*}*/
-				while (cmd_list->argv && cmd_list->argv[i])
-				{
-					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
-					i++;
-				}
-				printf("------------\n");
-				cmd_list = cmd_list->next;
-			}
-			printf("\n<-------------------->\n");
-			cmd_list = cmd_tmp;
+			expand_var(list, cmd_list, env);
 		}
+		ft_exec(&cmd_list, env);
 		free(line);
 	}
 	return (0);
