@@ -15,7 +15,7 @@
 int ft_exec_builtin(char *cmd, char **args, t_env **env)
 {
     if (!ft_strcmp(cmd, "cd"))
-        return (cd(args, env));
+        return (ft_cd(args, env));
     else if (!ft_strcmp(cmd, "echo"))
         return (ft_echo(args));
     else if (!ft_strcmp(cmd, "pwd"))
@@ -33,13 +33,13 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
 
 int is_builtin(t_command *cmd)
 {
-    if (!ft_strcmp(cmd->arg[0], "echo") || !ft_strcmp(cmd->arg[0], "cd"))
+    if (!ft_strcmp(cmd->argv[0], "echo") || !ft_strcmp(cmd->argv[0], "cd"))
         return (1);
-    else if (!ft_strcmp(cmd->arg[0], "export") || !ft_strcmp(cmd->arg[0], "unset"))
+    else if (!ft_strcmp(cmd->argv[0], "export") || !ft_strcmp(cmd->argv[0], "unset"))
         return (1);
-    else if (!ft_strcmp(cmd->arg[0], "env") || !ft_strcmp(cmd->arg[0], "pwd"))
+    else if (!ft_strcmp(cmd->argv[0], "env") || !ft_strcmp(cmd->argv[0], "pwd"))
         return (1);
-    else if (!ft_strcmp(cmd->arg[0], "exit"))
+    else if (!ft_strcmp(cmd->argv[0], "exit"))
         return (1);
     return (0);
 }

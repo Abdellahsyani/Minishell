@@ -28,13 +28,13 @@ char *get_env_value(t_env *env, char *str)
     return ("");
 }
 
-static char *cd_get_target(char **args, t_env *env)
+static char *cd_get_target(char **args, t_env **env)
 {
     char *target;
     
     if (!args[1])
     {
-        target= get_env_value(env, "HOME");
+        target= get_env_value(*env, "HOME");
         if(!target)
         {
             printf("cd: HOME not set\n");
@@ -62,9 +62,12 @@ void    set_pwd_env(t_env **env, char *key,char *value)
         return ;
     }
 }
-static int cd_update_env(t_env *env, char *str,char *target)
+
+static int cd_update_env(t_env **env, char *str,char *target)
 {
     char *new;
+	(void)str;
+	(void)target;
     
     new = getcwd(NULL, 0);
     if(!new)
@@ -72,11 +75,11 @@ static int cd_update_env(t_env *env, char *str,char *target)
         printf("cd: getcwd failed\n");
         return (0);
     }
-    set_pwd_env(&env, "PWD", new);
+    set_pwd_env(env, "PWD", new);
     free(new);
     return (1);
 }
-static int cd_change_directory(t_env *env, char *target)
+static int cd_change_directory(t_env **env, char *target)
 {
     char *cwd;
     
@@ -86,7 +89,7 @@ static int cd_change_directory(t_env *env, char *target)
         printf("cd: getcwd failed\n");
         return 0;
     }
-    set_pwd_env(&env,"OLDPWD",cwd);
+    set_pwd_env(env,"OLDPWD",cwd);
     free(cwd);
     if (chdir(target) != 0)
     {
@@ -97,7 +100,7 @@ static int cd_change_directory(t_env *env, char *target)
     
 }
 
-int ft_cd(char **args, t_env *env)
+int ft_cd(char **args, t_env **env)
 {
     char *target;
     

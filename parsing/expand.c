@@ -12,48 +12,6 @@
 
 #include "../minishell.h"
 
-static	char	*helper(char *concat, char const *s1, char const *s2)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		concat[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		concat[i + j] = s2[j];
-		j++;
-	}
-	concat[i + j] = '\0';
-	return (concat);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*concat;
-	int		s1_size;
-	int		s2_size;
-
-	if (s1 == NULL && s2 == NULL)
-		return (NULL);
-	if (s1 == NULL)
-		return (ft_strdup(s2));
-	if (s2 == NULL)
-		return (ft_strdup(s1));
-	s1_size = ft_strlen(s1);
-	s2_size = ft_strlen(s2);
-	concat = malloc(sizeof(char) * (s1_size + s2_size) + 1);
-	if (!concat)
-		return (NULL);
-	helper(concat, s1, s2);
-	return (concat);
-}
-
 char	*stcopy(char *var, char *content, char del)
 {
 	int	i;
@@ -82,7 +40,6 @@ char	*get_var(char *str)
 	int	i;
 	int	start;
 	int	len;
-	char	*quote;
 	char	*var1;
 
 	i = 1;
@@ -96,16 +53,11 @@ char	*get_var(char *str)
 			break;
 		i++;
 	}
-	/*if (str[i] == '"')*/
-	/*	quote = double_quote(&str[i]);*/
 	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
 	var1 = getenv(var);
 	if (!var1)
 		var1 = ft_strdup("");
-	/*printf("\nvar_quote: %s\n", quote);*/
-	/*if (quote)*/
-	/*	var1 = ft_strjoin(var1, quote);*/
 	printf("\nvar_$: %s\n", var1);
 	return (var1);
 }
@@ -312,13 +264,12 @@ char	*copy_var(char *content)
 }
 
 
-
 void	expand_var(t_token *list, t_command *cmd)
 {
 	int	i;
 	char	*all_cmd;
 	int	count;
-	t_command *cmd_list;
+	(void)list;
 
 	all_cmd = NULL;
 	while (cmd)

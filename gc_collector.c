@@ -12,16 +12,16 @@
 
 #include "minishell.h"
 
-static t_list	*head;
+static c_list	*head;
 
 void	ft_free_gc(void)
 {
-	t_list			*tmp;
+	c_list			*tmp;
 
 	tmp = head;
 	while (tmp)
 	{
-		t_list *next = tmp->next;
+		c_list *next = tmp->next;
 		free(tmp->data); 
 		free(tmp);
 		tmp = next;
@@ -31,8 +31,8 @@ void	ft_free_gc(void)
 
 void	*gc_malloc(size_t size)
 {
-	t_list	*node;
-	t_list	*tmp;
+	c_list	*node;
+	c_list	*tmp;
 	void	*ptr;
 
 	ptr = malloc(size);

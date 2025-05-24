@@ -82,6 +82,7 @@ int handle_quotes(t_shell *mini, t_token **list, char *line)
 {
 	char	quote_type;
 	int	start_i;
+	(void)list;
 
 	if (line[mini->i] != '"' && line[mini->i] != '\'')
 		return (0);

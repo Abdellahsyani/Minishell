@@ -27,11 +27,11 @@
 # include "libft/libft.h"
 
 /* struct for gc_collector */
-typedef struct s_list
+typedef struct j_list
 {
  	void			*data;
- 	struct s_list	*next;
-}	t_list;
+ 	struct j_list	*next;
+}	c_list;
 
 /*** struct for tokinization ***/
 typedef struct s_shell
@@ -106,7 +106,6 @@ void	expand_var(t_token *list, t_command *cmd);
 char	*double_quote(char *str);
 
 /***** parsing functions *****/
-=======
 void	ft_free_gc(void);
 void	*gc_malloc(size_t size);
 // char	*ft_strdup(char *s1);

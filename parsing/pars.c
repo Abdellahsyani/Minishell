@@ -92,12 +92,9 @@ t_command	*create_cmd_node(t_token *list)
 	if (!new_node->argv_t)
 		return (NULL);
 	new_node->argv_t[0] = NULL;
-	new_node->infile = NULL;
-	new_node->outfile = NULL;
-	new_node->append = 0;
 	new_node->next = NULL;
 	for (int i = 0; i < count + 1; i++)
-        new_node->argv_t[i] = NULL;
+        	new_node->argv_t[i] = NULL;
 	return (new_node);
 }
 
@@ -165,7 +162,7 @@ void	add_lis(t_redi **list, t_redi *new_node)
 	}
 }
 
-void	fill_operation(t_command *cmd, t_token **cur, int i)
+void	fill_operation(t_command *cmd, t_token **cur)
 {
 	cmd->redi = NULL;
 	if (!(*cur) || !(*cur)->next)
@@ -174,21 +171,21 @@ void	fill_operation(t_command *cmd, t_token **cur, int i)
 	new_redi->file = ft_strdup((*cur)->next->content);
 	new_redi->type = (*cur)->type;
 	add_lis(&cmd->redi, new_redi);
-	if (i == 0 || i == 1)
-	{
-		if (cmd->outfile)
-			free(cmd->outfile);
-		cmd->outfile = ft_strdup((*cur)->next->content);
-		cmd->append = (i == 1);
-		*cur = (*cur)->next;
-	}
-	else if (i == 2)
-	{
-		if (cmd->infile)
-			free(cmd->infile);
-		cmd->infile = ft_strdup((*cur)->next->content);
-		*cur = (*cur)->next;
-	}
+	/*if (i == 0 || i == 1)*/
+	/*{*/
+	/*	if (cmd->outfile)*/
+	/*		free(cmd->outfile);*/
+	/*	cmd->outfile = ft_strdup((*cur)->next->content);*/
+	/*	cmd->append = (i == 1);*/
+	/*	*cur = (*cur)->next;*/
+	/*}*/
+	/*else if (i == 2)*/
+	/*{*/
+	/*	if (cmd->infile)*/
+	/*		free(cmd->infile);*/
+	/*	cmd->infile = ft_strdup((*cur)->next->content);*/
+	/*	*cur = (*cur)->next;*/
+	/*}*/
 }
 
 int pars_command(t_token *list, t_command **cmd_list)
@@ -208,13 +205,13 @@ int pars_command(t_token *list, t_command **cmd_list)
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
 		else if (current->type == redir_output && current->next)
-			fill_operation(current_cmd, &current, 0);
+			fill_operation(current_cmd, &current);
 		else if (current->type == redir_input && current->next)
-			fill_operation(current_cmd, &current, 2);
+			fill_operation(current_cmd, &current);
 		else if (current->type == redir_o_app && current->next)
-			fill_operation(current_cmd, &current, 1);
+			fill_operation(current_cmd, &current);
 		else if (current->type == d_herdoc && current->next)
-			fill_operation(current_cmd, &current, 3);
+			fill_operation(current_cmd, &current);
 		else if (current->type == pipe_line)
 			current_cmd = NULL;
 		if (current)
