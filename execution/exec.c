@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/22 16:36:33 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/24 11:45:04 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
     path = find_path(cmd, env);
     input_handle1(cmd->in,ptr, cmd->fd);
     output_handle1(cmd->out, ptr);
-    if (!path)
+    if (path)
         exec_cmd(cmd, path,ptr.env);
     closingfds(ptr.pipline, ptr.i);
 }
