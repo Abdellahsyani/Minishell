@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/23 17:44:45 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/24 09:57:30 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int main(int ac, char **arg, char **env)
     char    **args;
     while (1)
     {
-        line = readline("minishell$ ");
+        line = readline("/033 minishell/00$ ");
         args = ft_split(line, ' ');
         if (ft_strcmp(args[0], "export") == 0)
             ft_export(args, envp);
