@@ -20,8 +20,10 @@ $(NAME) : $(OBJ)
 	$(CC) $(CFLAG) -c $< -o $@
 
 clean:
+	make clean -C ./libft
 	$(RM) $(OBJ)
 fclean: clean
+	make fclean -C ./libft
 	$(RM) $(NAME)
 
 re: fclean all
