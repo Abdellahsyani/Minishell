@@ -83,12 +83,12 @@ int main()
 				/*}*/
 				/*printf("\n<---------<->---------->\n");*/
 				/*i = 0;*/
-				t_redi *r = cmd_list->redi;
-				while (r)
-				{
-    					printf("==== %s == %d =\n", r->file, r->type);
-    					r = r->next;
-				}
+				/*t_redi *r = cmd_list->redi;*/
+				/*while (r)*/
+				/*{*/
+				/*					printf("==== %s == %d =\n", r->file, r->type);*/
+				/*					r = r->next;*/
+				/*}*/
 				while (cmd_list->argv && cmd_list->argv[i])
 				{
 					printf("argv[%d]: %s\n", i, cmd_list->argv[i]);
@@ -105,10 +105,6 @@ int main()
 			printf("\n<-------------------->\n");
 			cmd_list = cmd_tmp;
 		}
-		/*while (cmd_list->redi)*/
-		/*{*/
-		/*	cmd_list->redi = cmd_list->redi->next;*/
-		/*}*/
 		free(line);
 	}
 	return (0);
