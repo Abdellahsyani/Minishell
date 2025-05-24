@@ -19,6 +19,7 @@ int main(int ac, char **argv, char **envp)
 	t_token     *list = NULL;
 	t_token     *tmp = NULL;
 	t_command   *cmd_list = NULL;
+	t_command	*cmd_tmp = NULL;
 	int         parse_status;
 	t_env **env;
 	(void)ac;
@@ -52,9 +53,10 @@ int main(int ac, char **argv, char **envp)
 			int ex = pars_command(list, &cmd_list);
 			if (ex == 0)
 				return (0);
+			cmd_tmp = cmd_list;
 			expand_var(list, cmd_list, env);
 		}
-		ft_exec(&cmd_list, env);
+		ft_exec(&cmd_tmp, env);
 		free(line);
 	}
 	return (0);

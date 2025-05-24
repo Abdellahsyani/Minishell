@@ -14,7 +14,7 @@ all:$(NAME)
 
 $(NAME) : $(OBJ)
 		$(MAKE) -C $(LIBFT)
-		$(CC) $(CFLAG) $(OBJ) ./libft/libft.a -o $(NAME) -lreadline
+		$(CC) $(CFLAG) $(OBJ) -g ./libft/libft.a -o $(NAME) -lreadline
 
 %.o: %.c 
 	$(CC) $(CFLAG) -c $< -o $@

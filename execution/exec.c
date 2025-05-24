@@ -222,6 +222,8 @@ int ft_exec(t_command **cmd, t_env **env)
 		return (0);
 	ptr.env = env;
 	ptr.pid = gc_malloc(ptr.size);
+	if (!ptr.pid)
+		return (0);
 	ft_herdoc(cmd, ptr.env);
 	while (ptr.i < ptr.size)
 	{

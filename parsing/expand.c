@@ -223,7 +223,7 @@ char	*double_quote(char *content, t_env **env_t)
 
 	var = gc_malloc(sizeof(char) * (count + 1));
 	var = stcopy(var, content, '"');
-	printf("\nvar--> %s\n", var);
+	/*printf("\nvar--> %s\n", var);*/
 	i = 0;
 	int k = 0;
 	int	j = 0;
@@ -250,7 +250,7 @@ char	*double_quote(char *content, t_env **env_t)
 		i++;
 	}
 	var1[j] = '\0';
-	printf("var_\": %s\n", var1);
+	/*printf("var_\": %s\n", var1);*/
 	return (var1);
 }
 
