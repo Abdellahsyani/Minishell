@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/24 11:57:57 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/25 19:59:04 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int ft_cmd_size(t_command **cmd)
 {
 	t_command *tmp;
 	int count;
+	
+	count = 0;
 	if (!*cmd)
 		return (0);
 	tmp = *cmd;
@@ -31,13 +33,13 @@ void exec_builtins(t_command **cmd, t_env **env)
 	int fd;
 	int status;
 	t_command *tmp;
-
+	
 	tmp = *cmd;
 	if (!redirect_handler(&fd, cmd, env))
 		return ;
 	status = ft_exec_builtin(tmp->argv[0], tmp->argv, env);
 	update_exit_status(env, status);
-	if(fd == -2)
+	if(fd != -2)
 	{
 		dup2(fd, 1);
 		close(fd);
@@ -50,12 +52,12 @@ int **allocate_tube(int size)
 	int i;
 
 	i = 0;
-	tube = gc_malloc(size);
+	tube = gc_malloc(sizeof(int *) * size);
 	if (!tube)
 		return (0);
 	while (i < size)
 	{
-		tube[i] = gc_malloc(2);
+		tube[i] = gc_malloc(sizeof(int) * 2);
 		if(!tube[i])
 			return (0);
 		i++;
@@ -84,18 +86,20 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
 	int **tube;
 
 	tmp  = *cmd;
-	if (size == 0 && tmp->argv && is_builtin(tmp))
+	if (size == 0  && tmp->argv && is_builtin(tmp))
 	{
 		exec_builtins(cmd, env);
-		exit(0) ;
+		return(0) ;
 	}
 	tube = allocate_tube(size);
+	if (!tube)
+		return (0);
 	if(!tube || !set_pipes(tube, size))
 	{
 		printf("Error: pipe failed or allocation.\n");
 		update_exit_status(env, 1);
 		//closingfds(tube, size);
-		return (NULL);
+		return (0);
 	}
 	return (tube);
 }
@@ -176,62 +180,67 @@ void input_handle1(t_redi *in, t_extra ptr, int fd)
 		in = in->next;
 	}
 }
-void exec_cmd(t_command *cmd, char *path,  t_env **env)
+void exec_cmd(t_command *cmd, t_env **env)
 {
 	int status;
 	char    **envp;
+	char *path;
 
-	envp = NULL;//chr_envirment(env);
+	envp = chr_envirment(env);
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, env);
 		update_exit_status(env, status);
-		return ;
+		exit(status) ;
 	}
 	else
-{
+	{
+		path = find_path(cmd->argv[0], env);
 		if (execve(path, cmd->argv, envp) == -1)
 		{
 			perror("execve failed.");
-			return ;
+			exit(127);
 		}
 	}
+	
 }
-void    handle_child(t_command *cmd, t_env **env, t_extra ptr)
+void    handle_child(t_command *cmd, t_extra ptr)
 {
-	char *path;
+	
 
-	path = find_path(cmd->argv[0], env);
-	input_handle1(cmd->in,ptr, cmd->fd);
-	output_handle1(cmd->out, ptr);
-	if (path)
-		exec_cmd(cmd, path,ptr.env);
-	closingfds(ptr.pipline, ptr.i);
+	 input_handle1(NULL,ptr, cmd->fd); //cmd->in
+	 output_handle1(NULL, ptr); //cmd->out
+	 closingfds(ptr.pipline, ptr.i);
+	if (cmd->argv)
+		exec_cmd(cmd, ptr.env);
+	
+	exit(1);
 }
 
-int ft_exec(t_command **cmd, t_env **env)
+void ft_exec(t_command **cmd, t_env **env)
 {
 	t_extra ptr;
 	t_command *tmp;
 
 	tmp = *cmd;
+	
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
 	if (!ptr.pipline)
-		return (0);
+		return ;
 	ptr.env = env;
-	ptr.pid = gc_malloc(ptr.size);
+	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
 	if (!ptr.pid)
-		return (0);
-	ft_herdoc(cmd, ptr.env);
-	while (ptr.i < ptr.size)
+		return ;
+	// ft_herdoc(cmd, ptr.env);
+	while (ptr.i <= ptr.size)
 	{
 		ptr.pid[ptr.i] = fork();
 		if (!ptr.pid[ptr.i])
-			handle_child(tmp,env,ptr);
+			handle_child(tmp, ptr);
 		ptr.i++;
 		tmp = tmp->next;
 	}
-	return (wait_and_free(ptr));
+	wait_and_free(ptr);
 }

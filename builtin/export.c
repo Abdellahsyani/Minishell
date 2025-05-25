@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/24 09:57:30 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:42:47 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void    set_new_env(char *key, char *value, t_env **env)
     }
     else
     {
-        create = malloc(sizeof(t_env));//??
+        create = malloc(sizeof(t_env));
         create->key = ft_strdup(key);
         create->value= ft_strdup(value);
         create->next = *env;

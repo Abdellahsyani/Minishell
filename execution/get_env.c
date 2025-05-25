@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/14 18:11:21 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/25 11:50:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,23 @@ t_env *new_node(char *key, char *value)
 	new->next = NULL;
 	return (new);
 }
-/*
+
 char **chr_envirment(t_env **env)
 {
 	char **envp;
 	t_env   *tmp;
 	char    *str;
 	int i = 0;
-	tmp = *env;
-
+	
+	if (env)
+		return (NULL);
 	while (env[i])
 		i++;
 	envp = gc_malloc(sizeof(char *) * (i + 1));
 	if (!envp)
 		return (NULL);
 	i = 0;
+	tmp = *env;
 	while (tmp)
 	{
 		str = ft_strjoin(tmp->key, "=");
@@ -91,10 +93,10 @@ char **chr_envirment(t_env **env)
 		free(str);
 		tmp = tmp->next;
 	}
-	envp[i] = NULL;
+	envp[i] = 0;
 	return (envp);
 }
-*/
+	
 t_env   **get_env(char **list)
 {
 	t_env **tmp;

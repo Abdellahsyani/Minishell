@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/24 11:56:38 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/25 15:39:05 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,18 @@
 int input_handle(t_redi *redir)
 {
 	t_redi *tmp;
-	int fd;
-
+	
 	tmp = redir;
-	if (!tmp)
+	if (!tmp || tmp)
 		return (1);
 	while(tmp)
 	{
-		if (tmp->type == redir_input && (!access(tmp->file, R_OK)))
+		if (tmp->type == redir_input && access(tmp->file, R_OK) == -1)
 		{
-			fd = open(redir->file, O_RDONLY);
-			dup2(fd, 0);
-			close(fd);
-		}
-		else
-	{
-			perror("open");
+			perror("ERROR");
 			return (0);
 		}
+		
 		tmp = tmp->next;
 	}
 	return (1);
@@ -45,7 +39,7 @@ int output_handle(t_redi *redir)
 	int ret;
 
 	tmp = redir;
-	if (!tmp)
+	if (!tmp || tmp)
 		return (-2);
 	if (tmp->type == redir_output)
 		fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
@@ -73,6 +67,7 @@ int output_handle(t_redi *redir)
 int redirect_handler(int *fd, t_command **cmd , t_env **env)
 {
 	t_command *tmp;
+	(void)env;
 
 	tmp = *cmd;
 	if (!input_handle(tmp->in))

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/23 17:42:04 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/25 19:56:07 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ int     ft_unset(char **arg, t_env **env);
 int     ft_exit(char **arg,int last_status);
 
 //***************Execution**************
-int ft_exec(t_command **cmd, t_env **env);
-int	wait_and_free(t_extra ptr);
+void ft_exec(t_command **cmd, t_env **env);
+void	wait_and_free(t_extra ptr);
 void	helper_herdoc(char *line, int fd, t_env **env);
 int	ft_handle_herdoc(char *value, t_env **env);
 void    write_in_file(int fd, t_env **env, char *limiter);

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/22 16:55:38 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/25 12:22:38 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void    ft_herdoc(t_command **cmd,t_env **env)
 {
 	t_command *tmp;
 	t_redi *in;
-
+	
 	tmp = *cmd;
 	tmp->fd = -1;
 	while (tmp)
