@@ -191,7 +191,6 @@ int pars_command(t_token *list, t_command **cmd_list)
 	t_command *current_cmd = NULL;
 	t_token *current = list;
 
-
 	while (current)
 	{
 		if (current_cmd == NULL)
@@ -204,13 +203,37 @@ int pars_command(t_token *list, t_command **cmd_list)
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
 		else if (current->type == redir_output && current->next)
+		{
 			fill_operation(current_cmd, &current, 0);
+			if (!current->next->next)
+				break;
+			current = current->next->next;
+			continue;
+		}
 		else if (current->type == redir_input && current->next)
+		{
 			fill_operation(current_cmd, &current, 1);
+			if (!current->next->next)
+				break;
+			current = current->next->next;
+			continue;
+		}
 		else if (current->type == redir_o_app && current->next)
+		{
 			fill_operation(current_cmd, &current, 1);
+			if (!current->next->next)
+				break;
+			current = current->next->next;
+			continue;
+		}
 		else if (current->type == d_herdoc && current->next)
+		{
 			fill_operation(current_cmd, &current, 0);
+			if (!current->next->next)
+				break;
+			current = current->next->next;
+			continue;
+		}
 		else if (current->type == pipe_line)
 			current_cmd = NULL;
 		if (current)
@@ -218,3 +241,4 @@ int pars_command(t_token *list, t_command **cmd_list)
 	}
 	return (1);
 }
+

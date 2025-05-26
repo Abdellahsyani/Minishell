@@ -196,6 +196,8 @@ void exec_cmd(t_command *cmd, t_env **env)
 	else
 	{
 		path = find_path(cmd->argv[0], env);
+		if (!path)
+			return;
 		if (execve(path, cmd->argv, envp) == -1)
 		{
 			perror("execve failed.");

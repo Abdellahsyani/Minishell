@@ -56,11 +56,6 @@ int main(int ac, char **argv, char **envp)
 			cmd_tmp = cmd_list;
 			expand_var(list, cmd_list, env);
 		}
-		if (cmd_list->argv)
-		{
-			printf("%s\n", cmd_list->argv[0]);
-			break;
-		}
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}

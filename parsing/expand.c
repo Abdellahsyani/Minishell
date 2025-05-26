@@ -311,5 +311,5 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 		cmd->argv[i] = NULL;
 		cmd = cmd->next;
 	}
-	printf("\n---all_cmd---: %s\n", all_cmd);
+	/*printf("\n---all_cmd---: %s\n", all_cmd);*/
 }
