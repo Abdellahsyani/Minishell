@@ -36,7 +36,7 @@ int output_handle(t_redi *redir)
 {
 	t_redi *tmp;
 	int fd;
-	int ret;
+	int *ret;
 
 	tmp = redir;
 	if (!tmp)
@@ -55,13 +55,13 @@ int output_handle(t_redi *redir)
 			close(fd);
 		else
 		{
-			ret = dup(1);
+			*ret = dup(1);
 			dup2(fd,1);
 			close(fd);
 		}
 		tmp = tmp->next;
 	}
-	return (ret);
+	return (*ret);
 }
 
 int redirect_handler(int *fd, t_command **cmd , t_env **env)

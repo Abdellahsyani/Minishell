@@ -27,6 +27,8 @@ void helper_herdoc(char *line, int fd, t_env **env)
 {
 	int i = 0;
 	t_env *envp;
+	char *var = NULL;
+	char *var1 = NULL;
 
 	while (line[i])
 	{
@@ -51,6 +53,15 @@ void helper_herdoc(char *line, int fd, t_env **env)
 		}
 		else if (line[i] == '$' && line[i + 1] == '\0')
 			write(fd, "$1", 1);
+		else if (line[i] == '$' && ft_isalpha(line[i+1]))
+		{
+			var = get_var1(&line[i]);
+ 			var1 = get_var(&line[i], env);
+			write(fd, var1, ft_strlen(var1));
+			int len = ft_strlen(var);
+			i += len + 1;
+			write(fd, &line[i], 1);
+		}
 		else
 			write(fd, &line[i], 1);
 		i++;

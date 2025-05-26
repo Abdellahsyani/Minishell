@@ -102,6 +102,8 @@ int	pars_command(t_token *list, t_command **cmd_list);
 /** expand functions **/
 void	expand_var(t_token *list, t_command *cmd, t_env **env);
 char	*double_quote(char *str, t_env **env);
+char	*get_var(char *str, t_env **env);
+char	*get_var1(char *str);
 
 /***** parsing functions *****/
 void	ft_free_gc(void);

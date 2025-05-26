@@ -38,7 +38,9 @@ void write_to_herdoc(int fd, t_env **env, char *limiter)
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");
 	else
+	{
 		delimiter = ft_strjoin(limiter, "\n");
+	}
 	write_in_file(fd,env,delimiter);
 	//close(fd);
 	exit(0);
