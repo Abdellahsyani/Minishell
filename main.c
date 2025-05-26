@@ -56,6 +56,8 @@ int main(int ac, char **argv, char **envp)
 			cmd_tmp = cmd_list;
 			expand_var(list, cmd_list, env);
 		}
+		/*t_redi *i = cmd_tmp->out;*/
+		/*printf("file: %s type: %d\n", i->file, i->type);*/
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}

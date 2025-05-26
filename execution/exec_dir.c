@@ -17,7 +17,7 @@ int input_handle(t_redi *redir)
 	t_redi *tmp;
 	
 	tmp = redir;
-	if (!tmp || tmp)
+	if (!tmp) 
 		return (1);
 	while(tmp)
 	{
@@ -39,7 +39,7 @@ int output_handle(t_redi *redir)
 	int ret;
 
 	tmp = redir;
-	if (!tmp || tmp)
+	if (!tmp)
 		return (-2);
 	if (tmp->type == redir_output)
 		fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);

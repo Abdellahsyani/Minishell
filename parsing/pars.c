@@ -169,7 +169,7 @@ void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
 	if (!(*cur) || !(*cur)->next)
 		return;
-	if (i == 0)
+	if (i == 1)
 	{
 
 		t_redi *new_redi = create_nod();
@@ -177,7 +177,7 @@ void	fill_operation(t_command *cmd, t_token **cur, int i)
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->in, new_redi);
 	}
-	else if (i == 1)
+	else if (i == 0)
 	{
 		t_redi *new_redi = create_nod();
 		new_redi->file = ft_strdup((*cur)->next->content);
@@ -220,7 +220,7 @@ int pars_command(t_token *list, t_command **cmd_list)
 		}
 		else if (current->type == redir_o_app && current->next)
 		{
-			fill_operation(current_cmd, &current, 1);
+			fill_operation(current_cmd, &current, 0);
 			if (!current->next->next)
 				break;
 			current = current->next->next;
@@ -228,7 +228,7 @@ int pars_command(t_token *list, t_command **cmd_list)
 		}
 		else if (current->type == d_herdoc && current->next)
 		{
-			fill_operation(current_cmd, &current, 0);
+			fill_operation(current_cmd, &current, 1);
 			if (!current->next->next)
 				break;
 			current = current->next->next;
