@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:12:20 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/03 15:14:22 by asyani           ###   ########.fr       */
+/*   Updated: 2025/05/26 11:50:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ t_command	*create_cmd_node(t_token *list)
 	new_node = gc_malloc(sizeof(t_command));
 	if (!new_node)
 		return (NULL);
+	new_node->in = NULL;
+	new_node->out = NULL;
+	new_node->argv = NULL;
 	new_node->argv_t = gc_malloc(sizeof(char *) * (count + 1));
 	if (!new_node->argv_t)
 		return (NULL);
@@ -187,8 +190,7 @@ int pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command *current_cmd = NULL;
 	t_token *current = list;
-	current_cmd->in = NULL;
-	current_cmd->out = NULL;
+
 
 	while (current)
 	{

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/25 19:56:07 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/26 10:57:46 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_command
     t_redi	*in;
     t_redi	*out;
     struct s_command *next;
-    t_redi	*redi;
 } t_command;
 
 typedef struct s_extra
