@@ -164,7 +164,6 @@ void	add_lis(t_redi **list, t_redi *new_node)
 
 void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
-	cmd->redi = NULL;
 	if (!(*cur) || !(*cur)->next)
 		return;
 	if (i == 0)
@@ -188,6 +187,8 @@ int pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command *current_cmd = NULL;
 	t_token *current = list;
+	current_cmd->in = NULL;
+	current_cmd->out = NULL;
 
 	while (current)
 	{
