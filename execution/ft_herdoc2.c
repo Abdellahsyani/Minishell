@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:22:45 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/15 01:29:01 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/26 13:14:44 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void helper_herdoc(char *line, int fd, t_env **env)
 			write(fd, &line[i], 1);
 		i++;
 	}
+	write(fd,"\n", 1);
 }
 
 // int main(int ac, char **arg, char **env)
