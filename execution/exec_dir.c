@@ -6,7 +6,11 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/03 15:54:05 by abhimi           ###   ########.fr       */
+=======
+/*   Updated: 2025/05/26 16:12:59 by abdo             ###   ########.fr       */
+>>>>>>> 5b1b803 (fix redir)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +37,11 @@ int input_handle(t_redi *redir)
 	t_redi *tmp;
 	
 	tmp = redir;
+<<<<<<< HEAD
 	if (!tmp) 
+=======
+	if (!tmp)
+>>>>>>> 5b1b803 (fix redir)
 		return (1);
 	while(tmp)
 	{
@@ -54,8 +62,20 @@ int output_handle(t_redi *redir)
 	int ret;
 
 	tmp = redir;
+<<<<<<< HEAD
 	if (!tmp)
 		return (-2);
+=======
+	//printf("%s\n",tmp->file);
+	if (!tmp)
+		return (-2);
+	if (tmp->type == redir_output)
+		fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
+	else if (tmp->type == redir_o_app)
+		fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND,  0640);
+	if (fd == -1)
+		return (-1);
+>>>>>>> 5b1b803 (fix redir)
 	while (tmp)
 	{
 		if ((tmp->type == redir_output || tmp->type == redir_o_app)	&& pass_out(tmp, &fd))
