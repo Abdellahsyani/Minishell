@@ -162,30 +162,26 @@ void	add_lis(t_redi **list, t_redi *new_node)
 	}
 }
 
-void	fill_operation(t_command *cmd, t_token **cur)
+void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
 	cmd->redi = NULL;
 	if (!(*cur) || !(*cur)->next)
 		return;
-	t_redi *new_redi = create_nod();
-	new_redi->file = ft_strdup((*cur)->next->content);
-	new_redi->type = (*cur)->type;
-	add_lis(&cmd->redi, new_redi);
-	/*if (i == 0 || i == 1)*/
-	/*{*/
-	/*	if (cmd->outfile)*/
-	/*		free(cmd->outfile);*/
-	/*	cmd->outfile = ft_strdup((*cur)->next->content);*/
-	/*	cmd->append = (i == 1);*/
-	/*	*cur = (*cur)->next;*/
-	/*}*/
-	/*else if (i == 2)*/
-	/*{*/
-	/*	if (cmd->infile)*/
-	/*		free(cmd->infile);*/
-	/*	cmd->infile = ft_strdup((*cur)->next->content);*/
-	/*	*cur = (*cur)->next;*/
-	/*}*/
+	if (i == 0)
+	{
+
+		t_redi *new_redi = create_nod();
+		new_redi->file = ft_strdup((*cur)->next->content);
+		new_redi->type = (*cur)->type;
+		add_lis(&cmd->in, new_redi);
+	}
+	else if (i == 1)
+	{
+		t_redi *new_redi = create_nod();
+		new_redi->file = ft_strdup((*cur)->next->content);
+		new_redi->type = (*cur)->type;
+		add_lis(&cmd->out, new_redi);
+	}
 }
 
 int pars_command(t_token *list, t_command **cmd_list)
@@ -205,13 +201,13 @@ int pars_command(t_token *list, t_command **cmd_list)
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
 		else if (current->type == redir_output && current->next)
-			fill_operation(current_cmd, &current);
+			fill_operation(current_cmd, &current, 0);
 		else if (current->type == redir_input && current->next)
-			fill_operation(current_cmd, &current);
+			fill_operation(current_cmd, &current, 1);
 		else if (current->type == redir_o_app && current->next)
-			fill_operation(current_cmd, &current);
+			fill_operation(current_cmd, &current, 1);
 		else if (current->type == d_herdoc && current->next)
-			fill_operation(current_cmd, &current);
+			fill_operation(current_cmd, &current, 0);
 		else if (current->type == pipe_line)
 			current_cmd = NULL;
 		if (current)
