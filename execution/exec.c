@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 16:48:58 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/27 17:57:11 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,12 +198,13 @@ void exec_cmd(t_command *cmd, t_env **env)
 	{
 		path = find_path(cmd->argv[0], env);
 		if (!path)
-			return;
+			exit(1);
 		if (execve(path, cmd->argv, envp) == -1)
 		{
 			perror("execve failed.");
 			exit(127);
 		}
+
 	}
 	
 }

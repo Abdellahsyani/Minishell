@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/25 11:50:30 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/27 18:04:35 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,10 @@ t_env   **get_env(char **list)
 	while (*list)
 	{
 		cur->next = new_node(ft_key(*list), get_value(*list));
+		if (!ft_strcmp(cur->key, "_"))
+			cur->flag = 0;
+		else
+			cur->flag = 1;
 		cur = cur->next;
 		list++;
 	}

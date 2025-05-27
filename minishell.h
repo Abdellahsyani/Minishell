@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/27 13:17:45 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:02:54 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_env
 {
     char    *key;
     char    *value;
+    int     flag;
     struct s_env *next;
 } t_env;
 
