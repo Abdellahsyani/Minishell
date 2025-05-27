@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 13:50:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/27 16:48:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,13 +211,13 @@ void    handle_child(t_command *cmd, t_extra ptr)
 {
 	
 
-	input_handle1(cmd->in,ptr, cmd->fd); //cmd->in
-	output_handle1(cmd->out, ptr); //cmd->out
+	input_handle1(cmd->in,ptr, cmd->fd);
+	output_handle1(cmd->out, ptr); 
 	 closingfds(ptr.pipline, ptr.i);
 	if (cmd->argv)
 		exec_cmd(cmd, ptr.env);
 	
-	exit(1);
+	//exit(1);
 }
 
 void ft_exec(t_command **cmd, t_env **env)
@@ -237,8 +237,6 @@ void ft_exec(t_command **cmd, t_env **env)
 	if (!ptr.pid)
 		return ;
 	ft_herdoc(cmd, ptr.env);
-	if (!tmp->argv)
-		exit(0);
 	while (ptr.i <= ptr.size)
 	{
 		ptr.pid[ptr.i] = fork();

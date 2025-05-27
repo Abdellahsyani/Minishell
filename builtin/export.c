@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 14:30:41 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/27 15:45:41 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void    set_new_env(char *key, char *value, t_env **env)
 		return ;
 	}
 	else
-{
+	{
 		create = malloc(sizeof(t_env));
 		create->key = ft_strdup(key);
 		create->value= ft_strdup(value);
@@ -79,8 +79,6 @@ int check_arg(char *str,t_env **env)
 		if (str[i + 1] == '"')
 		{
 			i += 1;
-			while (str[i] == ' ')
-				i++;
 			l -= 1;
 		}
 		value = ft_substr(str, i + 1, l - i - 1);
@@ -90,26 +88,26 @@ int check_arg(char *str,t_env **env)
 }
 
 int ft_export(char **arg, t_env **env)
-	{
-		int i;
+{
+	int i;
 
-		i = 1;
-		if (!arg[1])
-		{
-			print_export(env);
-			return (1);
-		}
-		else
+	i = 1;
+	if (!arg[1])
 	{
-			while (arg[i])
-			{
-				if (!check_arg(arg[i],env))
-				{
-					printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
-					// return (0);
-				}
-				i++;    
-			}
-		}
+		print_export(env);
 		return (1);
 	}
+	else
+	{
+		while (arg[i])
+		{
+			if (!check_arg(arg[i],env))
+			{
+				printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
+			}
+			i++;    
+			}
+	}
+		return (1);
+}
+
