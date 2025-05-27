@@ -15,10 +15,18 @@
 void    write_in_file(int fd, t_env **env, char *limiter)
 {
 	char *line;
+	char *err = "minishell: warning: here-document at line 1 delimited by end-of-file\n";
 
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+		{
+			write(2, err, ft_strlen(err));
+			exit(0);
+		}
+		if (!*line)
+			continue;
 		if (!ft_strncmp(line, limiter,ft_strlen(line)))
 		{
 			free(limiter);

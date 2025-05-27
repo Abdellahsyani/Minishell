@@ -32,7 +32,7 @@ int main(int ac, char **argv, char **envp)
 		list = NULL;
 		cmd_list = NULL;
 
-		line = readline("\033[1;32m minishell $ \033[0m");
+		line = readline("\033[1;32mminishell $ \033[0m");
 		if (!line)
 		{
 			printf("exit\n");
