@@ -266,13 +266,21 @@ char	*copy_var(char *content)
 	start = i;
 	while (content[i])
 	{
-		if (content[i] == ' ')
-			break ;
+		/*if (content[i] == '"')*/
+		/*{*/
+		/*	if (content[i] == ' ')*/
+		/*	{*/
+		/*		i++;*/
+		/*		continue;*/
+		/*	}*/
+		/*}*/
+		/*else if (content[i] == ' ')*/
+		/*	break ;*/
 		i++;
 	}
 	len = i;
 	var = ft_strlcpy(var, content, len, start);
-	/*printf("var_all: %s", var);*/
+	/*printf("var_all: %s\n", var);*/
 	return (var);
 }
 

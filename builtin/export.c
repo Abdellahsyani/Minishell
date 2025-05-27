@@ -59,31 +59,65 @@ void    set_new_env(char *key, char *value, t_env **env)
 		*env = create;
 	}
 }
+
+char	*extract_space(char *str)
+{
+	int	i;
+	char	*value;
+	int count = 0;
+	int j = 0;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalpha(str[i]))
+			count++;
+		i++;
+	}
+	i = 0;
+	value = gc_malloc(sizeof(count) + 1);
+	while (str[i])
+	{
+		if ((str[i] == ' ' && str[i + 1] == ' ') || str[i] == '"')
+		{
+			i++;
+			continue;
+		}
+		value[j] = str[i];
+		i++;
+		j++;
+	}
+	value[j] = '\0';
+	return (value);
+}
+
 int check_arg(char *str,t_env **env)
 {
 	int i;
 	char *key;
 	char *value = NULL;
 	int l;
-	printf("%s8\n", str);
 	l = ft_strlen(str);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
 		i++;
-
 	key = ft_substr(str, 0, i);
 	if (!is_valid(key))
 		return (free(key), 0);
 	if (str[i] == '=')
 	{
-		if (str[i + 1] == '"')
+		if (str[i + 2] == ' ')
 		{
-			i += 1;
-			while (str[i] == ' ')
-				i++;
-			l -= 1;
+			if (str[i + 1] == '"')
+			{
+				i += 2;
+				while (str[i] == ' ')
+					i++;
+			}
+			value = ft_substr(str, i, l - i - 2);
 		}
-		value = ft_substr(str, i + 1, l - i - 1);
+		else
+			value = extract_space(&str[i + 1]);
 	}
 	set_new_env(key, value,env);
 	return (1);
