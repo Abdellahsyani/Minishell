@@ -106,6 +106,7 @@ char	*single_qoute(char *content)
 	char	*var;
 
 	i = 0;
+	count = 0;
 	while (content[i])
 	{
 		if (content[i] == '\'')

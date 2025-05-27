@@ -36,7 +36,7 @@ int output_handle(t_redi *redir)
 {
 	t_redi *tmp;
 	int fd;
-	int *ret;
+	int *ret = NULL;
 
 	tmp = redir;
 	if (!tmp)

@@ -28,6 +28,7 @@ int ft_cmd_size(t_command **cmd)
 	}
 	return(count);
 }
+
 void exec_builtins(t_command **cmd, t_env **env)
 {
 	int fd;
@@ -142,7 +143,7 @@ void output_handle1(t_redi *tmp, t_extra ptr)
 	}
 	while (tmp)
 	{
-		if (tmp->type == redir_input && tmp->type == redir_o_app && pass_out(tmp, &fd))
+		if ((tmp->type == redir_input || tmp->type == redir_o_app) && pass_out(tmp, &fd))
 		{
 			dup2(fd, 1);
 			close(fd);   
