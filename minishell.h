@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/26 10:57:46 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/27 13:17:45 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,6 @@ int     redirect_handler(int *fd, t_command **cmd , t_env **env);
 int     input_handle(t_redi *redir);
 int     output_handle(t_redi *redir);
 void    closingfds(int **tube, int pos);
+int     pass_out(t_redi *tmp ,int *fd);
 
 #endif
