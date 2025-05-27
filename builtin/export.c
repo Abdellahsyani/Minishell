@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/25 15:42:47 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/27 14:30:41 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int check_arg(char *str,t_env **env)
 	char *key;
 	char *value = NULL;
 	int l;
-
+	printf("%s8\n", str);
 	l = ft_strlen(str);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
@@ -79,6 +79,8 @@ int check_arg(char *str,t_env **env)
 		if (str[i + 1] == '"')
 		{
 			i += 1;
+			while (str[i] == ' ')
+				i++;
 			l -= 1;
 		}
 		value = ft_substr(str, i + 1, l - i - 1);
@@ -111,35 +113,3 @@ int ft_export(char **arg, t_env **env)
 		}
 		return (1);
 	}
-
-	/*int main(int ac, char **arg, char **env)*/
-	/*{*/
-	/*    t_env **envp;*/
-	/**/
-	/*    envp = get_env(env);*/
-	/*    // if (!ft_export(arg,envp))*/
-	/*    // {*/
-	/*    //     return (1);*/
-	/*    // }*/
-	/*    char    *line;*/
-	/*    char    **args;*/
-	/*    while (1)*/
-	/*    {*/
-	/*        line = readline("/033 minishell/00$ ");*/
-	/*        args = ft_split(line, ' ');*/
-	/*        if (ft_strcmp(args[0], "export") == 0)*/
-	/*            ft_export(args, envp);*/
-	/*        else if (ft_strcmp(args[0], "unset") == 0)*/
-	/*            ft_unset(args, envp);*/
-	/*        else if (ft_strcmp(args[0], "echo")== 0)*/
-	/*            ft_echo(args);*/
-	/*        else if (ft_strcmp(args[0], "pwd")== 0)*/
-	/*            ft_pwd(args);*/
-	/*        else if (ft_strcmp(args[0], "env")== 0)*/
-	/*            ft_env(envp);*/
-	/*        else if (ft_strcmp(args[0], "cd")== 0)*/
-	/*            ft_cd(args,*envp);*/
-	/*    }*/
-	/*    print_export(envp);*/
-	/*    return (0);*/
-	/*}*/
