@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 17:06:05 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:24:48 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void exec_cmd(t_command *cmd, t_env **env)
 		path = find_path(cmd->argv[0], env);
 		if (!path)
 			exit(1);
+		printf(" %s\n", path);
 		if (execve(path, cmd->argv, envp) == -1)
 		{
 			perror("execve failed.");
@@ -246,7 +247,6 @@ void ft_exec(t_command **cmd, t_env **env)
 	ft_herdoc(cmd, ptr.env);
 	while (ptr.i <= ptr.size)
 	{
-		printf("here\n");
 		ptr.pid[ptr.i] = fork();
 		if (!ptr.pid[ptr.i])
 			handle_child(tmp, ptr);

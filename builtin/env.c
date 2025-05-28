@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 11:29:08 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:49:11 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int ft_check_value(char *str)
     }
     return (0);
 }
+
+
 void ft_remove(char **argv, t_env **env)
 {
     char *key;
@@ -49,14 +51,14 @@ int ft_env(t_env **env, char **argv)
     i = 1;
     while (argv[i])
     {
-        if (!ft_check_value(argv[i]))
+        if (!ft_check_value(argv[i]) && ft_strcmp(argv[i], "env"))
         {
             printf("env : \'%s\' : NO such file or directory\n", argv[i]);
             return (1);
         }
         i++;
     }
-    if (argv[1])
+    if (argv[1] && ft_strcmp(argv[1], "env"))
         ft_export(argv,env);
     update_path(argv[0], env);
     tmp = *env;
