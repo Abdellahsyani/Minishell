@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:32:15 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/18 01:46:58 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/28 09:47:25 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
 	else if (!ft_strcmp(cmd, "unset"))
 		return (ft_unset(args, env));
 	else if (!ft_strcmp(cmd, "env"))
-		return (ft_env(env));
+		return (ft_env(env, args));
 	else if (!ft_strcmp(cmd, "exit"))
 		return (ft_exit(args, 0));
 	return (1);

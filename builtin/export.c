@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 18:27:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:42:35 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ void    print_export(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
+		if (!tmp->flag)
+			break ;
 		if (!tmp->value)
 		{
 			printf("declare -x %s\n",tmp->key);
 		}
 		else
 			printf("declare -x %s=\"%s\"\n",tmp->key,tmp->value);
+		tmp = tmp->next;
 	}
 }
 void    set_new_env(char *key, char *value, t_env **env)
@@ -91,6 +94,7 @@ int ft_export(char **arg, t_env **env)
 	int i;
 
 	i = 1;
+
 	if (!arg[1])
 	{
 		print_export(env);

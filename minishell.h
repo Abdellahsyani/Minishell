@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/27 18:02:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:28:02 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,18 +133,21 @@ char	*token_type(t_token *list);
 int	start_parsing(t_token *list);
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
+int     ft_check_value(char *str);
 t_env   *ft_find(t_env *env, char *key);
 t_env   **get_env(char **list);
 int	count_word_tokens(t_token *list);
 void    set_new_env(char *key, char *value, t_env **env);
 char    **chr_envirment(t_env **env);
-
+void    delete_key_value(char *key, t_env **env);
+char    *ft_key(char *str);
+void    update_path(char *arg, t_env **env);
 //**************Builtin****************
 
 int    ft_echo(char **arg);
 int     ft_cd(char **args, t_env **env);
 int    ft_pwd(char **args);
-int     ft_env(t_env **env);
+int     ft_env(t_env **env, char **argv);
 int     ft_export(char **arg, t_env **env);
 int     ft_unset(char **arg, t_env **env);
 int     ft_exit(char **arg,int last_status);
