@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 10:53:11 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/10 14:49:16 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:25:38 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,37 @@ int	is_operator(char op)
 	return (0);
 }
 
+void ft_sort(t_env **env)
+{
+	t_env *tmp;
+	t_env *cur;
+	int l;
+	int i = 0;
+	int j;
+	
+	tmp = *env;
+	l = 0;
+	while (tmp)
+	{
+		l++;
+		tmp = tmp->next;
+	}
+	tmp = *env;
+	cur  = *env;
+	while (i < l)
+	{
+		j = 0;
+		while (j < l - i - 1)
+		{
+			if(cur->key[j] > cur->next->key[j + 1])
+			{
+				tmp = cur->next;
+				cur->next = cur;
+				cur = tmp ;
+			}
+			j++;
+			cur = cur->next;
+		}
+		i++;
+	}
+}
