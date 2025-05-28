@@ -268,50 +268,38 @@ char	*copy_var(char *content)
 int	h_export(t_command *cmd, t_env **env)
 {
 	char	*var;
+	char	**spl;
+	int	i;
+	int	j;
 
-	printf("her\n");
-	printf("%c\n", cmd->argv_t[0][0]);
 	if (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$')
 	{
-		printf("error");
+		printf("bash: %s: command not found\n", get_var(&cmd->argv_t[0][1], env));
 		return (0);
 	}
 	if (cmd->argv_t[0][0] == '$')
 	{
 		var = ft_strdup(get_var(cmd->argv_t[0], env));
-		printf("%s\n", var);
-		int j = 0;
-		int x = 0;
-		int k = 0;
-		while (var[j])
+		spl = ft_split(var, ' ');
+		i = 0;
+		j = 0;
+		while (spl[i])
 		{
-			printf("%c\n", var[j]);
-			if (var[j] == ' ')
-			{
-				j++;
-				k++;
-				x = 0;
-				continue;
-			}
-			cmd->argv[k][x] = var[j];
-			printf("%c\n", cmd->argv[k][x]);
+			cmd->argv[j] = spl[i];
+			i++;
 			j++;
-			x++;
 		}
-		printf("argv[0]: %s, argv[1]: %s\n", cmd->argv[0], cmd->argv[1]);
+		cmd->argv[j] = NULL;
 	}
-	printf("her2\n");
 	return (1);
 }
 
 void	expand_var(t_token *list, t_command *cmd, t_env **env)
 {
 	int	i;
-	char	*all_cmd;
 	int	count;
 	(void)list;
 
-	all_cmd = NULL;
 	while (cmd)
 	{
 		count = 0;
@@ -321,7 +309,11 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 		if (!cmd->argv)
 			return ;
 		i = 0;
-		/*h_export(cmd, env);*/
+		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$'))
+		{
+			h_export(cmd, env);
+			break;
+		}
 		while (cmd->argv_t[i])
 		{
 			if (cmd->argv_t[i][0] == '\'')
@@ -332,13 +324,9 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 				cmd->argv[i] = ft_strdup(get_var(cmd->argv_t[i], env));
 			else
 				cmd->argv[i] = ft_strdup(copy_var(cmd->argv_t[i]));
-			all_cmd = ft_strjoin(all_cmd, cmd->argv[i]);
-			if (cmd->argv_t[i + 1] != NULL && ft_isalpha(cmd->argv[i][0]))
-				all_cmd = ft_strjoin(all_cmd, " ");
 			i++;
 		}
 		cmd->argv[i] = NULL;
 		cmd = cmd->next;
 	}
-	/*printf("\n---all_cmd---: %s\n", all_cmd);*/
 }
