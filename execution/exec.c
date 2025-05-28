@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 17:57:11 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:16:06 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void pass_in(t_redi *tmp, int fd)
 		fd = open(tmp->file, O_RDONLY);
 	if (fd  == -1)
 	{
-		perror("open failed");
+		perror("o8pen failed");
 		return ;
 	}
 	dup2(fd, 0);
