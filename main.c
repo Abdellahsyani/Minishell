@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/27 13:10:39 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:36:41 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int main(int ac, char **argv, char **envp)
 			cmd_tmp = cmd_list;
 			expand_var(list, cmd_list, env);
 		}
-		/*t_redi *i = cmd_tmp->out;*/
-		/*printf("file: %s type: %d\n", i->file, i->type);*/
+	
+		//printf("ARG: %s\n",cmd_tmp->argv[1]);
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}
