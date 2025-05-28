@@ -38,13 +38,13 @@ char *ft_get(t_env **env, char *key)
 {
 	t_env *tmp;
 	tmp = *env;
-    while (tmp)
-    {
-        if (!ft_strcmp((tmp)->key, key))
-            return (tmp->value);
-        (tmp) = (tmp)->next;
-    }
-    return (NULL);
+	while (tmp)
+	{
+		if (!ft_strcmp((tmp)->key, key))
+			return (tmp->value);
+		(tmp) = (tmp)->next;
+	}
+	return (NULL);
 }
 
 char	*get_var(char *str, t_env **env)
@@ -182,13 +182,6 @@ char	*double_quote(char *content, t_env **env_t)
 	}
 	env[counts] = NULL;
 	env_var[counts] = NULL;
-	/*printf("\n------------\n");*/
-	/*printf("env-->%s\n", env[0]);*/
-	/*printf("env-->%s\n", env[1]);*/
-	/*printf("env_var-->%s\n", env_var[0]);*/
-	/*printf("env_var-->%s\n", env_var[1]);*/
-	/*printf("count--> %d\n", count);*/
-	/*printf("\n------------\n");*/
 	i = 0;
 	track_size = gc_malloc(sizeof(int) * (coun + 1));
 	if (!track_size)
@@ -265,25 +258,51 @@ char	*copy_var(char *content)
 	i = 0;
 	start = i;
 	while (content[i])
-	{
-		/*if (content[i] == '"')*/
-		/*{*/
-		/*	if (content[i] == ' ')*/
-		/*	{*/
-		/*		i++;*/
-		/*		continue;*/
-		/*	}*/
-		/*}*/
-		/*else if (content[i] == ' ')*/
-		/*	break ;*/
 		i++;
-	}
 	len = i;
 	var = ft_strlcpy(var, content, len, start);
 	/*printf("var_all: %s\n", var);*/
 	return (var);
 }
 
+int	h_export(t_command *cmd, t_env **env)
+{
+	char	*var;
+
+	printf("her\n");
+	printf("%c\n", cmd->argv_t[0][0]);
+	if (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$')
+	{
+		printf("error");
+		return (0);
+	}
+	if (cmd->argv_t[0][0] == '$')
+	{
+		var = ft_strdup(get_var(cmd->argv_t[0], env));
+		printf("%s\n", var);
+		int j = 0;
+		int x = 0;
+		int k = 0;
+		while (var[j])
+		{
+			printf("%c\n", var[j]);
+			if (var[j] == ' ')
+			{
+				j++;
+				k++;
+				x = 0;
+				continue;
+			}
+			cmd->argv[k][x] = var[j];
+			printf("%c\n", cmd->argv[k][x]);
+			j++;
+			x++;
+		}
+		printf("argv[0]: %s, argv[1]: %s\n", cmd->argv[0], cmd->argv[1]);
+	}
+	printf("her2\n");
+	return (1);
+}
 
 void	expand_var(t_token *list, t_command *cmd, t_env **env)
 {
@@ -302,6 +321,7 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 		if (!cmd->argv)
 			return ;
 		i = 0;
+		/*h_export(cmd, env);*/
 		while (cmd->argv_t[i])
 		{
 			if (cmd->argv_t[i][0] == '\'')
