@@ -55,35 +55,168 @@ char	*get_status(char *str, t_env **env)
 	return (var);
 }
 
-char	*get_var(char *str, t_env **env)
-{
-	char	*var;
-	int	i;
-	int	start;
-	int	len;
-	char	*var1;
 
-	i = 1;
-	len = 0;
-	start = 0;
-	var = NULL;
-	start = i;
-	if (str[i] == '?')
-		return (get_status(&str[i], env));
-	while (ft_isalpha(str[i]) || str[i] == '_')
+char	*norm_whitespace(char *str, char *allo, char *get)
+{
+	char *result;
+	int i = 0, j = 0;
+	int in_whitespace = 0;
+
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+	int result_len = 0;
+	int temp_i = i;
+	while (str[temp_i])
 	{
-		if (str[i] == ' ' || str[i] == '"')
-			break;
+		if (str[temp_i] == ' ' || str[temp_i] == '\t')
+		{
+			if (!in_whitespace && str[temp_i + 1] && 
+				str[temp_i + 1] != ' ' && str[temp_i + 1] != '\t')
+				result_len++;
+			in_whitespace = 1;
+		}
+		else
+	{
+			result_len++;
+			in_whitespace = 0;
+		}
+		temp_i++;
+	}
+	int n = ft_strlen(str);
+	if (str[n - 1] == ' ' && get)
+		result_len += 1;
+	result = gc_malloc(result_len + 1);
+	if (!result)
+		return NULL;
+	in_whitespace = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+		{
+			if (!in_whitespace)
+			{
+				int k = i;
+				while (str[k] && (str[k] == ' ' || str[k] == '\t'))
+					k++;
+				if (str[k])
+					result[j++] = ' ';
+			}
+			in_whitespace = 1;
+		}
+		else
+		{
+			result[j++] = str[i];
+			in_whitespace = 0;
+		}
 		i++;
 	}
-	len = i - 1;
-	var = ft_strlcpy(var, str, len, start);
-	var1 = ft_get(env, var);
-	if (!var1)
-		var1 = ft_strdup("");
-	/*printf("\nvar_$: %s\n", var1);*/
-	return (var1);
+	result[j] = '\0';
+	if (allo)
+		result = ft_strjoin(result, allo);
+	if (str[n - 1] == ' ' && get)
+		result = ft_strjoin(result, " ");
+	if (get)
+		result = ft_strjoin(result, get);
+	return result;
 }
+
+char *get_allstr(char *str)
+{
+	int	i =0;
+	char	*value;
+
+	while (str[i])
+		i++;
+	value = ft_substr(str, 0, i);
+	return value;
+}
+
+char *get_var(char *str, t_env **env)
+{
+	int i = 1;
+	int start = i;
+	int len;
+	char *var_name;
+	char *var_value;
+	char	*allo = NULL;
+	char	*get = NULL;
+
+	if (str[i] == '?')
+		return (get_status(&str[i], env));
+
+	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
+		i++;
+	if (str[i] == '"' && str[i + 1] == '$')
+		allo = ft_strdup(double_quote(&str[i], env));
+	if (!ft_isalpha(str[i]))
+		get = ft_strdup(get_allstr(&str[i]));
+	len = i - start;
+	var_name = ft_strlcpy(NULL, str, len, start);
+	var_value = ft_get(env, var_name);
+	if (!var_value)
+		var_value = ft_strdup("");
+	/*printf("var_value: %s\n", var_value);*/
+	return (norm_whitespace(var_value, allo, get));
+}
+
+/*char	*get_var(char *str, t_env **env)*/
+/*{*/
+/*	char	*var;*/
+/*	int	i;*/
+/*	int	start;*/
+/*	int	len;*/
+/*	char	*var1;*/
+/*	char	*var2;*/
+/*	static int	track = 0;*/
+/**/
+/*	i = 1;*/
+/*	len = 0;*/
+/*	start = 0;*/
+/*	var = NULL;*/
+/*	start = i;*/
+/*	if (str[i] == '?')*/
+/*		return (get_status(&str[i], env));*/
+/*	while (ft_isalpha(str[i]) || str[i] == '_')*/
+/*	{*/
+/*		if (str[i] == ' ' || str[i] == '"')*/
+/*			break;*/
+/*		i++;*/
+/*	}*/
+/*	len = i - 1;*/
+/*	var = ft_strlcpy(var, str, len, start);*/
+/*	var1 = ft_get(env, var);*/
+/*	if (!var1)*/
+/*		var1 = ft_strdup("");*/
+/*	i = 0;*/
+/*	int count = 0;*/
+/*	while (var1[i])*/
+/*	{*/
+/*		if (var1[i] != ' ')*/
+/*			count++;*/
+/*		i++;*/
+/*	}*/
+/*	var2 = gc_malloc(sizeof(count) + 2);*/
+/*	int j = 0;*/
+/*	if (var1)*/
+/*	{*/
+/*		i = 0;*/
+/*		while (var1[i])*/
+/*		{*/
+/*			if (track == 0 && var1[i] == ' ')*/
+/*			{*/
+/*				i++;*/
+/*				continue;*/
+/*			}*/
+/*			var2[j] = var1[i];*/
+/*			i++;*/
+/*			j++;*/
+/*		}*/
+/*	}*/
+/*	track += 1;*/
+/*	var2[j] = '\0';*/
+/*	printf("\nvar_$: %s\n", var2);*/
+/*	return (var1);*/
+/*}*/
 
 char	*get_var1(char *str)
 {
@@ -176,7 +309,6 @@ char	*double_quote(char *content, t_env **env_t)
 			get_v = get_var1(&content[i]);
 			env_var[counts] = ft_strdup(get_v);
 			exp = ft_get(env_t, get_v);
-			/*printf("\nexp--> '%s'\n", exp);*/
 			if (exp)
 				env[counts] = ft_strdup(exp);
 			else

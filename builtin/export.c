@@ -107,15 +107,15 @@ int check_arg(char *str,t_env **env)
 		return (free(key), 0);
 	if (str[i] == '=')
 	{
-		if (str[i + 2] == ' ')
+		if (str[i + 1] == '"')
 		{
 			i += 2;
 			value = ft_substr(str, i, l - i - 1);
 		}
-		else
-			value = extract_space(&str[i + 1]);
+		/*else*/
+		/*	value = extract_space(&str[i + 1]);*/
 	}
-	printf("value: %s\n", value);
+	/*printf("value: %s\n", value);*/
 	set_new_env(key, value,env);
 	return (1);
 }
