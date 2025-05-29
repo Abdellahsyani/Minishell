@@ -38,6 +38,7 @@ void    print_export(t_env **env)
 		tmp = tmp->next;
 	}
 }
+
 void    set_new_env(char *key, char *value, t_env **env)
 {
 	t_env *exist;
@@ -108,17 +109,13 @@ int check_arg(char *str,t_env **env)
 	{
 		if (str[i + 2] == ' ')
 		{
-			if (str[i + 1] == '"')
-			{
-				i += 2;
-				while (str[i] == ' ')
-					i++;
-			}
-			value = ft_substr(str, i, l - i - 2);
+			i += 2;
+			value = ft_substr(str, i, l - i - 1);
 		}
 		else
 			value = extract_space(&str[i + 1]);
 	}
+	printf("value: %s\n", value);
 	set_new_env(key, value,env);
 	return (1);
 }

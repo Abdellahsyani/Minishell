@@ -47,6 +47,14 @@ char *ft_get(t_env **env, char *key)
 	return (NULL);
 }
 
+char	*get_status(char *str, t_env **env)
+{
+	char	*var;
+
+	var = ft_strdup(ft_get(env, str));
+	return (var);
+}
+
 char	*get_var(char *str, t_env **env)
 {
 	char	*var;
@@ -60,6 +68,8 @@ char	*get_var(char *str, t_env **env)
 	start = 0;
 	var = NULL;
 	start = i;
+	if (str[i] == '?')
+		return (get_status(&str[i], env));
 	while (ft_isalpha(str[i]) || str[i] == '_')
 	{
 		if (str[i] == ' ' || str[i] == '"')
@@ -166,6 +176,7 @@ char	*double_quote(char *content, t_env **env_t)
 			get_v = get_var1(&content[i]);
 			env_var[counts] = ft_strdup(get_v);
 			exp = ft_get(env_t, get_v);
+			/*printf("\nexp--> '%s'\n", exp);*/
 			if (exp)
 				env[counts] = ft_strdup(exp);
 			else
@@ -217,7 +228,6 @@ char	*double_quote(char *content, t_env **env_t)
 
 	var = gc_malloc(sizeof(char) * (count + 1));
 	var = stcopy(var, content, '"');
-	/*printf("\nvar--> %s\n", var);*/
 	i = 0;
 	int k = 0;
 	int	j = 0;
