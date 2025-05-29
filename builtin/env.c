@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 17:49:11 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:18:05 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,28 @@ int ft_check_value(char *str)
 }
 
 
-void ft_remove(char **argv, t_env **env)
-{
-    char *key;
-    int i;
+// void ft_remove(char **argv, t_env **env)
+// {
+//     char *key;
+//     int i;
     
-    i = 1;
-    while (argv[i])
-    {
-       key = ft_key(argv[i]);
-       delete_key_value(key, env);
-       free(key);
-       i++;
-    }
-}
+//     i = 1;
+//     while (argv[i])
+//     {
+//        key = ft_key(argv[i]);
+//        delete_key_value(key, env);
+//        free(key);
+//        i++;
+//     }
+// }
 
 int ft_env(t_env **env, char **argv)
 {
     t_env *tmp;
+    (void)argv;
     int i;
 
     i = 1;
-    while (argv[i])
-    {
-        if (!ft_check_value(argv[i]) && ft_strcmp(argv[i], "env"))
-        {
-            printf("env : \'%s\' : NO such file or directory\n", argv[i]);
-            return (1);
-        }
-        i++;
-    }
-    if (argv[1] && ft_strcmp(argv[1], "env"))
-        ft_export(argv,env);
     update_path(argv[0], env);
     tmp = *env;
     if (!tmp)
@@ -69,15 +59,5 @@ int ft_env(t_env **env, char **argv)
         printf("%s=%s\n",tmp->key,tmp->value);
         tmp = tmp->next;
     }
-    ft_remove(argv, env);
     return (0);
 }
-// int main(int ac, char **args, char **env)
-// {
-//     (void)ac;
-//     (void)args;
-//     t_env **envp;
-
-//     envp = get_env(env);
-//     return (ft_env(envp));
-// 

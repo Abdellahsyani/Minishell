@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 17:24:48 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:14:35 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,8 +194,9 @@ void exec_cmd(t_command *cmd, t_env **env)
 	int status;
 	char    **envp;
 	char *path;
-
 	envp = chr_envirment(env);
+	
+
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, env);
@@ -206,16 +207,13 @@ void exec_cmd(t_command *cmd, t_env **env)
 	{
 		path = find_path(cmd->argv[0], env);
 		if (!path)
-			exit(1);
-		printf(" %s\n", path);
-		if (execve(path, cmd->argv, envp) == -1)
 		{
-			perror("execve failed.");
-			exit(127);
+			exit(1);
 		}
-
+		execve(path, cmd->argv, envp);
+		perror("execve failed.");
+		exit(127);
 	}
-
 }
 void    handle_child(t_command *cmd, t_extra ptr)
 {
@@ -223,8 +221,9 @@ void    handle_child(t_command *cmd, t_extra ptr)
 	output_handle1(cmd->out, ptr); 
 	closingfds(ptr.pipline, ptr.i);
 	if (cmd->argv)
+	{
 		exec_cmd(cmd, ptr.env);
-	
+	}
 	exit(1);
 }
 

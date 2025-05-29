@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 12:22:46 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/29 10:02:25 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void    print_export(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
-		if (tmp->flag == 0)
-			break ;
+		// if (tmp->flag == 0)
+		// 	break ;
 		if (!tmp->value)
 		{
 			printf("declare -x %s\n",tmp->key);

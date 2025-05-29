@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 18:04:35 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:05:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,32 @@ char **chr_envirment(t_env **env)
 {
 	char **envp;
 	t_env   *tmp;
+	t_env   *envy;
 	char    *str;
 	int i = 0;
-	
-	if (env)
+
+	if (!env)
 		return (NULL);
-	while (env[i])
+	tmp = *env;
+	envy = *env;
+	while (envy)
+	{
 		i++;
-	envp = gc_malloc(sizeof(char *) * (i + 1));
+		(envy) = (envy)->next;
+	}
+	envp = malloc(sizeof(char *) * (i + 1));
 	if (!envp)
 		return (NULL);
 	i = 0;
-	tmp = *env;
 	while (tmp)
 	{
 		str = ft_strjoin(tmp->key, "=");
 		envp[i] = ft_strjoin(str, tmp->value);
-		i++;
 		free(str);
+		i++;
 		tmp = tmp->next;
 	}
-	envp[i] = 0;
+	envp[i] = NULL;
 	return (envp);
 }
 	
