@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:58:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/30 11:26:28 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/30 15:44:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,7 @@ int main() {
 
     char *input;
     input = readline("enter smithing : ");
-    if(input)
-    {
-        rl_replace_line("This is new line", 0);
-        write(1,"\n",1);
-        rl_redisplay();
-        free(input);
-    }
+    printf("%s\n", input);
     return (0);
 }
 

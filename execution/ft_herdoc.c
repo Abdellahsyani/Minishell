@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_herdoc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/26 12:12:38 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/30 16:02:57 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 {
 	char *line;
 	char *err = "minishell: warning: here-document at line 1 delimited by end-of-file\n";
-
+	signal(SIGINT, handle_sig);
 	while (1)
 	{
 		line = readline("> ");
@@ -42,7 +42,7 @@ void write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char *delimiter;
 
-	//signal(??)
+	
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");
 	else
@@ -68,6 +68,7 @@ int ft_handle_herdoc(char *value, t_env **env)
 			write_to_herdoc(fd,env, value);
 	else	
 		waitpid(pid, &status,0);
+	unlink("/tmp/heredoc");
 	return (fd);
 }
 

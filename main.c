@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/30 11:13:23 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/30 15:50:42 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ int main(int ac, char **argv, char **envp)
 		cmd_list = NULL;
 
 		line = readline("\033[1;32mminishell $ \033[0m");
-		if (!*line)
-			continue ;
+		
 		if (!line)
 		{
 			printf("exit\n");
 			break;
 		}
+		if (!*line && line)
+			continue ;
 		if (*line)
 			add_history(line);
 		get_input(line, &list);
@@ -58,8 +59,6 @@ int main(int ac, char **argv, char **envp)
 			cmd_tmp = cmd_list;
 			expand_var(list, cmd_list, env);
 		}
-	
-		//printf("ARG: %s\n",cmd_tmp->argv[1]);
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}
