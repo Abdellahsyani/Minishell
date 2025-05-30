@@ -270,14 +270,12 @@ char	*double_quote(char *content, t_env **env_t)
 	env[counts] = NULL;
 	env_var[counts] = NULL;
 	i = 0;
-	track_size = gc_malloc(sizeof(int) * (coun + 1));
+	track_size = gc_malloc(sizeof(int) * coun);
 	if (!track_size)
 		return (NULL);
-	track_size[0] = '\0';
-	track_s = gc_malloc(sizeof(int) * (coun + 1));
+	track_s = gc_malloc(sizeof(int) * coun);
 	if (!track_s)
 		return (NULL);
-	track_s[0] = '\0';
 	while (env[i])
 	{
 		track_size[i] = ft_strlen(env[i]);
@@ -290,31 +288,41 @@ char	*double_quote(char *content, t_env **env_t)
 		i++;
 	}
 	i = 0;
-	while (track_s[i])
+	while (i < coun)
 	{
 		len1 += track_s[i];
 		i++;
 	}
 	i = 0;
-	while (track_size[i])
+	while (i < coun)
 	{
 		len += track_size[i];
 		i++;
 	}
-
 	var = gc_malloc(sizeof(char) * (count + 1));
+	if (!var)
+		return NULL;
 	var = stcopy(var, content, '"');
 	i = 0;
 	int k = 0;
 	int	j = 0;
-	var1 = gc_malloc(sizeof(char) * ((count + len - len1 + 1) - coun));
+	int size_all = count + len - len1;
+	printf("count : %d | len : %d | len1 : %d\n", count, len, len1);
+	var1 = gc_malloc(sizeof(char) * size_all + 1);
 	if (!var1)
 		return (NULL);
-	var1[0] = '\0';
+	/*
+	 * temp buff [32]
+	 * var1 = hello asyani\0
+	 * buff = hello asyani ...
+	 * var1 =  /usr/home/
+	 * */
 	while (var[i])
 	{
 		if (var[i] != '$')
+		{
 			var1[j] = var[i];
+		}
 		else
 		{
 			var1[j] = '\0';
@@ -330,7 +338,6 @@ char	*double_quote(char *content, t_env **env_t)
 		i++;
 	}
 	var1[j] = '\0';
-	printf("var_\": %s\n", var1);
 	return (var1);
 }
 
@@ -403,13 +410,13 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 		while (cmd->argv_t[i])
 		{
 			if (cmd->argv_t[i][0] == '\'')
-				cmd->argv[i] = ft_strdup(single_qoute(cmd->argv_t[i]));
+				cmd->argv[i] = single_qoute(cmd->argv_t[i]);
 			else if (cmd->argv_t[i][0] == '"')
-				cmd->argv[i] = ft_strdup(double_quote(cmd->argv_t[i], env));
+				cmd->argv[i] = double_quote(cmd->argv_t[i], env);
 			else if (cmd->argv_t[i][0] == '$')
-				cmd->argv[i] = ft_strdup(get_var(cmd->argv_t[i], env));
+				cmd->argv[i] = get_var(cmd->argv_t[i], env);
 			else
-				cmd->argv[i] = ft_strdup(copy_var(cmd->argv_t[i]));
+				cmd->argv[i] = copy_var(cmd->argv_t[i]);
 			i++;
 		}
 		cmd->argv[i] = NULL;
