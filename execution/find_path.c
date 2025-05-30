@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/29 13:59:55 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:08:47 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ char *find_path(char *cmd, t_env **env)
 		free(path);
 		i++;
 	}
-	printf("command not found\n");
+	printf("%s: command not found\n", cmd);
 	return (NULL);
 }
