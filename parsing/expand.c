@@ -152,14 +152,13 @@ char *get_var(char *str, t_env **env)
 		i++;
 	if (str[i] == '"' && str[i + 1] == '$')
 		var_quote = ft_strdup(double_quote(&str[i], env));
-	if (!ft_isalpha(str[i]))
+	else if (!ft_isalpha(str[i]))
 		get_last = ft_strdup(get_allstr(&str[i]));
 	len = i - start;
 	var_name = ft_strlcpy(NULL, str, len, start);
 	var_value = ft_get(env, var_name);
 	if (!var_value)
 		var_value = ft_strdup("");
-	/*printf("var_value: %s\n", var_value);*/
 	return (norm_whitespace(var_value, var_quote, get_last));
 }
 
