@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/28 16:36:41 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/30 11:13:23 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int ac, char **argv, char **envp)
 	(void)ac;
 	(void)argv;
 
-
+	signal(SIGINT, handle_sig);
 	env = get_env(envp);
 	while (1)
 	{

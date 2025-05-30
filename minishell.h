@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/28 11:28:02 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/30 10:53:27 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <signal.h>
 # include <unistd.h>
 # include <errno.h>
 # include <limits.h>
@@ -169,5 +170,5 @@ int     input_handle(t_redi *redir);
 int     output_handle(t_redi *redir);
 void    closingfds(int **tube, int pos);
 int     pass_out(t_redi *tmp ,int *fd);
-
+void    handle_sig(int signum);
 #endif
