@@ -60,7 +60,6 @@ int main(int ac, char **argv, char **envp)
 		}
 		/*t_redi *i = cmd_tmp->out;*/
 		/*printf("file: %s type: %d\n", i->file, i->type);*/
-		printf("e: %s\n", cmd_tmp->argv[1]);
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}

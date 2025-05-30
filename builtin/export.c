@@ -61,36 +61,36 @@ void    set_new_env(char *key, char *value, t_env **env)
 	}
 }
 
-char	*extract_space(char *str)
-{
-	int	i;
-	char	*value;
-	int count = 0;
-	int j = 0;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_isalpha(str[i]))
-			count++;
-		i++;
-	}
-	i = 0;
-	value = gc_malloc(sizeof(count) + 1);
-	while (str[i])
-	{
-		if ((str[i] == ' ' && str[i + 1] == ' ') || str[i] == '"')
-		{
-			i++;
-			continue;
-		}
-		value[j] = str[i];
-		i++;
-		j++;
-	}
-	value[j] = '\0';
-	return (value);
-}
+/*char	*extract_space(char *str)*/
+/*{*/
+/*	int	i;*/
+/*	char	*value;*/
+/*	int count = 0;*/
+/*	int j = 0;*/
+/**/
+/*	i = 0;*/
+/*	while (str[i])*/
+/*	{*/
+/*		if (ft_isalpha(str[i]))*/
+/*			count++;*/
+/*		i++;*/
+/*	}*/
+/*	i = 0;*/
+/*	value = gc_malloc(sizeof(count) + 1);*/
+/*	while (str[i])*/
+/*	{*/
+/*		if ((str[i] == ' ' && str[i + 1] == ' ') || str[i] == '"')*/
+/*		{*/
+/*			i++;*/
+/*			continue;*/
+/*		}*/
+/*		value[j] = str[i];*/
+/*		i++;*/
+/*		j++;*/
+/*	}*/
+/*	value[j] = '\0';*/
+/*	return (value);*/
+/*}*/
 
 int check_arg(char *str,t_env **env)
 {

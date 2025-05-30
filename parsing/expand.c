@@ -56,7 +56,7 @@ char	*get_status(char *str, t_env **env)
 }
 
 
-char	*norm_whitespace(char *str, char *allo, char *get)
+char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 {
 	char *result;
 	int i = 0, j = 0;
@@ -83,7 +83,7 @@ char	*norm_whitespace(char *str, char *allo, char *get)
 		temp_i++;
 	}
 	int n = ft_strlen(str);
-	if (str[n - 1] == ' ' && get)
+	if (str[n - 1] == ' ' && get_last)
 		result_len += 1;
 	result = gc_malloc(result_len + 1);
 	if (!result)
@@ -111,12 +111,17 @@ char	*norm_whitespace(char *str, char *allo, char *get)
 		i++;
 	}
 	result[j] = '\0';
-	if (allo)
-		result = ft_strjoin(result, allo);
-	if (str[n - 1] == ' ' && get)
+	if (var_quote)
+	{
+		result = ft_strjoin(result, var_quote);
+	}
+	if (str[n - 1] == ' ' && get_last)
 		result = ft_strjoin(result, " ");
-	if (get)
-		result = ft_strjoin(result, get);
+	if (get_last)
+	{
+		result = ft_strjoin(result, get_last);
+		free(get_last);
+	}
 	return result;
 }
 
@@ -138,85 +143,25 @@ char *get_var(char *str, t_env **env)
 	int len;
 	char *var_name;
 	char *var_value;
-	char	*allo = NULL;
-	char	*get = NULL;
+	char	*var_quote = NULL;
+	char	*get_last = NULL;
 
 	if (str[i] == '?')
 		return (get_status(&str[i], env));
-
 	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i++;
 	if (str[i] == '"' && str[i + 1] == '$')
-		allo = ft_strdup(double_quote(&str[i], env));
+		var_quote = ft_strdup(double_quote(&str[i], env));
 	if (!ft_isalpha(str[i]))
-		get = ft_strdup(get_allstr(&str[i]));
+		get_last = ft_strdup(get_allstr(&str[i]));
 	len = i - start;
 	var_name = ft_strlcpy(NULL, str, len, start);
 	var_value = ft_get(env, var_name);
 	if (!var_value)
 		var_value = ft_strdup("");
 	/*printf("var_value: %s\n", var_value);*/
-	return (norm_whitespace(var_value, allo, get));
+	return (norm_whitespace(var_value, var_quote, get_last));
 }
-
-/*char	*get_var(char *str, t_env **env)*/
-/*{*/
-/*	char	*var;*/
-/*	int	i;*/
-/*	int	start;*/
-/*	int	len;*/
-/*	char	*var1;*/
-/*	char	*var2;*/
-/*	static int	track = 0;*/
-/**/
-/*	i = 1;*/
-/*	len = 0;*/
-/*	start = 0;*/
-/*	var = NULL;*/
-/*	start = i;*/
-/*	if (str[i] == '?')*/
-/*		return (get_status(&str[i], env));*/
-/*	while (ft_isalpha(str[i]) || str[i] == '_')*/
-/*	{*/
-/*		if (str[i] == ' ' || str[i] == '"')*/
-/*			break;*/
-/*		i++;*/
-/*	}*/
-/*	len = i - 1;*/
-/*	var = ft_strlcpy(var, str, len, start);*/
-/*	var1 = ft_get(env, var);*/
-/*	if (!var1)*/
-/*		var1 = ft_strdup("");*/
-/*	i = 0;*/
-/*	int count = 0;*/
-/*	while (var1[i])*/
-/*	{*/
-/*		if (var1[i] != ' ')*/
-/*			count++;*/
-/*		i++;*/
-/*	}*/
-/*	var2 = gc_malloc(sizeof(count) + 2);*/
-/*	int j = 0;*/
-/*	if (var1)*/
-/*	{*/
-/*		i = 0;*/
-/*		while (var1[i])*/
-/*		{*/
-/*			if (track == 0 && var1[i] == ' ')*/
-/*			{*/
-/*				i++;*/
-/*				continue;*/
-/*			}*/
-/*			var2[j] = var1[i];*/
-/*			i++;*/
-/*			j++;*/
-/*		}*/
-/*	}*/
-/*	track += 1;*/
-/*	var2[j] = '\0';*/
-/*	printf("\nvar_$: %s\n", var2);*/
-/*	return (var1);*/
-/*}*/
 
 char	*get_var1(char *str)
 {
@@ -386,7 +331,7 @@ char	*double_quote(char *content, t_env **env_t)
 		i++;
 	}
 	var1[j] = '\0';
-	/*printf("var_\": %s\n", var1);*/
+	printf("var_\": %s\n", var1);
 	return (var1);
 }
 
