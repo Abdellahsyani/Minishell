@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/30 18:38:55 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 09:56:27 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int ft_check_value(char *str)
 
 int ft_env(t_env **env, char **argv)
 {
-    t_env *tmp;
+    t_env *tmp = NULL;
     (void)argv;
     int i;
 
@@ -59,7 +59,7 @@ int ft_env(t_env **env, char **argv)
         if (tmp->value)
             printf("%s=%s\n",tmp->key,tmp->value);
         else
-             printf("%s\n",tmp->key);
+            printf("%s\n",tmp->key);
         tmp = tmp->next;
     }
     return (0);

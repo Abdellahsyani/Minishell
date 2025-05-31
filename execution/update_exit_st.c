@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/29 16:12:51 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 09:51:36 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void update_exit_status(t_env **env,int status)
 
 	value = ft_itoa(status);
 	set_new_env("?", value, env);
-	free(value);
+	//free(value);
 }
 
 void wait_and_free(t_extra ptr)

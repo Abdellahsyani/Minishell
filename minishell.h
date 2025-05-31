@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/30 10:53:27 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 11:02:32 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,4 +171,5 @@ int     output_handle(t_redi *redir);
 void    closingfds(int **tube, int pos);
 int     pass_out(t_redi *tmp ,int *fd);
 void    handle_sig(int signum);
+void    handle_child_sig(int signum);
 #endif
