@@ -14,12 +14,30 @@
 
 static int	print_error(char *str)
 {
-	printf("bash: syntax error near unexpected token `%s`\n", str);
+	if (str)
+		printf("bash: syntax error near unexpected token `%s`\n", str);
+	else
+		printf("bash: syntax error near unexpected token `newline`\n");
+	return (0);
+}
+
+static int	is_consecutive_operator(t_token *list)
+{
+	if (!list || !list->next)
+		return (0);
+	while (list && list->type != word)
+	{
+		if (list->next && list->type == list->next->type)
+			return (1);
+		list = list->next;
+	}
 	return (0);
 }
 
 int	op_error_syntax(t_token *list)
 {
+	if (list && is_consecutive_operator(list))
+		return (print_error(list->content));
 	if (list && list->type != pipe_line)
 	{
 		if (list->next && list->next->type != word)
@@ -29,7 +47,7 @@ int	op_error_syntax(t_token *list)
 				return (print_error(list->content));
 		}
 		if (list->next == NULL)
-			return (print_error("newline"));
+			return (print_error(NULL));
 	}
 	else if (list && list->type == pipe_line)
 	{
@@ -49,7 +67,7 @@ int	start_parsing(t_token *list)
 	if (!list)
 		return (0);
 	if (list->type == pipe_line)
-		return (print_error(list->content));
+		print_error(list->content);
 	while (current)
 	{
 		if (current->type == word)

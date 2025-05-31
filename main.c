@@ -62,7 +62,6 @@ int main(int ac, char **argv, char **envp)
 		/*printf("file: %s type: %d\n", i->file, i->type);*/
 		ft_exec(&cmd_tmp, env);
 		free(line);
-		ft_free_gc();
 	}
 	return (0);
 }

@@ -44,6 +44,10 @@ typedef struct s_shell
 
 typedef struct s_token
 {
+	int	num_her;
+	int	num_app;
+	int	num_in;
+	int	num_out;
 	char	*content;
 	int	type;
 	struct s_token	*next;
