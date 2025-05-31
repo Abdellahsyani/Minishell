@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:12:20 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/26 11:50:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/31 17:08:30 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ int pars_command(t_token *list, t_command **cmd_list)
 		}
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
+			
 		else if (current->type == redir_output && current->next)
 		{
 			fill_operation(current_cmd, &current, 0);

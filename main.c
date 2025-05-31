@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/31 11:28:34 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:06:50 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int ac, char **argv, char **envp)
 
 	
 	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, SIG_IGN);
 	env = get_env(envp);
 	while (1)
 	{
@@ -51,9 +52,12 @@ int main(int ac, char **argv, char **envp)
 			token_type(tmp);
 			tmp = tmp->next;
 		}
+		
 		parse_status = start_parsing(list);
+		
 		if (parse_status == 1)
 		{
+			
 			int ex = pars_command(list, &cmd_list);
 			if (ex == 0)
 				return (0);

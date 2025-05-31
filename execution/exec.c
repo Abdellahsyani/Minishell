@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/31 11:08:49 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:21:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void output_handle1(t_redi *tmp, t_extra ptr)
 
 void pass_in(t_redi *tmp, int fd)
 {
+	// printf("%s\n", tmp->file);
 	if (fd  == -3)
 		fd = open(tmp->file, O_RDONLY);
 	if (fd  == -1)
@@ -195,7 +196,7 @@ void exec_cmd(t_command *cmd, t_env **env)
 	char    **envp;
 	char *path;
 	envp = chr_envirment(env);
-	//printf("here : %s\n", (*env)->key);
+
 
 	if (is_builtin(cmd))
 	{
@@ -217,11 +218,10 @@ void exec_cmd(t_command *cmd, t_env **env)
 }
 void    handle_child(t_command *cmd, t_extra ptr)
 {
-	signal(SIGINT, handle_sig);
 	input_handle1(cmd->in,ptr, cmd->fd);
 	output_handle1(cmd->out, ptr); 
-	closingfds(ptr.pipline, ptr.i);
-	if (cmd->argv)
+	closingfds(ptr.pipline, ptr.size);
+	if (cmd->argv[0] != NULL)
 	{
 		exec_cmd(cmd, ptr.env);
 	}
@@ -247,7 +247,7 @@ void ft_exec(t_command **cmd, t_env **env)
 	while (ptr.i <= ptr.size)
 	{
 		ptr.pid[ptr.i] = fork();
-		if (!ptr.pid[ptr.i])
+		if (ptr.pid[ptr.i] == 0)
 			handle_child(tmp, ptr);
 		ptr.i++;
 		tmp = tmp->next;
