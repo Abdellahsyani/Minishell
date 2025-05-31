@@ -59,9 +59,13 @@ char	*get_status(char *str, t_env **env)
 char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 {
 	char *result;
-	int i = 0, j = 0;
-	int in_whitespace = 0;
+	int i = 0;
+	int j = 0;
+	int n = 0;
+	int in_whitespace = 1;
 
+	if (!*str)
+		return (NULL);
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	int result_len = 0;
@@ -73,19 +77,19 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 			if (!in_whitespace && str[temp_i + 1] && 
 				str[temp_i + 1] != ' ' && str[temp_i + 1] != '\t')
 				result_len++;
-			in_whitespace = 1;
+			in_whitespace = 0;
 		}
 		else
 	{
 			result_len++;
-			in_whitespace = 0;
+			in_whitespace = 1;
 		}
 		temp_i++;
 	}
-	int n = ft_strlen(str);
-	if (str[n - 1] == ' ' && get_last)
+	n = ft_strlen(str);
+	if (str && str[n - 1] == ' ' && get_last)
 		result_len += 1;
-	result = gc_malloc(result_len + 1);
+	result = gc_malloc(sizeof(char) * result_len + 1);
 	if (!result)
 		return NULL;
 	in_whitespace = 0;
@@ -112,9 +116,7 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 	}
 	result[j] = '\0';
 	if (var_quote)
-	{
 		result = ft_strjoin(result, var_quote);
-	}
 	if (str[n - 1] == ' ' && get_last)
 		result = ft_strjoin(result, " ");
 	if (get_last)
@@ -150,8 +152,8 @@ char *get_var(char *str, t_env **env)
 		return (get_status(&str[i], env));
 	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i++;
-	if (str[i] == '"' && str[i + 1] == '$')
-		var_quote = ft_strdup(double_quote(&str[i], env));
+	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i] && ft_isalpha(str[i + 1])))
+		var_quote = double_quote(&str[i], env);
 	else if (!ft_isalpha(str[i]))
 		get_last = ft_strdup(get_allstr(&str[i]));
 	len = i - start;
@@ -209,6 +211,25 @@ char	*single_qoute(char *content)
 	/*printf("var_': %s\n", var);*/
 	return (var);
 }
+
+char	*ft_strjoins(char *s1, char *s2)
+{
+	size_t		i;
+	size_t		j;
+
+	i = 0;
+	j = 0;
+	while (s1[i])
+		i++;
+	while (s2[j])
+	{
+		s1[i] = s2[j];
+		i++;
+		j++;
+	}
+	return (s1);
+}
+
 
 char	*double_quote(char *content, t_env **env_t)
 {
@@ -306,17 +327,10 @@ char	*double_quote(char *content, t_env **env_t)
 	i = 0;
 	int k = 0;
 	int	j = 0;
-	int size_all = count + len - len1;
-	printf("count : %d | len : %d | len1 : %d\n", count, len, len1);
+	int size_all = count + len - (len1 + coun);
 	var1 = gc_malloc(sizeof(char) * size_all + 1);
 	if (!var1)
 		return (NULL);
-	/*
-	 * temp buff [32]
-	 * var1 = hello asyani\0
-	 * buff = hello asyani ...
-	 * var1 =  /usr/home/
-	 * */
 	while (var[i])
 	{
 		if (var[i] != '$')
@@ -326,7 +340,7 @@ char	*double_quote(char *content, t_env **env_t)
 		else
 		{
 			var1[j] = '\0';
-			var1 = ft_strjoin(var1, env[k]);
+			var1 = ft_strjoins(var1, env[k]);
 			int s = ft_strlen(env[k]);
 			int c = ft_strlen(env_var[k]);
 			k++;
@@ -338,15 +352,18 @@ char	*double_quote(char *content, t_env **env_t)
 		i++;
 	}
 	var1[j] = '\0';
+	/*printf("var_\": %s\n", var1);*/
 	return (var1);
 }
 
-char	*copy_var(char *content)
+char	*copy_var(char *content, t_env **env)
 {
 	int	i;
 	int	len;
 	char	*var = NULL;
 	int	start;
+	char	*quote = NULL;
+	char	*copy = NULL;
 
 	i = 0;
 	start = i;
@@ -354,6 +371,23 @@ char	*copy_var(char *content)
 		i++;
 	len = i;
 	var = ft_strlcpy(var, content, len, start);
+	i = 0;
+	while (var[i])
+	{
+		if (var[i] == '"')
+		{
+			quote = double_quote(&var[i], env);
+			break;
+		}
+		i++;
+	}
+	if (quote)
+	{
+		copy = ft_strlcpy(copy, var, i, 0);
+		copy = ft_strjoin(copy, quote);
+		/*printf("copy_all: %s\n", copy);*/
+		return (copy);
+	}
 	/*printf("var_all: %s\n", var);*/
 	return (var);
 }
@@ -374,6 +408,11 @@ int	h_export(t_command *cmd, t_env **env)
 	{
 		var = ft_strdup(get_var(cmd->argv_t[0], env));
 		spl = ft_split(var, ' ');
+		i = 0;
+		while (spl[i])
+			i++;
+		printf("i: %d\n", i);
+		cmd->argv = gc_malloc(sizeof(char *) * (i + 1));
 		i = 0;
 		j = 0;
 		while (spl[i])
@@ -416,7 +455,7 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 			else if (cmd->argv_t[i][0] == '$')
 				cmd->argv[i] = get_var(cmd->argv_t[i], env);
 			else
-				cmd->argv[i] = copy_var(cmd->argv_t[i]);
+				cmd->argv[i] = copy_var(cmd->argv_t[i], env);
 			i++;
 		}
 		cmd->argv[i] = NULL;
