@@ -411,7 +411,7 @@ int	h_export(t_command *cmd, t_env **env)
 		i = 0;
 		while (spl[i])
 			i++;
-		printf("i: %d\n", i);
+		/*printf("i: %d\n", i);*/
 		cmd->argv = gc_malloc(sizeof(char *) * (i + 1));
 		i = 0;
 		j = 0;
@@ -432,6 +432,8 @@ void	expand_var(t_token *list, t_command *cmd, t_env **env)
 	int	count;
 	(void)list;
 
+	if (!cmd->argv_t)
+		return ;
 	while (cmd)
 	{
 		count = 0;

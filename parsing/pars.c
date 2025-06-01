@@ -90,6 +90,8 @@ int	count_word_tokens(t_token *list)
 	count = 0;
 	while (list && list->type != pipe_line)
 	{
+		if (list->type != word && list->next->type == word)
+			return (count);
 		if (list->type == word)
 			count++;
 		list = list->next;
@@ -109,13 +111,17 @@ t_command	*create_cmd_node(t_token *list)
 	new_node->in = NULL;
 	new_node->out = NULL;
 	new_node->argv = NULL;
-	new_node->argv_t = gc_malloc(sizeof(char *) * (count + 1));
-	if (!new_node->argv_t)
-		return (NULL);
-	new_node->argv_t[0] = NULL;
+	new_node->argv_t = NULL;
+	if (count > 0)
+	{
+		new_node->argv_t = gc_malloc(sizeof(char *) * (count + 1));
+		if (!new_node->argv_t)
+			return (NULL);
+		new_node->argv_t[0] = NULL;
+		for (int i = 0; i < count + 1; i++)
+        		new_node->argv_t[i] = NULL;
+	}
 	new_node->next = NULL;
-	for (int i = 0; i < count + 1; i++)
-        	new_node->argv_t[i] = NULL;
 	return (new_node);
 }
 
@@ -204,23 +210,28 @@ void	fill_operation(t_command *cmd, t_token **cur, int i)
 	}
 }
 
+void	create_new_node(t_token *list, t_command **cmd, t_command **cur)
+{
+	add_cmd_list(list, cmd);
+	*cur = get_last_cmd(*cmd);
+	if (!cur)
+		return ;
+}
+
 int pars_command(t_token *list, t_command **cmd_list)
 {
-	t_command *current_cmd = NULL;
-	t_token *current = list;
+	t_command	*current_cmd;
+	t_token	*current;
 
+	current_cmd = NULL;
+	current = list;
 	while (current)
 	{
 		if (current_cmd == NULL)
-		{
-			add_cmd_list(list, cmd_list);
-			current_cmd = get_last_cmd(*cmd_list);
-			if (!current_cmd)
-				return (0);
-		}
+			create_new_node(list, cmd_list, &current_cmd);
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
-		else if (current->type == redir_output && current->next)
+		else if ((current->type == redir_output || current->type == redir_o_app) && current->next)
 		{
 			fill_operation(current_cmd, &current, 0);
 			if (!current->next->next)
@@ -228,23 +239,7 @@ int pars_command(t_token *list, t_command **cmd_list)
 			current = current->next->next;
 			continue;
 		}
-		else if (current->type == redir_input && current->next)
-		{
-			fill_operation(current_cmd, &current, 1);
-			if (!current->next->next)
-				break;
-			current = current->next->next;
-			continue;
-		}
-		else if (current->type == redir_o_app && current->next)
-		{
-			fill_operation(current_cmd, &current, 0);
-			if (!current->next->next)
-				break;
-			current = current->next->next;
-			continue;
-		}
-		else if (current->type == d_herdoc && current->next)
+		else if ((current->type == redir_input || current->type == d_herdoc) && current->next)
 		{
 			fill_operation(current_cmd, &current, 1);
 			if (!current->next->next)
@@ -259,4 +254,3 @@ int pars_command(t_token *list, t_command **cmd_list)
 	}
 	return (1);
 }
-

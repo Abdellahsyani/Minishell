@@ -94,7 +94,6 @@ int handle_quotes(t_shell *mini, t_token **list, char *line)
 	if (line[mini->i] == quote_type)
 		mini->i++;
 	mini->len += (mini->i) - start_i;
-	/*mini->st = start_i;*/
 	return (1);
 }
 
