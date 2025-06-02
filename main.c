@@ -56,7 +56,7 @@ int main(int ac, char **argv, char **envp)
 			if (ex == 0)
 				return (0);
 			cmd_tmp = cmd_list;
-			expand_var(list, cmd_list, env);
+			expand_var(cmd_list, env);
 		}
 		/*t_redi *i = cmd_tmp->out;*/
 		/*printf("file: %s type: %d\n", i->file, i->type);*/

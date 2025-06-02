@@ -115,18 +115,18 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 {
 	char *result;
 	int i = 0;
-	int n = 0;
 	int result_len = 0;
 	int temp_i;
 
+	i = 0;
+	result_len = 0;
 	if (!*str)
 		return (NULL);
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	temp_i = i;
 	result_len = get_space_size(str, temp_i);
-	n = ft_strlen(str);
-	if (str && str[n - 1] == ' ' && get_last)
+	if (str && str[ft_strlen(str) - 1] == ' ' && get_last)
 		result_len += 1;
 	result = gc_malloc(sizeof(char) * result_len + 1);
 	if (!result)
@@ -134,14 +134,11 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 	result = fill_nonspace(str, i, result);
 	if (var_quote)
 		result = ft_strjoin(result, var_quote);
-	if (str[n - 1] == ' ' && get_last)
+	if (str[ft_strlen(str) - 1] == ' ' && get_last)
 		result = ft_strjoin(result, " ");
 	if (get_last)
-	{
 		ft_strjoin(result, get_last);
-		free(get_last);
-	}
-	return result;
+	return (result);
 }
 
 char *get_allstr(char *str)
@@ -373,17 +370,29 @@ char	*double_quote(char *content, t_env **env_t)
 	return (var1);
 }
 
+char	*when_quote(char *var, char *quote, int i)
+{
+	char	*copy;
+
+	copy = NULL;
+	copy = ft_strlcpy(copy, var, i, 0);
+	copy = ft_strjoin(copy, quote);
+	/*printf("copy_all: %s\n", copy);*/
+	return (copy);
+}
+
 char	*copy_var(char *content, t_env **env)
 {
 	int	i;
 	int	len;
-	char	*var = NULL;
+	char	*var;
 	int	start;
-	char	*quote = NULL;
-	char	*copy = NULL;
+	char	*quote;
 
 	i = 0;
 	start = i;
+	var = NULL;
+	quote = NULL;
 	while (content[i])
 		i++;
 	len = i;
@@ -399,12 +408,7 @@ char	*copy_var(char *content, t_env **env)
 		i++;
 	}
 	if (quote)
-	{
-		copy = ft_strlcpy(copy, var, i, 0);
-		copy = ft_strjoin(copy, quote);
-		/*printf("copy_all: %s\n", copy);*/
-		return (copy);
-	}
+		return (when_quote(var, quote, i));
 	/*printf("var_all: %s\n", var);*/
 	return (var);
 }
@@ -442,11 +446,10 @@ int	h_export(t_command *cmd, t_env **env)
 	return (1);
 }
 
-void	expand_var(t_token *list, t_command *cmd, t_env **env)
+void	expand_var(t_command *cmd, t_env **env)
 {
 	int	i;
 	int	count;
-	(void)list;
 
 	if (!cmd->argv_t)
 		return ;
