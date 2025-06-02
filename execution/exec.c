@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 13:00:31 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 17:17:38 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,9 @@ void pass_in(t_redi *tmp, int fd)
 		fd = open(tmp->file, O_RDONLY);
 	if (fd  == -1)
 	{
-		perror("open failed");
-		return ;
+		write(1, "minishell: ",11);
+		perror(tmp->file);
+		exit(1) ;
 	}
 	dup2(fd, 0);
 	close(fd);
