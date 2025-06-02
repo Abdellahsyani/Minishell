@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_collector.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:06:47 by asyani            #+#    #+#             */
-/*   Updated: 2025/04/24 18:10:02 by asyani           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:22:32 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	ft_free_gc(void)
 	while (tmp)
 	{
 		c_list *next = tmp->next;
-		free(tmp->data); 
+		if(tmp->data)
+			free(tmp->data); 
 		free(tmp);
 		tmp = next;
 	}
@@ -38,6 +39,7 @@ void	*gc_malloc(size_t size)
 	ptr = malloc(size);
 	if (!ptr)
 		return (NULL);
+	ft_bzero(ptr, size);
 	node = malloc(sizeof(t_list));
 	if (!node)
 	{
