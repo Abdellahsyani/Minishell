@@ -61,37 +61,6 @@ void    set_new_env(char *key, char *value, t_env **env)
 	}
 }
 
-/*char	*extract_space(char *str)*/
-/*{*/
-/*	int	i;*/
-/*	char	*value;*/
-/*	int count = 0;*/
-/*	int j = 0;*/
-/**/
-/*	i = 0;*/
-/*	while (str[i])*/
-/*	{*/
-/*		if (ft_isalpha(str[i]))*/
-/*			count++;*/
-/*		i++;*/
-/*	}*/
-/*	i = 0;*/
-/*	value = gc_malloc(sizeof(count) + 1);*/
-/*	while (str[i])*/
-/*	{*/
-/*		if ((str[i] == ' ' && str[i + 1] == ' ') || str[i] == '"')*/
-/*		{*/
-/*			i++;*/
-/*			continue;*/
-/*		}*/
-/*		value[j] = str[i];*/
-/*		i++;*/
-/*		j++;*/
-/*	}*/
-/*	value[j] = '\0';*/
-/*	return (value);*/
-/*}*/
-
 int check_arg(char *str,t_env **env)
 {
 	int i;
@@ -107,15 +76,11 @@ int check_arg(char *str,t_env **env)
 		return (free(key), 0);
 	if (str[i] == '=')
 	{
-		if (str[i + 1] == '"')
-		{
-			i += 2;
-			value = ft_substr(str, i, l - i - 1);
-		}
+		i += 1;
+		value = ft_substr(str, i, l - i);
 		/*else*/
 		/*	value = extract_space(&str[i + 1]);*/
 	}
-	/*printf("value: %s\n", value);*/
 	set_new_env(key, value,env);
 	return (1);
 }

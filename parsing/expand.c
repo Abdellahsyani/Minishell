@@ -55,21 +55,12 @@ char	*get_status(char *str, t_env **env)
 	return (var);
 }
 
-
-char	*norm_whitespace(char *str, char *var_quote, char *get_last)
+int	get_space_size(char *str, int temp_i)
 {
-	char *result;
-	int i = 0;
-	int j = 0;
-	int n = 0;
+	int	result_len;
 	int in_whitespace = 1;
 
-	if (!*str)
-		return (NULL);
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-	int result_len = 0;
-	int temp_i = i;
+	result_len = 0;
 	while (str[temp_i])
 	{
 		if (str[temp_i] == ' ' || str[temp_i] == '\t')
@@ -86,12 +77,14 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 		}
 		temp_i++;
 	}
-	n = ft_strlen(str);
-	if (str && str[n - 1] == ' ' && get_last)
-		result_len += 1;
-	result = gc_malloc(sizeof(char) * result_len + 1);
-	if (!result)
-		return NULL;
+	return (result_len);
+}
+
+char	*fill_nonspace(char *str, int i, char *result)
+{
+	int in_whitespace;
+	int j = 0;
+
 	in_whitespace = 0;
 	while (str[i])
 	{
@@ -115,13 +108,37 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 		i++;
 	}
 	result[j] = '\0';
+	return (result);
+}
+
+char	*norm_whitespace(char *str, char *var_quote, char *get_last)
+{
+	char *result;
+	int i = 0;
+	int n = 0;
+	int result_len = 0;
+	int temp_i;
+
+	if (!*str)
+		return (NULL);
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+		i++;
+	temp_i = i;
+	result_len = get_space_size(str, temp_i);
+	n = ft_strlen(str);
+	if (str && str[n - 1] == ' ' && get_last)
+		result_len += 1;
+	result = gc_malloc(sizeof(char) * result_len + 1);
+	if (!result)
+		return NULL;
+	result = fill_nonspace(str, i, result);
 	if (var_quote)
 		result = ft_strjoin(result, var_quote);
 	if (str[n - 1] == ' ' && get_last)
 		result = ft_strjoin(result, " ");
 	if (get_last)
 	{
-		result = ft_strjoin(result, get_last);
+		ft_strjoin(result, get_last);
 		free(get_last);
 	}
 	return result;
@@ -411,7 +428,6 @@ int	h_export(t_command *cmd, t_env **env)
 		i = 0;
 		while (spl[i])
 			i++;
-		/*printf("i: %d\n", i);*/
 		cmd->argv = gc_malloc(sizeof(char *) * (i + 1));
 		i = 0;
 		j = 0;
