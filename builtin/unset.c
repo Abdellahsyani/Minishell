@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/21 11:29:45 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:27:04 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,14 @@ int ft_unset(char **arg, t_env **env)
 
     if (!arg[1])
     {
-        printf("Error: no argument");
+        printf("Error: not enough arguments\n");
         return (1);
     }
     i = 1;
     while (arg[i])
     {
-        if (!is_valid(arg[i]))
-        {
-            printf("unset: %s:invalid parameter name\n", arg[i]);
+        if (ft_check_value(arg[i]))
             return (1);
-        }
         delete_key_value(arg[i],env);
         i++;
     }

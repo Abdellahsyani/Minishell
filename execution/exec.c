@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 13:50:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 17:21:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,12 @@ int ft_cmd_size(t_command **cmd)
 	return(count);
 }
 
-void exec_builtins(t_command **cmd, t_env **env)
+void exec_builtins(t_command **cmd, t_env **env, int fd)
 {
-	int fd;
 	int status;
 	t_command *tmp;
 	
 	tmp = *cmd;
-	if (!redirect_handler(&fd, cmd, env))
-		return ;
 	status = ft_exec_builtin(tmp->argv[0], tmp->argv, env);
 	update_exit_status(env, status);
 	if(fd != -2)
@@ -45,6 +42,7 @@ void exec_builtins(t_command **cmd, t_env **env)
 		dup2(fd, 1);
 		close(fd);
 	}
+	
 }
 
 int **allocate_tube(int size)
@@ -85,12 +83,18 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
 {
 	t_command *tmp;
 	int **tube;
-
+	int fd;
+	fd = -1;
 	tmp  = *cmd;
-	if (size == 0  && tmp->argv && is_builtin(tmp))
+	if (size == 0  && redirect_handler(&fd, cmd, env) && is_builtin(tmp) && tmp->argv)
 	{
-		exec_builtins(cmd, env);
+		exec_builtins(cmd, env, fd);
 		return(0) ;
+	}
+	if(fd != -2)
+	{
+		dup2(fd, 1);
+		close(fd);
 	}
 	tube = allocate_tube(size);
 	if (!tube)
@@ -99,7 +103,7 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
 	{
 		printf("Error: pipe failed or allocation.\n");
 		update_exit_status(env, 1);
-		//closingfds(tube, size);
+		closingfds(tube, size);
 		return (0);
 	}
 	return (tube);
@@ -123,6 +127,8 @@ int pass_out(t_redi *tmp ,int *fd)
 		*fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
 	else if (tmp->type == redir_o_app)
 		*fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
+	else
+		return (-1);
 	if (*fd == -1)
 	{
 		perror("open failed");
@@ -134,6 +140,7 @@ int pass_out(t_redi *tmp ,int *fd)
 void output_handle1(t_redi *tmp, t_extra ptr)
 {
 	int fd;
+	
 	if(!tmp)
 	{
 		if (ptr.i != ptr.size)
@@ -141,9 +148,10 @@ void output_handle1(t_redi *tmp, t_extra ptr)
 			dup2(ptr.pipline[ptr.i][1], 1);
 		}
 	}
+	
 	while (tmp)
 	{
-		if ((tmp->type == redir_input || tmp->type == redir_o_app) && pass_out(tmp, &fd))
+		if (pass_out(tmp, &fd) == 1)
 		{
 			dup2(fd, 1);
 			close(fd);   
@@ -154,6 +162,7 @@ void output_handle1(t_redi *tmp, t_extra ptr)
 
 void pass_in(t_redi *tmp, int fd)
 {
+	// printf("%s\n", tmp->file);
 	if (fd  == -3)
 		fd = open(tmp->file, O_RDONLY);
 	if (fd  == -1)
@@ -186,8 +195,9 @@ void exec_cmd(t_command *cmd, t_env **env)
 	int status;
 	char    **envp;
 	char *path;
-
 	envp = chr_envirment(env);
+
+
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, env);
@@ -198,25 +208,23 @@ void exec_cmd(t_command *cmd, t_env **env)
 	{
 		path = find_path(cmd->argv[0], env);
 		if (!path)
-			return;
-		if (execve(path, cmd->argv, envp) == -1)
 		{
-			perror("execve failed.");
-			exit(127);
+			exit(1);
 		}
+		execve(path, cmd->argv, envp);
+		perror("execve failed.");
+		exit(127);
 	}
-	
 }
 void    handle_child(t_command *cmd, t_extra ptr)
 {
-	
-
-	input_handle1(cmd->in,ptr, cmd->fd); //cmd->in
-	output_handle1(cmd->out, ptr); //cmd->out
-	 closingfds(ptr.pipline, ptr.i);
-	if (cmd->argv)
+	input_handle1(cmd->in,ptr, cmd->fd);
+	output_handle1(cmd->out, ptr); 
+	closingfds(ptr.pipline, ptr.size);
+	if (cmd->argv[0] != NULL)
+	{
 		exec_cmd(cmd, ptr.env);
-	
+	}
 	exit(1);
 }
 
@@ -226,7 +234,6 @@ void ft_exec(t_command **cmd, t_env **env)
 	t_command *tmp;
 
 	tmp = *cmd;
-	
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
@@ -237,12 +244,10 @@ void ft_exec(t_command **cmd, t_env **env)
 	if (!ptr.pid)
 		return ;
 	ft_herdoc(cmd, ptr.env);
-	if (!tmp->argv)
-		exit(0);
 	while (ptr.i <= ptr.size)
 	{
 		ptr.pid[ptr.i] = fork();
-		if (!ptr.pid[ptr.i])
+		if (ptr.pid[ptr.i] == 0)
 			handle_child(tmp, ptr);
 		ptr.i++;
 		tmp = tmp->next;

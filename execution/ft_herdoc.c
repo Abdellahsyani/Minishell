@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_herdoc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/26 12:12:38 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/31 11:47:19 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 {
 	char *line;
 	char *err = "minishell: warning: here-document at line 1 delimited by end-of-file\n";
-
+	
 	while (1)
 	{
 		line = readline("> ");
@@ -42,7 +42,7 @@ void write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char *delimiter;
 
-	//signal(??)
+	signal(SIGINT, handle_child_sig);
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");
 	else
@@ -59,7 +59,7 @@ int ft_handle_herdoc(char *value, t_env **env)
 	pid_t pid;
 	int fd;
 	int status;
-
+	
 	pid = fork();
 	fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0774);
 	if (pid < 0)
@@ -68,6 +68,7 @@ int ft_handle_herdoc(char *value, t_env **env)
 			write_to_herdoc(fd,env, value);
 	else	
 		waitpid(pid, &status,0);
+	unlink("/tmp/heredoc");
 	return (fd);
 }
 

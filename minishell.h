@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/27 13:17:45 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/05/31 11:02:32 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <signal.h>
 # include <unistd.h>
 # include <errno.h>
 # include <limits.h>
@@ -69,6 +70,7 @@ typedef struct s_env
 {
     char    *key;
     char    *value;
+    int     flag;
     struct s_env *next;
 } t_env;
 
@@ -135,18 +137,21 @@ int	is_operator(char op);
 int	start_parsing(t_token *list);
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
+int     ft_check_value(char *str);
 t_env   *ft_find(t_env *env, char *key);
 t_env   **get_env(char **list);
 int	count_word_tokens(t_token *list);
 void    set_new_env(char *key, char *value, t_env **env);
 char    **chr_envirment(t_env **env);
-
+void    delete_key_value(char *key, t_env **env);
+char    *ft_key(char *str);
+void    update_path(char *arg, t_env **env);
 //**************Builtin****************
 
 int    ft_echo(char **arg);
 int     ft_cd(char **args, t_env **env);
 int    ft_pwd(char **args);
-int     ft_env(t_env **env);
+int     ft_env(t_env **env, char **argv);
 int     ft_export(char **arg, t_env **env);
 int     ft_unset(char **arg, t_env **env);
 int     ft_exit(char **arg,int last_status);
@@ -168,5 +173,6 @@ int     input_handle(t_redi *redir);
 int     output_handle(t_redi *redir);
 void    closingfds(int **tube, int pos);
 int     pass_out(t_redi *tmp ,int *fd);
-
+void    handle_sig(int signum);
+void    handle_child_sig(int signum);
 #endif

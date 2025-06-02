@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/25 11:50:30 by abdo             ###   ########.fr       */
+/*   Updated: 2025/05/29 16:05:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,32 @@ char **chr_envirment(t_env **env)
 {
 	char **envp;
 	t_env   *tmp;
+	t_env   *envy;
 	char    *str;
 	int i = 0;
-	
-	if (env)
+
+	if (!env)
 		return (NULL);
-	while (env[i])
+	tmp = *env;
+	envy = *env;
+	while (envy)
+	{
 		i++;
-	envp = gc_malloc(sizeof(char *) * (i + 1));
+		(envy) = (envy)->next;
+	}
+	envp = malloc(sizeof(char *) * (i + 1));
 	if (!envp)
 		return (NULL);
 	i = 0;
-	tmp = *env;
 	while (tmp)
 	{
 		str = ft_strjoin(tmp->key, "=");
 		envp[i] = ft_strjoin(str, tmp->value);
-		i++;
 		free(str);
+		i++;
 		tmp = tmp->next;
 	}
-	envp[i] = 0;
+	envp[i] = NULL;
 	return (envp);
 }
 	
@@ -111,6 +116,10 @@ t_env   **get_env(char **list)
 	while (*list)
 	{
 		cur->next = new_node(ft_key(*list), get_value(*list));
+		if (!ft_strcmp(cur->key, "_"))
+			cur->flag = 0;
+		else
+			cur->flag = 1;
 		cur = cur->next;
 		list++;
 	}

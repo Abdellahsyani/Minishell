@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 14:30:41 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 12:35:11 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void    print_export(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
+		// if (tmp->flag == 0)
+		// 	break ;
 		if (!tmp->value)
 		{
 			printf("declare -x %s\n",tmp->key);
@@ -52,10 +54,11 @@ void    set_new_env(char *key, char *value, t_env **env)
 		return ;
 	}
 	else
-{
+	{
 		create = malloc(sizeof(t_env));
-		create->key = ft_strdup(key);
-		create->value= ft_strdup(value);
+		create->key = key;
+		if(value)
+			create->value= value;
 		create->next = *env;
 		*env = create;
 	}
@@ -67,6 +70,7 @@ int check_arg(char *str,t_env **env)
 	char *key;
 	char *value = NULL;
 	int l;
+	
 	l = ft_strlen(str);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
@@ -78,34 +82,33 @@ int check_arg(char *str,t_env **env)
 	{
 		i += 1;
 		value = ft_substr(str, i, l - i);
-		/*else*/
-		/*	value = extract_space(&str[i + 1]);*/
 	}
 	set_new_env(key, value,env);
 	return (1);
 }
 
 int ft_export(char **arg, t_env **env)
-	{
-		int i;
+{
+	int i;
 
-		i = 1;
-		if (!arg[1])
-		{
-			print_export(env);
-			return (1);
-		}
-		else
+	i = 1;
+
+	if (!arg[1])
 	{
-			while (arg[i])
-			{
-				if (!check_arg(arg[i],env))
-				{
-					printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
-					// return (0);
-				}
-				i++;    
-			}
-		}
+		print_export(env);
 		return (1);
 	}
+	else
+	{
+		while (arg[i])
+		{
+			if (!check_arg(arg[i],env))
+			{
+				printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
+			}
+			i++;    
+			}
+	}
+		return (1);
+}
+
