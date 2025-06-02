@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 16:23:55 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 17:04:34 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,11 @@ void pass_in(t_redi *tmp, int fd)
 		perror("open failed");
 		return ;
 	}
-	dup2(fd, 0);
-	close(fd);
+	if (fd  != -3)
+	{
+		dup2(fd, 0);
+		close(fd);
+	}
 }
 void input_handle1(t_redi *in, t_extra ptr, int fd)
 {
@@ -197,8 +200,6 @@ void exec_cmd(t_command *cmd, t_env **env)
 	char    **envp;
 	char *path;
 	envp = chr_envirment(env);
-
-
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, env);
@@ -236,7 +237,6 @@ void ft_exec(t_command **cmd, t_env **env)
 	t_command *tmp;
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
-	// printf("%d\n", ptr.size);
 	ptr.i = 0;
 	(*env)->pid = getpid();
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
@@ -247,7 +247,6 @@ void ft_exec(t_command **cmd, t_env **env)
 	if (!ptr.pid)
 		return ;
 	ft_herdoc(cmd, ptr.env);
-	
 	while (ptr.i <= ptr.size)
 	{
 		ptr.pid[ptr.i] = fork();
