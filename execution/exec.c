@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/31 17:21:58 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 13:00:31 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ void    handle_child(t_command *cmd, t_extra ptr)
 	input_handle1(cmd->in,ptr, cmd->fd);
 	output_handle1(cmd->out, ptr); 
 	closingfds(ptr.pipline, ptr.size);
-	if (cmd->argv[0] != NULL)
+	if (cmd->argv != NULL)
 	{
 		exec_cmd(cmd, ptr.env);
 	}

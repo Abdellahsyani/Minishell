@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:32:15 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 09:47:25 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 12:57:49 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
 
 int is_builtin(t_command *cmd)
 {
+	if (!cmd->argv)
+		return (0);
 	if (cmd->argv[0])
 	{
 		if (!ft_strcmp(cmd->argv[0], "echo") || !ft_strcmp(cmd->argv[0], "cd"))
