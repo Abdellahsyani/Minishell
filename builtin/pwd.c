@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int ft_pwd(char **args)
+int ft_pwd(char **args, t_env **env)
 {
     int i;
     char *path;
@@ -28,7 +28,7 @@ int ft_pwd(char **args)
         }
         i++;
     }
-    path = getcwd(NULL, 0);
+    path = ft_get(env, "PWD");
     if(!path)
     {
         printf("pwd: getcwd failed\n");
@@ -36,6 +36,5 @@ int ft_pwd(char **args)
         return (0);
     }
     printf("%s\n", path);
-    free(path);
     return (1);
 }

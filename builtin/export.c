@@ -32,12 +32,10 @@ void    print_export(t_env **env)
 		if (!strcmp(tmp->key, "_") || !strcmp(tmp->key, "?"))
 		{
 			tmp = tmp->next;
-			break ;
+			continue ;
 		}
 		if (!tmp->value)
-		{
 			printf("declare -x %s\n",tmp->key);
-		}
 		else
 			printf("declare -x %s=\"%s\"\n",tmp->key,tmp->value);
 		tmp = tmp->next;
@@ -116,4 +114,3 @@ int ft_export(char **arg, t_env **env)
 	}
 		return (1);
 }
-

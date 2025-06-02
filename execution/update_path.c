@@ -36,8 +36,8 @@ void update_path(char *arg, t_env **env)
     if (!new_value)
         return ;
     set_new_env("_", new_value, env);
-    free(str);
-    free(value);
+    /*free(str);*/
+    /*free(value);*/
 }
 
 

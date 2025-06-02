@@ -62,7 +62,6 @@ int    ft_echo(char **arg)
         i = 1;
         while (arg[i])
         {
-            printf("hello echo");
             printf("%s\n",arg[i]);
             i++;
         }

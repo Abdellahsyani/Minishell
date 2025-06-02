@@ -147,11 +147,12 @@ char    **chr_envirment(t_env **env);
 void    delete_key_value(char *key, t_env **env);
 char    *ft_key(char *str);
 void    update_path(char *arg, t_env **env);
+char *ft_get(t_env **env, char *key);
 //**************Builtin****************
 
 int    ft_echo(char **arg);
 int     ft_cd(char **args, t_env **env);
-int    ft_pwd(char **args);
+int    ft_pwd(char **args, t_env **env);
 int     ft_env(t_env **env, char **argv);
 int     ft_export(char **arg, t_env **env);
 int     ft_unset(char **arg, t_env **env);

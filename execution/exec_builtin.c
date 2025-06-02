@@ -19,7 +19,7 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
 	else if (!ft_strcmp(cmd, "echo"))
 		return (ft_echo(args));
 	else if (!ft_strcmp(cmd, "pwd"))
-		return (ft_pwd(args));
+		return (ft_pwd(args, env));
 	else if (!ft_strcmp(cmd, "export"))
 		return (ft_export(args, env));
 	else if (!ft_strcmp(cmd, "unset"))
