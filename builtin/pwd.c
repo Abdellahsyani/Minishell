@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:50:39 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/23 17:38:02 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/02 19:28:15 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_pwd(char **args)
+
+int ft_pwd(char **args, t_env **env)
 {
     int i;
     char *path;
@@ -28,7 +29,7 @@ int ft_pwd(char **args)
         }
         i++;
     }
-    path = getcwd(NULL, 0);
+    path = ft_get(env, "PWD");
     if(!path)
     {
         printf("pwd: getcwd failed\n");
@@ -36,6 +37,5 @@ int ft_pwd(char **args)
         return (0);
     }
     printf("%s\n", path);
-    free(path);
     return (1);
 }

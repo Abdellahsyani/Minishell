@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/30 15:14:46 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:21:36 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ char *find_path(char *cmd, t_env **env)
 	if (cmd == NULL)
 		return NULL;
 	if (!access(cmd, X_OK))
-	{
 		return (cmd);
-	}
 	cur = *env;
 	while(ft_strncmp(cur->key,"PATH",4))
 		cur = cur->next;
