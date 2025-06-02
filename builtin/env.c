@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 12:34:27 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:28:28 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ int ft_env(t_env **env, char **argv)
         return (1);
     while(tmp)
     {
-        if (tmp->value)
+        if (tmp->value && strcmp(tmp->key, "?"))
             printf("%s=%s\n",tmp->key,tmp->value);
-        else
-            printf("%s\n",tmp->key);
         tmp = tmp->next;
     }
     return (0);

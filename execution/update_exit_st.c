@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/31 14:53:19 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 15:39:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void wait_and_free(t_extra ptr)
 	int new_status;
 
 	i = 0;
-	//ft_free_gc();
+
 	closingfds(ptr.pipline, ptr.size);
 	while (i <= ptr.size)
 	{
@@ -45,5 +45,5 @@ void wait_and_free(t_extra ptr)
 		}
 		i++;
 	}
-	free(ptr.pid);
+	ft_free_gc();
 }

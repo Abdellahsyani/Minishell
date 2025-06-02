@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/02 12:54:30 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 16:15:42 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(int ac, char **argv, char **envp)
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
 	env = get_env(envp);
+	update_exit_status(env, 0);
 	while (1)
 	{
 		list = NULL;
@@ -64,8 +65,14 @@ int main(int ac, char **argv, char **envp)
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
 		}
+		else
+		{
+			free(line);
+			continue;
+		}
+			
+		//printf("here");
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}
-	return (0);
 }

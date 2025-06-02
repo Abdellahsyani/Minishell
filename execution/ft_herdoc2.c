@@ -6,19 +6,18 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:22:45 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 12:39:41 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:00:53 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_dollar(char *line, int fd)
+void ft_dollar(char *line, int fd, t_env **env)
 {
 	(void)line;
-	int pid;
 	char *s;
-	pid = getpid();
-	s = ft_itoa(pid);
+	
+	s = ft_itoa((*env)->pid);
 	write(fd, s, ft_strlen(s));
 	free(s);
 }
@@ -42,7 +41,7 @@ void helper_herdoc(char *line, int fd, t_env **env)
 		}
 		else if (line[i] == '$' && line[i + 1] == '$')
 		{
-			ft_dollar(line, fd);
+			ft_dollar(line, fd, env);
 			i += 2;
 		}
 

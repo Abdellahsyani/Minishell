@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 12:35:11 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 14:27:27 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ void    print_export(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
-		// if (tmp->flag == 0)
-		// 	break ;
+		if (!strcmp(tmp->key, "_") || !strcmp(tmp->key, "?"))
+		{
+			tmp = tmp->next;
+			break ;
+		}
 		if (!tmp->value)
 		{
 			printf("declare -x %s\n",tmp->key);
@@ -60,6 +63,7 @@ void    set_new_env(char *key, char *value, t_env **env)
 		if(value)
 			create->value= value;
 		create->next = *env;
+		
 		*env = create;
 	}
 }
@@ -83,6 +87,7 @@ int check_arg(char *str,t_env **env)
 		i += 1;
 		value = ft_substr(str, i, l - i);
 	}
+
 	set_new_env(key, value,env);
 	return (1);
 }
@@ -92,7 +97,7 @@ int ft_export(char **arg, t_env **env)
 	int i;
 
 	i = 1;
-
+	update_path(arg[0], env);
 	if (!arg[1])
 	{
 		print_export(env);

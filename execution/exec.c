@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 17:17:38 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/02 17:21:51 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int ft_cmd_size(t_command **cmd)
 	int count;
 	
 	count = 0;
-	if (!*cmd)
+	if (!cmd)
 		return (0);
 	tmp = *cmd;
 	while (tmp)
@@ -35,6 +35,8 @@ void exec_builtins(t_command **cmd, t_env **env, int fd)
 	t_command *tmp;
 	
 	tmp = *cmd;
+	if (!redirect_handler(&fd, cmd, env))
+		return ;
 	status = ft_exec_builtin(tmp->argv[0], tmp->argv, env);
 	update_exit_status(env, status);
 	if(fd != -2)
@@ -51,9 +53,12 @@ int **allocate_tube(int size)
 	int i;
 
 	i = 0;
+	if (size < 0)
+		return (0);
 	tube = gc_malloc(sizeof(int *) * size);
 	if (!tube)
 		return (0);
+	
 	while (i < size)
 	{
 		tube[i] = gc_malloc(sizeof(int) * 2);
@@ -86,19 +91,15 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
 	int fd;
 	fd = -1;
 	tmp  = *cmd;
-	if (size == 0  && redirect_handler(&fd, cmd, env) && is_builtin(tmp) && tmp->argv)
+	if (size == 0  && is_builtin(tmp) && tmp->argv)
 	{
 		exec_builtins(cmd, env, fd);
 		return(0) ;
 	}
-	if(fd != -2)
-	{
-		dup2(fd, 1);
-		close(fd);
-	}
 	tube = allocate_tube(size);
 	if (!tube)
 		return (0);
+	
 	if(!tube || !set_pipes(tube, size))
 	{
 		printf("Error: pipe failed or allocation.\n");
@@ -118,14 +119,14 @@ void    closingfds(int **tube, int pos)
 		free(tube[pos - 1]);
 		pos--;
 	}
-	free(tube);
+	// free(tube);
 }
 
 int pass_out(t_redi *tmp ,int *fd)
 {
-	if (tmp->type == redir_output)
+	if (tmp->type == redir_output && tmp->file)
 		*fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
-	else if (tmp->type == redir_o_app)
+	else if (tmp->type == redir_o_app  && tmp->file)
 		*fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
 	else
 		return (-1);
@@ -197,8 +198,6 @@ void exec_cmd(t_command *cmd, t_env **env)
 	char    **envp;
 	char *path;
 	envp = chr_envirment(env);
-
-
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, env);
@@ -219,6 +218,7 @@ void exec_cmd(t_command *cmd, t_env **env)
 }
 void    handle_child(t_command *cmd, t_extra ptr)
 {
+
 	input_handle1(cmd->in,ptr, cmd->fd);
 	output_handle1(cmd->out, ptr); 
 	closingfds(ptr.pipline, ptr.size);
@@ -233,10 +233,10 @@ void ft_exec(t_command **cmd, t_env **env)
 {
 	t_extra ptr;
 	t_command *tmp;
-
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
+	(*env)->pid = getpid();
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
 	if (!ptr.pipline)
 		return ;
