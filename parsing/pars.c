@@ -12,52 +12,57 @@
 
 #include "../minishell.h"
 
-static int	print_error(char *str)
+static int	print_error(char *str, t_env **env)
 {
 	if (str)
+	{
 		printf("bash: syntax error near unexpected token `%s`\n", str);
+		update_exit_status(env, 2);
+	}
 	else
+	{
 		printf("bash: syntax error near unexpected token `newline`\n");
+		update_exit_status(env, 2);
+	}
+
 	return (0);
 }
 
 static int	is_consecutive_operator(t_token *list)
 {
 	if (!list || !list->next)
-		return (0);
+		return (1);
 	while (list && list->type != word)
 	{
-		if (list->next && list->type == list->next->type)
-			return (1);
+		if (list->next && (list->type == list->next->type
+			|| list->next->type != word))
+		{
+			return (0);
+		}
 		list = list->next;
 	}
-	return (0);
+	return (1);
 }
 
-int	op_error_syntax(t_token *list)
+int	op_error_syntax(t_token *list, t_env **env)
 {
-	if (list && is_consecutive_operator(list))
-		return (print_error(list->content));
+	if (list && is_consecutive_operator(list) == 0)
+		return (print_error(list->content, env));
 	if (list && list->type != pipe_line)
 	{
 		if (list->next && list->next->type != word)
 		{
 			list = list->next;
 			if (list->next == NULL)
-				return (print_error(list->content));
+				return (print_error(list->content, env));
 		}
 		if (list->next == NULL)
-			return (print_error(NULL));
-	}
-	else if (list && list->type == pipe_line)
-	{
-		if (list->next != NULL && list->type == word)
-			return (print_error(list->content));
+			return (print_error(NULL, env));
 	}
 	return (1);
 }
 
-int	start_parsing(t_token *list)
+int	start_parsing(t_token *list, t_env **env)
 {
 	t_token	*current;
 	int	error;
@@ -66,15 +71,15 @@ int	start_parsing(t_token *list)
 	error = 1;
 	if (!list)
 		return (0);
-	if (list->type == pipe_line)
-		print_error(list->content);
+	if (list->type == pipe_line && !list->next)
+		print_error(list->content, env);
 	while (current)
 	{
 		if (current->type == word)
 			current = current->next;
 		else
 		{
-			error = op_error_syntax(current);
+			error = op_error_syntax(current, env);
 			if (!error)
 				return (0);
 			current = current->next;
