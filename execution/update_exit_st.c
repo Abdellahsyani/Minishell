@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 15:39:17 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:56:21 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,33 @@ void update_exit_status(t_env **env,int status)
 	value = ft_itoa(status);
 	set_new_env("?", value, env);
 	//free(value);
+}
+void    closingfds(int **tube, int pos)
+{
+	while (pos > 0)
+	{
+		close(tube[pos - 1][0]);
+		close(tube[pos - 1][1]);
+		free(tube[pos - 1]);
+		pos--;
+	}
+	// free(tube);
+}
+int ft_cmd_size(t_command **cmd)
+{
+	t_command *tmp;
+	int count;
+	
+	count = 0;
+	if (!cmd)
+		return (0);
+	tmp = *cmd;
+	while (tmp)
+	{
+		count++;
+		tmp = tmp->next;
+	}
+	return(count);
 }
 
 void wait_and_free(t_extra ptr)

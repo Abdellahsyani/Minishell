@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/29 16:05:58 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:44:14 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ char    *get_value(char *str)
 	char *value = NULL;
 	int j = 0;
 	i = 0;
-	int l= strlen(str);
+	int l;
+	l = strlen(str);
 	while (str[i] && str[i] != '=')
 		i++;
 	i++;
+	if(str[i] == '\0')
+		return (NULL);
 	value = malloc(sizeof(char) * (l - i + 1));
 	if (!value)
 		return NULL;
@@ -116,10 +119,6 @@ t_env   **get_env(char **list)
 	while (*list)
 	{
 		cur->next = new_node(ft_key(*list), get_value(*list));
-		if (!ft_strcmp(cur->key, "_"))
-			cur->flag = 0;
-		else
-			cur->flag = 1;
 		cur = cur->next;
 		list++;
 	}

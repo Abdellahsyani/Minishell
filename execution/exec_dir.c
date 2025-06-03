@@ -6,11 +6,27 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 13:48:23 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:54:05 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int pass_out(t_redi *tmp ,int *fd)
+{
+	if (tmp->type == redir_output && tmp->file)
+		*fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
+	else if (tmp->type == redir_o_app  && tmp->file)
+		*fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
+	else
+		return (-1);
+	if (*fd == -1)
+	{
+		perror("open failed");
+		return 0;
+	}
+	return (1);
+}
 
 int input_handle(t_redi *redir)
 {

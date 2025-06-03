@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/03 13:29:38 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:57:18 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void    delete_key_value(char *key, t_env **env);
 char    *ft_key(char *str);
 void    update_path(char *arg, t_env **env);
 char    *ft_get(t_env **env, char *key);
+int     ft_cmd_size(t_command **cmd);
 
 //**************Builtin****************
 
@@ -178,5 +179,6 @@ void    closingfds(int **tube, int pos);
 int     pass_out(t_redi *tmp ,int *fd);
 void    handle_sig(int signum);
 void    handle_child_sig(int signum);
+void    handle_child(t_command *cmd, t_extra ptr);
 
 #endif

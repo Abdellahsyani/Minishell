@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 13:30:35 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 16:12:38 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,9 @@ void    set_pwd_env(t_env **env, char *key,char *value)
 
 	list = ft_find(*env, key);
 	if (list)
-	{
-		free(list->value);
-		list->value = ft_strdup(value);
-	}
+		list->value = value;
 	else
-{
+	{
 		printf("key not exist\n");
 		return ;
 	}
@@ -72,11 +69,11 @@ static int cd_update_env(t_env **env, char *str,char *target)
  
     if(!new)
     {
-        printf("cd: getcwd failed\n");
+        ft_putstr_fd("cd: error retrieving current directory", 2);
+		perror("getcwd : cannot access parent directories");
         return (0);
     }
     set_pwd_env(env, "PWD", new);
-    free(new);
     return (1);
 }
 static int cd_change_directory(t_env **env, char *target)
@@ -86,18 +83,17 @@ static int cd_change_directory(t_env **env, char *target)
 	cwd = ft_get(env, "OLDPWD");
 	if (!cwd)
 	{
-		printf("cd: getcwd failed\n");
+		ft_putstr_fd("cd: error retrieving current directory: ", 2);
+		perror("getcwd : cannot access parent directories");
 		return 0;
 	}
 	set_pwd_env(env,"OLDPWD",cwd);
-	free(cwd);
 	if (chdir(target) != 0)
 	{
 		printf("cd : %s : %s\n",target,strerror(errno));
 		return (0);
 	}
 	return (cd_update_env(env,"PWD", target));
-
 }
 
 int ft_cd(char **args, t_env **env)
