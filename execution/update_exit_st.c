@@ -18,7 +18,6 @@ void update_exit_status(t_env **env,int status)
 
 	value = ft_itoa(status);
 	set_new_env("?", value, env);
-	//free(value);
 }
 void    closingfds(int **tube, int pos)
 {
@@ -72,5 +71,5 @@ void wait_and_free(t_extra ptr)
 		}
 		i++;
 	}
-	ft_free_gc();
+	//ft_free_gc();
 }

@@ -73,6 +73,7 @@ int main(int ac, char **argv, char **envp)
 			
 		//printf("here");
 		ft_exec(&cmd_tmp, env);
+		ft_free_gc();
 		free(line);
 	}
 }

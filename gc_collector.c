@@ -40,7 +40,7 @@ void	*gc_malloc(size_t size)
 	if (!ptr)
 		return (NULL);
 	ft_bzero(ptr, size);
-	node = malloc(sizeof(t_list));
+	node = malloc(sizeof(c_list));
 	if (!node)
 	{
 		free(ptr);
