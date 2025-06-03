@@ -138,7 +138,7 @@ int	is_operator(char op);
 int	start_parsing(t_token *list);
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
-int     ft_check_value(char *str);
+int     ft_check_value(char *str, t_env *env);
 t_env   *ft_find(t_env *env, char *key);
 t_env   **get_env(char **list);
 int	count_word_tokens(t_token *list);

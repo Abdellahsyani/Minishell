@@ -38,7 +38,7 @@ void delete_key_value(char *key, t_env **env)
 	cur = *env;
 	if(!key)
 		return ;
-	while (cur)
+	while (cur && cur->next)
 	{
 		if (!ft_strcmp(cur->key , key))
 		{
@@ -68,7 +68,7 @@ int ft_unset(char **arg, t_env **env)
 	i = 1;
 	while (arg[i])
 	{
-		if (ft_check_value(arg[i]))
+		if (ft_check_value(arg[i], *env))
 			return (1);
 		delete_key_value(arg[i],env);
 		i++;
