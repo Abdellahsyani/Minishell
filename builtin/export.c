@@ -22,6 +22,7 @@ t_env *ft_find(t_env *env, char *key)
 	}
 	return (NULL);
 }
+
 void    print_export(t_env **env)
 {
 	t_env *tmp;
@@ -32,12 +33,10 @@ void    print_export(t_env **env)
 		if (!strcmp(tmp->key, "_") || !strcmp(tmp->key, "?"))
 		{
 			tmp = tmp->next;
-			break ;
+			continue ;
 		}
 		if (!tmp->value)
-		{
 			printf("declare -x %s\n",tmp->key);
-		}
 		else
 			printf("declare -x %s=\"%s\"\n",tmp->key,tmp->value);
 		tmp = tmp->next;
@@ -72,9 +71,10 @@ int check_arg(char *str,t_env **env)
 {
 	int i;
 	char *key;
-	char *value = NULL;
+	char *value;
 	int l;
 	
+	value = NULL;
 	l = ft_strlen(str);
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')
@@ -88,7 +88,7 @@ int check_arg(char *str,t_env **env)
 		value = ft_substr(str, i, l - i);
 	}
 
-	set_new_env(key, value,env);
+	set_new_env(key, value, env);
 	return (1);
 }
 
@@ -116,4 +116,3 @@ int ft_export(char **arg, t_env **env)
 	}
 		return (1);
 }
-

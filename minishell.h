@@ -138,7 +138,7 @@ int	is_operator(char op);
 int	start_parsing(t_token *list);
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
-int     ft_check_value(char *str);
+int     ft_check_value(char *str, t_env *env);
 t_env   *ft_find(t_env *env, char *key);
 t_env   **get_env(char **list);
 int	count_word_tokens(t_token *list);
@@ -147,7 +147,11 @@ char    **chr_envirment(t_env **env);
 void    delete_key_value(char *key, t_env **env);
 char    *ft_key(char *str);
 void    update_path(char *arg, t_env **env);
+<<<<<<< HEAD
 char    *ft_get(t_env **env, char *key);
+=======
+char *ft_get(t_env **env, char *key);
+>>>>>>> 4073848dce699c30f06039176f2f57825d91cc7a
 //**************Builtin****************
 
 int    ft_echo(char **arg);

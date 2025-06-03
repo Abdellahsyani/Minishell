@@ -14,63 +14,64 @@
 
 int is_valid(char *str)
 {
-    int i;
+	int i;
 
-    i = 1;
-    if (!str[0] || (!ft_isalpha(str[0]) && str[0] != '_'))
-    {
-        return (0);
-    }
-    while (str[i])
-    {
-        if (!ft_isalnum(str[i]) && str[i] != '_' )
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 1;
+	if (!str[0] || (!ft_isalpha(str[0]) && str[0] != '_'))
+	{
+		return (0);
+	}
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_' )
+			return (0);
+		i++;
+	}
+	return (1);
 }
 void delete_key_value(char *key, t_env **env)
 {
-    t_env *prev;
-    t_env *cur;
-    
-    prev = NULL;
-    cur = *env;
-    if(!key)
-        return ;
-    while (cur)
-    {
-        if (!ft_strcmp(cur->key , key))
-        {
-            if (prev == NULL)
-                *env = cur->next;
-            else
-                prev->next = cur->next;
-            free(cur->key);
-            free(cur->value);
-            free(cur);
-        }
-        prev = cur;
-        cur = cur->next;
-    }
+	t_env *prev;
+	t_env *cur;
+
+	prev = NULL;
+	cur = *env;
+	if(!key)
+		return ;
+	while (cur && cur->next)
+	{
+		if (!ft_strcmp(cur->key , key))
+		{
+			if (prev == NULL)
+				*env = cur->next;
+			else
+				prev->next = cur->next;
+			free(cur->key);
+			if (cur->value)
+				free(cur->value);
+			free(cur);
+		}
+		prev = cur;
+		cur = cur->next;
+	}
 }
 
 int ft_unset(char **arg, t_env **env)
 {
-    int i;
+	int i;
 
-    if (!arg[1])
-    {
-        printf("Error: not enough arguments\n");
-        return (1);
-    }
-    i = 1;
-    while (arg[i])
-    {
-        if (ft_check_value(arg[i]))
-            return (1);
-        delete_key_value(arg[i],env);
-        i++;
-    }
-    return (0);
+	if (!arg[1])
+	{
+		printf("Error: not enough arguments\n");
+		return (1);
+	}
+	i = 1;
+	while (arg[i])
+	{
+		if (ft_check_value(arg[i], *env))
+			return (1);
+		delete_key_value(arg[i],env);
+		i++;
+	}
+	return (0);
 }

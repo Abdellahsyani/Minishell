@@ -12,7 +12,10 @@
 
 #include "../minishell.h"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4073848dce699c30f06039176f2f57825d91cc7a
 int ft_pwd(char **args, t_env **env)
 {
     int i;
