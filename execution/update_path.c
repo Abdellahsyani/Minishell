@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:07:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/28 11:33:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 16:50:43 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void update_path(char *arg, t_env **env)
 {
     t_env *tmp;
+    char *new_value;
     char *value;
     char *str;
-    char *new_value;
     int l;
 
     tmp = ft_find(*env, "_");

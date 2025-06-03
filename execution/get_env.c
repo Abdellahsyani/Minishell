@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 15:44:14 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 16:57:01 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char    *ft_key(char *str)
 
 	while (str[i] && str[i] != '=')
 		i++;
-	key = malloc(sizeof(char) * (i + 1));
+	key = gc_malloc(sizeof(char) * (i + 1));
 	if (!key)
 		return (NULL);
 	while (j < i)
@@ -46,7 +46,7 @@ char    *get_value(char *str)
 	i++;
 	if(str[i] == '\0')
 		return (NULL);
-	value = malloc(sizeof(char) * (l - i + 1));
+	value = gc_malloc(sizeof(char) * (l - i + 1));
 	if (!value)
 		return NULL;
 	while (i < l)
@@ -63,7 +63,7 @@ t_env *new_node(char *key, char *value)
 {
 	t_env *new;
 
-	new = malloc(sizeof(t_env));
+	new = gc_malloc(sizeof(t_env));
 	if(!new)
 		return (NULL);
 	new->key = key;
@@ -89,7 +89,7 @@ char **chr_envirment(t_env **env)
 		i++;
 		(envy) = (envy)->next;
 	}
-	envp = malloc(sizeof(char *) * (i + 1));
+	envp = gc_malloc(sizeof(char *) * (i + 1));
 	if (!envp)
 		return (NULL);
 	i = 0;
@@ -110,7 +110,7 @@ t_env   **get_env(char **list)
 	t_env **tmp;
 	t_env *cur;
 
-	tmp = malloc(sizeof(t_env*));
+	tmp = gc_malloc(sizeof(t_env*));
 	if (!tmp)
 		return (NULL);
 	cur = new_node(ft_key(*list), get_value(*list));
