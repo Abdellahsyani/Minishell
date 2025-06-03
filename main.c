@@ -54,7 +54,7 @@ int main(int ac, char **argv, char **envp)
 			tmp = tmp->next;
 		}
 		
-		parse_status = start_parsing(list);
+		parse_status = start_parsing(list, env);
 		
 		if (parse_status == 1)
 		{

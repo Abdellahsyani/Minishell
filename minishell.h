@@ -127,7 +127,7 @@ int	handle_dollar(t_shell *mini, t_token **list, char *line);
 int	get_input(char *line, t_token **tokens_list);
 char	*ft_strlcpy(char *token, char *input, int len, int j);
 void	*token_type(t_token *list);
-int	start_parsing(t_token *list);
+int	start_parsing(t_token *list, t_env **env);
 
 /******** helper functions ************/
 
@@ -135,7 +135,6 @@ void	add_cmd_list(t_token *list, t_command **cmd);
 void	ft_free_gc(void);
 void	*gc_malloc(size_t size);
 int	is_operator(char op);
-int	start_parsing(t_token *list);
 int     ft_strcmp(char *s1, char *s2);
 int     is_valid(char *str);
 int     ft_check_value(char *str, t_env *env);

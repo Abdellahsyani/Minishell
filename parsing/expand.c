@@ -37,6 +37,7 @@ char	*stcopy(char *var, char *content, char del)
 char *ft_get(t_env **env, char *key)
 {
 	t_env *tmp;
+
 	tmp = *env;
 	while (tmp)
 	{
@@ -58,8 +59,9 @@ char	*get_status(char *str, t_env **env)
 int	get_space_size(char *str, int temp_i)
 {
 	int	result_len;
-	int in_whitespace = 1;
+	int in_whitespace;
 
+	in_whitespace = 1;
 	result_len = 0;
 	while (str[temp_i])
 	{
@@ -83,8 +85,9 @@ int	get_space_size(char *str, int temp_i)
 char	*fill_nonspace(char *str, int i, char *result)
 {
 	int in_whitespace;
-	int j = 0;
+	int j;
 
+	j = 0;
 	in_whitespace = 0;
 	while (str[i])
 	{
@@ -114,8 +117,8 @@ char	*fill_nonspace(char *str, int i, char *result)
 char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 {
 	char *result;
-	int i = 0;
-	int result_len = 0;
+	int i;
+	int result_len;
 	int temp_i;
 
 	i = 0;
@@ -143,9 +146,10 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 
 char *get_allstr(char *str)
 {
-	int	i =0;
+	int	i;
 	char	*value;
 
+	i = 0;
 	while (str[i])
 		i++;
 	value = ft_substr(str, 0, i);
@@ -155,13 +159,17 @@ char *get_allstr(char *str)
 char *get_var(char *str, t_env **env)
 {
 	int i = 1;
-	int start = i;
+	int start;
 	int len;
 	char *var_name;
 	char *var_value;
-	char	*var_quote = NULL;
-	char	*get_last = NULL;
+	char	*var_quote;
+	char	*get_last;
 
+	i = 1;
+	start = i;
+	var_quote = NULL;
+	get_last = NULL;
 	if (str[i] == '?')
 		return (get_status(&str[i], env));
 	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
