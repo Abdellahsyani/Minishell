@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 19:16:15 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 13:30:35 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ static int cd_update_env(t_env **env, char *str,char *target)
 	char *new;
 	(void)str;
 	(void)target;
-<<<<<<< HEAD
-    
     new = getcwd(NULL, 0);
  
     if(!new)
@@ -80,18 +78,6 @@ static int cd_update_env(t_env **env, char *str,char *target)
     set_pwd_env(env, "PWD", new);
     free(new);
     return (1);
-=======
-
-	new = getcwd(NULL, 0);
-	if(!new)
-	{
-		printf("cd: getcwd failed\n");
-		return (0);
-	}
-	set_pwd_env(env, "PWD", new);
-	free(new);
-	return (1);
->>>>>>> 4073848dce699c30f06039176f2f57825d91cc7a
 }
 static int cd_change_directory(t_env **env, char *target)
 {

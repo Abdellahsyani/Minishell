@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/02 19:01:13 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/03 13:29:38 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,8 @@ char    **chr_envirment(t_env **env);
 void    delete_key_value(char *key, t_env **env);
 char    *ft_key(char *str);
 void    update_path(char *arg, t_env **env);
-<<<<<<< HEAD
 char    *ft_get(t_env **env, char *key);
-=======
-char *ft_get(t_env **env, char *key);
->>>>>>> 4073848dce699c30f06039176f2f57825d91cc7a
+
 //**************Builtin****************
 
 int    ft_echo(char **arg);
