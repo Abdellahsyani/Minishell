@@ -71,9 +71,4 @@ void wait_and_free(t_extra ptr)
 		}
 		i++;
 	}
-<<<<<<< HEAD
-	// ft_free_gc();
-=======
-	//ft_free_gc();
->>>>>>> parsing
 }

@@ -26,11 +26,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s1));
 	i = 0;
 	j = 0;
-<<<<<<< HEAD
 	p = gc_malloc(sizeof(char) * (ft_strlen(s1) +ft_strlen(s2) + 1));
-=======
-	p = malloc(sizeof(char) * (ft_strlen(s1) +ft_strlen(s2) + 1));
->>>>>>> parsing
 	if (!p)
 		return (NULL);
 	while (i < ft_strlen(s1))
