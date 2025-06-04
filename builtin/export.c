@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 14:27:27 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:06:06 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void    set_new_env(char *key, char *value, t_env **env)
 	}
 	else
 	{
-		create = malloc(sizeof(t_env));
+		create = gc_malloc(sizeof(t_env));
 		create->key = key;
 		if(value)
 			create->value= value;
@@ -87,8 +87,9 @@ int check_arg(char *str,t_env **env)
 		i += 1;
 		value = ft_substr(str, i, l - i);
 	}
-
+	gc_type(1, e_dont_free);
 	set_new_env(key, value, env);
+	gc_type(1, e_free_content);
 	return (1);
 }
 

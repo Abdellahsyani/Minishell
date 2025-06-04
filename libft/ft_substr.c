@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:27:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/27 14:22:39 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:27:37 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > ft_strlen(s) - start)
 		len = ft_strlen(s) - start;
-	p = malloc(sizeof(char) * (len + 1));
+	p = gc_malloc(sizeof(char) * (len + 1));
 	if (!p)
 		return (NULL);
 	i = 0;

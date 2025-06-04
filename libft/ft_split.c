@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 13:30:13 by abhimi            #+#    #+#             */
-/*   Updated: 2024/11/03 16:08:49 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:07:48 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	cword = count_word(s, c);
-	arr = (char **)malloc(sizeof(char *) * (cword + 1));
+	arr = gc_malloc(sizeof(char *) * (cword + 1));
 	if (!arr)
 		return (NULL);
 	return (ft_allocat(arr, s, c));
