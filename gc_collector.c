@@ -6,71 +6,77 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:06:47 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 10:58:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 12:05:58 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static c_list	*head;
+t_gc	*gc_global = NULL;
 
-void	ft_free_gc(void)
+void	init_gc(void)
 {
-	c_list			*tmp;
-
-	tmp = head;
-	while (tmp)
-	{
-		c_list *next = tmp->next;
-		if (gc_type(0, 0) == e_free_all ||
-			tmp->type == e_free_content)
-		{
-			if(tmp->data)
-				free(tmp->data);
-			free(tmp);
-		}
-		
-		tmp = next;
-	}
-	head = NULL;
-}
-
-int gc_type(int set, int value)
-{
-	static int type;
-
-	if (set)
-		type = value;
-	return type;
+	gc_global = malloc(sizeof(t_gc));
+	if (!gc_global)
+		return ;
+	gc_global->head = NULL;
 }
 
 void	*gc_malloc(size_t size)
 {
+	void		*ptr;
 	c_list	*node;
-	c_list	*tmp;
-	void	*ptr;
 
 	ptr = malloc(size);
 	if (!ptr)
 		return (NULL);
 	ft_bzero(ptr, size);
 	node = malloc(sizeof(c_list));
-	node->type = gc_type(0, 0);
 	if (!node)
 	{
 		free(ptr);
 		return (NULL);
 	}
-	node->data = ptr;
-	node->next = NULL;
-	if (head == NULL)
-		head = node;
-	else
-	{
-		tmp = head;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = node;
-	}
+	node->ptr = ptr;
+	node->next = gc_global->head;
+	gc_global->head = node;
 	return (ptr);
+}
+
+void	gc_free_one(void *ptr)
+{
+	c_list *curr;
+	c_list *prev;
+
+	prev = NULL;
+	curr = gc_global->head;
+	while (curr)
+	{
+		if (curr->ptr == ptr)
+		{
+			if (prev)
+				prev->next = curr->next;
+			else
+				gc_global->head = curr->next;
+			free(curr->ptr);
+			free(curr);
+			return;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
+}
+
+void	gc_free_all(void)
+{
+	c_list *curr = gc_global->head;
+	while (curr)
+	{
+		c_list *next = curr->next;
+		free(curr->ptr);
+		free(curr);
+		curr = next;
+	}
+	free(gc_global);
+	gc_global = NULL;
 }

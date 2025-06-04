@@ -375,6 +375,10 @@ char	*double_quote(char *content, t_env **env_t)
 	}
 	var1[j] = '\0';
 	/*printf("var_\": %s\n", var1);*/
+	free_2d(env);
+	free_2d(env_var);
+	gc_free_one(track_size);
+	gc_free_one(track_s);
 	return (var1);
 }
 
@@ -435,7 +439,7 @@ int	h_export(t_command *cmd, t_env **env)
 	}
 	if (cmd->argv_t[0][0] == '$')
 	{
-		var = ft_strdup(get_var(cmd->argv_t[0], env));
+		var = get_var(cmd->argv_t[0], env);
 		spl = ft_split(var, ' ');
 		i = 0;
 		while (spl[i])
@@ -451,6 +455,8 @@ int	h_export(t_command *cmd, t_env **env)
 		}
 		cmd->argv[j] = NULL;
 	}
+	free_2d(spl);
+	free_2d(cmd->argv_t);
 	return (1);
 }
 

@@ -87,9 +87,7 @@ int check_arg(char *str,t_env **env)
 		i += 1;
 		value = ft_substr(str, i, l - i);
 	}
-	gc_type(1, e_dont_free);
 	set_new_env(key, value, env);
-	gc_type(1, e_free_content);
 	return (1);
 }
 

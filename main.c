@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 int main(int ac, char **argv, char **envp)
 {
 	char        *line;
@@ -25,24 +24,20 @@ int main(int ac, char **argv, char **envp)
 	(void)ac;
 	(void)argv;
 
-	
+	init_gc();
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
-	gc_type(1, e_dont_free);
 	env = get_env(envp);
 	update_exit_status(env, 0);
-	gc_type(1, e_free_content);
 	while (1)
 	{
 		list = NULL;
 		cmd_list = NULL;
 
 		line = readline("\033[1;32mminishell $ \033[0m");
-		
 		if (!line)
 		{
-			gc_type(1, e_free_all);
-			//ft_free_gc();
+			gc_free_all();
 			printf("exit\n");
 			break;
 		}
@@ -77,11 +72,8 @@ int main(int ac, char **argv, char **envp)
 			
 		//printf("here");
 		ft_exec(&cmd_tmp, env);
-		ft_free_gc();
 		free(line);
-		//ft_free_gc();
 	}
-	gc_type(1, e_free_all);
 	// ft_free_gc();
 	
 }
