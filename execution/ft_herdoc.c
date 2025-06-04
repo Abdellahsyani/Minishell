@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/31 11:47:19 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:13:36 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 			write(2, err, ft_strlen(err));
 			exit(0);
 		}
-		if (!*line)
-			continue;
 		if (!ft_strncmp(line, limiter,ft_strlen(line)))
 		{
 			free(limiter);
 			free(line);
 			break;
 		}
+		if (!*line)
+			continue;
 		helper_herdoc(line,fd,env);
 		free(line);
 	}
@@ -50,7 +50,7 @@ void write_to_herdoc(int fd, t_env **env, char *limiter)
 		delimiter = ft_strjoin(limiter, "\n");
 	}
 	write_in_file(fd,env,delimiter);
-	//close(fd);
+	close(fd);
 	exit(0);
 }
 
