@@ -55,7 +55,10 @@ void	*gc_malloc(size_t size)
 		return (NULL);
 	ft_bzero(ptr, size);
 	node = malloc(sizeof(c_list));
+<<<<<<< HEAD
 	node->type = gc_type(0, 0);
+=======
+>>>>>>> parsing
 	if (!node)
 	{
 		free(ptr);

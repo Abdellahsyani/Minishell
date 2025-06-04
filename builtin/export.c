@@ -51,7 +51,7 @@ void    set_new_env(char *key, char *value, t_env **env)
 	exist = ft_find(*env, key);
 	if (exist)
 	{
-		free(exist->value);
+		//free(exist->value);
 		exist->value = ft_strdup(value);
 		return ;
 	}
