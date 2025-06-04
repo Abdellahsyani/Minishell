@@ -13,32 +13,26 @@
 #ifndef GC_H
 # define GC_H
 
-#include "minishell.h"
-
-typedef enum e_gc_type
-{
-    e_dont_free,
-    e_free_content,
-    e_free_all,
-} t_gc_type;
+# include "minishell.h"
 
 /* struct for gc_collector */
 typedef struct j_list
 {
 	int             type;
- 	void			*data;
+ 	void			*ptr;
  	struct j_list	*next;
 }	c_list;
 
 typedef struct s_gc
 {
-	c_list *gc_list;
+	c_list *head;
 }	t_gc;
 
 extern t_gc *gc_global;
 
-void	ft_free_gc(void);
-int gc_type(int set, int value);
+void	gc_free_all(void);
 void	*gc_malloc(size_t size);
+void	init_gc(void);
+void	gc_free_one(void *ptr);
 
 #endif

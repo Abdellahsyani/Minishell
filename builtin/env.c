@@ -34,9 +34,7 @@ int ft_env(t_env **env, char **argv)
 {
 	t_env *tmp = NULL;
 	(void)argv;
-	int i;
 
-	i = 1;
 	update_path(argv[0], env);
 	tmp = *env;
 	if (!tmp)

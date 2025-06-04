@@ -36,7 +36,7 @@ char	*ft_itoa(int n)
 
 	len = ft_lenum(n);
 	i = len - 1;
-	p = gc_malloc(sizeof(char) * (len + 1));
+	p = malloc(sizeof(char) * (len + 1));
 	if (!p)
 		return (NULL);
 	p[len] = '\0';

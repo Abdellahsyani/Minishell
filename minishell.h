@@ -39,10 +39,6 @@ typedef struct s_shell
 
 typedef struct s_token
 {
-	int	num_her;
-	int	num_app;
-	int	num_in;
-	int	num_out;
 	char	*content;
 	int	type;
 	struct s_token	*next;
@@ -107,11 +103,6 @@ char	*get_var(char *str, t_env **env);
 char	*get_var1(char *str);
 
 /***** parsing functions *****/
-void	ft_free_gc(void);
-void	*gc_malloc(size_t size);
-// char	*ft_strdup(char *s1);
-int gc_type(int set, int value);
-
 t_token	*create_node(char *c);
 void	add_list(t_shell *mini, t_token **list);
 int	handle_blank(t_shell *mini, t_token **list, char *line);
@@ -125,7 +116,7 @@ void	*token_type(t_token *list);
 int	start_parsing(t_token *list, t_env **env);
 
 /******** helper functions ************/
-
+void	free_2d(char **arr);
 void	add_cmd_list(t_token *list, t_command **cmd);
 void	*gc_malloc(size_t size);
 int	is_operator(char op);
