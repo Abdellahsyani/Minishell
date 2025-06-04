@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 10:33:24 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:37:01 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include "libft/libft.h"
-
-typedef enum e_gc_type
-{
-    e_dont_free,
-    e_free_content,
-    e_free_all,
-} t_gc_type;
-
-/* struct for gc_collector */
-typedef struct j_list
-{
-    int             type;
- 	void			*data;
- 	struct j_list	*next;
-}	c_list;
+# include "gc.h"
 
 /*** struct for tokinization ***/
 typedef struct s_shell

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+t_gc *gc_global = NULL;
 
 int main(int ac, char **argv, char **envp)
 {

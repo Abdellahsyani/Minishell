@@ -6,13 +6,11 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:06:47 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 10:58:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 12:05:58 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static c_list	*head;
 
 void	ft_free_gc(void)
 {
