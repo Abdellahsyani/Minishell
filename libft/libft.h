@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 18:33:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/14 18:30:28 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:28:06 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-
+# include "../minishell.h"
 typedef struct s_list
 {
 	void			*content;

@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/03 15:57:18 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:33:24 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,17 @@
 # include <sys/wait.h>
 # include "libft/libft.h"
 
+typedef enum e_gc_type
+{
+    e_dont_free,
+    e_free_content,
+    e_free_all,
+} t_gc_type;
+
 /* struct for gc_collector */
 typedef struct j_list
 {
+    int             type;
  	void			*data;
  	struct j_list	*next;
 }	c_list;
@@ -116,6 +124,7 @@ char	*get_var1(char *str);
 void	ft_free_gc(void);
 void	*gc_malloc(size_t size);
 // char	*ft_strdup(char *s1);
+int gc_type(int set, int value);
 
 t_token	*create_node(char *c);
 void	add_list(t_shell *mini, t_token **list);
@@ -132,7 +141,6 @@ int	start_parsing(t_token *list);
 /******** helper functions ************/
 
 void	add_cmd_list(t_token *list, t_command **cmd);
-void	ft_free_gc(void);
 void	*gc_malloc(size_t size);
 int	is_operator(char op);
 int	start_parsing(t_token *list);

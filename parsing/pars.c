@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:12:20 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/02 13:02:45 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 10:15:11 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_command	*create_cmd_node(t_token *list)
 	new_node->argv_t = NULL;
 	if (count > 0)
 	{
-		new_node->argv_t = gc_malloc(sizeof(char *) * (count + 1));
+		new_node->argv_t = gc_malloc(sizeof(char *) * (count + 2));
 		if (!new_node->argv_t)
 			return (NULL);
 		new_node->argv_t[0] = NULL;

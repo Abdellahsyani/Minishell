@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/02 16:15:42 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:00:46 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int main(int ac, char **argv, char **envp)
 	
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
+	gc_type(1, e_dont_free);
 	env = get_env(envp);
 	update_exit_status(env, 0);
+	gc_type(1, e_free_content);
 	while (1)
 	{
 		list = NULL;
@@ -39,6 +41,8 @@ int main(int ac, char **argv, char **envp)
 		
 		if (!line)
 		{
+			gc_type(1, e_free_all);
+			//ft_free_gc();
 			printf("exit\n");
 			break;
 		}
@@ -74,5 +78,9 @@ int main(int ac, char **argv, char **envp)
 		//printf("here");
 		ft_exec(&cmd_tmp, env);
 		free(line);
+		//ft_free_gc();
 	}
+	gc_type(1, e_free_all);
+	// ft_free_gc();
+	
 }
