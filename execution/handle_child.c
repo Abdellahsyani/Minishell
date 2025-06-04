@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 15:51:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:58:50 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,24 @@ void input_handle1(t_redi *in, t_extra ptr, int fd)
 	}
 }
 
-void exec_cmd(t_command *cmd, t_env **env)
+void exec_cmd(t_command *cmd, t_extra ptr)
 {
 	int status;
-	char    **envp;
 	char *path;
-	envp = chr_envirment(env);
 	if (is_builtin(cmd))
 	{
-		status = ft_exec_builtin(cmd->argv[0], cmd->argv, env);
-		update_exit_status(env, status);
+		status = ft_exec_builtin(cmd->argv[0], cmd->argv, ptr.env);
+		update_exit_status(ptr.env, status);
 		exit(status) ;
 	}
 	else
 	{
-		path = find_path(cmd->argv[0], env);
+		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
 		{
 			exit(1);
 		}
-		execve(path, cmd->argv, envp);
+		execve(path, cmd->argv, ptr.envp);
 		perror("execve failed.");
 		exit(127);
 	}
@@ -100,7 +98,7 @@ void    handle_child(t_command *cmd, t_extra ptr)
 	closingfds(ptr.pipline, ptr.size);
 	if (cmd->argv != NULL)
 	{
-		exec_cmd(cmd, ptr.env);
+		exec_cmd(cmd, ptr);
 	}
 	exit(1);
 }
