@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 11:00:46 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:45:05 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int main(int ac, char **argv, char **envp)
 			
 		//printf("here");
 		ft_exec(&cmd_tmp, env);
-		ft_free_gc();
+		//ft_free_gc();
 		free(line);
 		//ft_free_gc();
 	}

@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/02 19:09:19 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 16:34:22 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int    ft_echo(char **arg)
         i = 1;
         while (arg[i])
         {
-            printf("%s\n",arg[i]);
+            printf("%s ",arg[i]);
             i++;
         }
+        printf("\n");
     }
     return (0);
 }
