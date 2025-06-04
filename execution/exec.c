@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 15:56:12 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:57:31 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void ft_exec(t_command **cmd, t_env **env)
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
+	ptr.envp = chr_envirment(env);
 	(*env)->pid = getpid();
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
 	if (!ptr.pipline)

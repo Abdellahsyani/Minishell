@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 10:33:24 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 11:56:37 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_extra
     pid_t *pid;
     int **pipline;
     t_env **env;
+    char **envp;
     struct s_extra *next;
 } t_extra;
 
