@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_herdoc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 17:13:36 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:59:54 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 			write(2, err, ft_strlen(err));
 			exit(0);
 		}
-		if (!ft_strncmp(line, limiter,ft_strlen(line)))
+		if (*line !='\0' && !ft_strncmp(line, limiter,ft_strlen(line)))
 		{
+			printf("herdoc");
 			free(limiter);
 			free(line);
 			break;
 		}
-		if (!*line)
+		if (!*line && *limiter != '\0')
 			continue;
 		helper_herdoc(line,fd,env);
 		free(line);

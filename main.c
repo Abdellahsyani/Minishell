@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/05 09:49:15 by abhimi           ###   ########.fr       */
-=======
-/*   Updated: 2025/05/26 16:21:15 by abdo             ###   ########.fr       */
->>>>>>> 5b1b803 (fix redir)
+/*   Updated: 2025/06/05 15:03:31 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +18,7 @@ int main(int ac, char **argv, char **envp)
 	t_token     *list = NULL;
 	t_token     *tmp = NULL;
 	t_command   *cmd_list = NULL;
-	// t_command	*cmd_tmp = NULL;
+	t_command	*cmd_tmp = NULL;
 	int         parse_status;
 	t_env **env;
 	(void)ac;
@@ -65,7 +61,6 @@ int main(int ac, char **argv, char **envp)
 			int ex = pars_command(list, &cmd_list);
 			if (ex == 0)
 				return (0);
-<<<<<<< HEAD
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
 		}
@@ -77,16 +72,6 @@ int main(int ac, char **argv, char **envp)
 			
 		//printf("here");
 		ft_exec(&cmd_tmp, env);
-		//ft_free_gc();
-=======
-			// cmd_tmp = cmd_list;
-			expand_var(list, cmd_list, env);
-		}
-		if (!cmd_list->in->file)
-		{
-			exit(0);
-		}
->>>>>>> 5b1b803 (fix redir)
 		free(line);
 	}
 	// ft_free_gc();
