@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:12:20 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 11:19:31 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/05 09:51:06 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	print_error(char *str, t_env **env)
 		printf("bash: syntax error near unexpected token `newline`\n");
 		update_exit_status(env, 2);
 	}
-
 	return (0);
 }
 
@@ -72,7 +71,7 @@ int	start_parsing(t_token *list, t_env **env)
 	if (!list)
 		return (0);
 	if (list->type == pipe_line && !list->next)
-		print_error(list->content, env);
+		return (print_error(list->content, env));
 	while (current)
 	{
 		if (current->type == word)

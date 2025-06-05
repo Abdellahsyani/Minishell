@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 10:06:50 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/05 10:10:16 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_env *new_node(char *key, char *value)
 
 char **chr_envirment(t_env **env)
 {
-	char **envp;
+	char **envp=NULL;
 	t_env   *tmp;
 	t_env   *envy;
 	char    *str;

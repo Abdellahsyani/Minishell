@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:51:37 by asyani            #+#    #+#             */
-/*   Updated: 2025/05/31 17:02:54 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:58:42 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -431,7 +431,7 @@ int	h_export(t_command *cmd, t_env **env)
 	char	**spl;
 	int	i;
 	int	j;
-
+	spl = NULL;
 	if (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$')
 	{
 		printf("bash: %s: command not found\n", get_var(&cmd->argv_t[0][1], env));
