@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/11 10:59:16 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 17:57:06 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void ft_exec(t_command **cmd, t_env **env)
 	if (!ptr.pipline)
 		return ;
 	ptr.env = env;
-	ptr.pid = gc_malloc(sizeof(pid_t) * ptr.size);
+	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
 	if (!ptr.pid)
 		return ;
 	ft_herdoc(cmd, ptr.env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/05/29 16:27:04 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 19:27:37 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ int ft_unset(char **arg, t_env **env)
 {
 	int i;
 
-	if (!arg[1])
-	{
-		printf("Error: not enough arguments\n");
-		return (1);
-	}
 	i = 1;
 	while (arg[i])
 	{

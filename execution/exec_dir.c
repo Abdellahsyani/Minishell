@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/05 15:05:39 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/10 20:16:48 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ int input_handle(t_redi *redir)
 	{
 		if (tmp->type == redir_input && access(tmp->file, R_OK) == -1)
 		{
-			perror("ERROR");
+			perror(tmp->file);
 			return (0);
 		}
-		
 		tmp = tmp->next;
 	}
 	return (1);

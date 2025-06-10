@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 16:12:38 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 19:40:33 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ static int cd_update_env(t_env **env, char *str,char *target)
 	char *new;
 	(void)str;
 	(void)target;
+	
     new = getcwd(NULL, 0);
- 
     if(!new)
     {
         ft_putstr_fd("cd: error retrieving current directory", 2);
 		perror("getcwd : cannot access parent directories");
-        return (0);
+        return (1);
     }
     set_pwd_env(env, "PWD", new);
-    return (1);
+    return (0);
 }
 static int cd_change_directory(t_env **env, char *target)
 {
@@ -85,13 +85,13 @@ static int cd_change_directory(t_env **env, char *target)
 	{
 		ft_putstr_fd("cd: error retrieving current directory: ", 2);
 		perror("getcwd : cannot access parent directories");
-		return 0;
+		return 1;
 	}
 	set_pwd_env(env,"OLDPWD",cwd);
 	if (chdir(target) != 0)
 	{
 		printf("cd : %s : %s\n",target,strerror(errno));
-		return (0);
+		return (1);
 	}
 	return (cd_update_env(env,"PWD", target));
 }
@@ -99,7 +99,12 @@ static int cd_change_directory(t_env **env, char *target)
 int ft_cd(char **args, t_env **env)
 {
 	char *target;
-
+	if (args[2])
+	{
+		ft_putstr_fd("too many arguments",2);
+		update_exit_status(env, 1);
+		return (1);
+	}
 	target = cd_get_target(args,env);
 	if(!target)
 	{
