@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:51:37 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 17:58:42 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 21:56:04 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -439,7 +439,14 @@ int	h_export(t_command *cmd, t_env **env)
 	}
 	if (cmd->argv_t[0][0] == '$')
 	{
+		if (cmd->argv_t[0][0] == '$' && cmd->argv_t[0][1] == '\0')
+		{
+		printf(" command not found\n");
+		exit (127);
+		}
 		var = get_var(cmd->argv_t[0], env);
+		if(!var)
+			return (0);
 		spl = ft_split(var, ' ');
 		i = 0;
 		while (spl[i])
