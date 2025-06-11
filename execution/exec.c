@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/05 09:57:50 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/11 09:47:53 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void ft_exec(t_command **cmd, t_env **env)
 	if (!ptr.pipline)
 		return ;
 	ptr.env = env;
-	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
+	ptr.pid = gc_malloc(sizeof(pid_t) * ptr.size);
 	if (!ptr.pid)
 		return ;
 	ft_herdoc(cmd, ptr.env);
