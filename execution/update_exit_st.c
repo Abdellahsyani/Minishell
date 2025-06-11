@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_exit_st.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/05 10:16:45 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:31:59 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ void ft_free(char **p)
 	}
 	free(p);
 }
+void ft_free_int(int **p)
+{
+	int i;
+	i = 0;
+	while (p[i])
+	{
+		free(p[i]);
+		i++;
+	}
+	free(p);
+}
 void wait_and_free(t_extra ptr)
 {
 	int status;
@@ -66,6 +77,7 @@ void wait_and_free(t_extra ptr)
 
 	i = 0;
 	ft_free(ptr.envp);
+	// ft_free_int(ptr.pipline);
 	closingfds(ptr.pipline, ptr.size);
 	while (i <= ptr.size)
 	{
@@ -82,4 +94,5 @@ void wait_and_free(t_extra ptr)
 		}
 		i++;
 	}
+	free(ptr.pid);
 }

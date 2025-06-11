@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec_dir.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 15:54:05 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:05:39 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
@@ -33,7 +34,7 @@ int input_handle(t_redi *redir)
 	t_redi *tmp;
 	
 	tmp = redir;
-	if (!tmp) 
+	if (!tmp)
 		return (1);
 	while(tmp)
 	{

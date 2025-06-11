@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/11 09:54:33 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/11 10:01:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 			free(line);
 			exit(0);
 		}
-		if (!ft_strncmp(line, limiter,ft_strlen(line)))
+		if (*line !='\0' && !ft_strncmp(line, limiter,ft_strlen(line)))
 		{
+			printf("herdoc");
 			free(limiter);
 			free(line);
 			exit(0);
