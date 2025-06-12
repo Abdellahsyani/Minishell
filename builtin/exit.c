@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:54:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/12 09:35:52 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/12 14:08:50 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ int ft_exit(char **arg, int last_status)
     int i;
 
     i = 0;
-    if (arg[2] != NULL)
+    while (arg[i])
+        i++;
+    if (i > 1)
     {
         ft_putstr_fd(" too many arguments\n", 2);
         exit (1);
     }
+    i = 0;
     if (arg[1])
     {
         while (arg[1][i])
