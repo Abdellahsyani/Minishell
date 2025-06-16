@@ -158,7 +158,7 @@ char *get_allstr(char *str)
 
 char *get_var(char *str, t_env **env)
 {
-	int i = 1;
+	int i;
 	int start;
 	int len;
 	char *var_name;
@@ -170,9 +170,7 @@ char *get_var(char *str, t_env **env)
 	start = i;
 	var_quote = NULL;
 	get_last = NULL;
-	if (str[i] == '?')
-		return (get_status(&str[i], env));
-	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
+	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]) || str[i] == '?')
 		i++;
 	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i] && ft_isalpha(str[i + 1])))
 		var_quote = double_quote(&str[i], env);
@@ -198,7 +196,7 @@ char	*get_var1(char *str)
 	start = 0;
 	var = NULL;
 	start = i;
-	while (ft_isalpha(str[i]) || str[i] == '_')
+	while (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?')
 	{
 		if (str[i] == ' ' || str[i] == '"')
 			break;
@@ -229,6 +227,8 @@ char	*single_qoute(char *content)
 		count++;
 	}
 	var = gc_malloc(sizeof(char) * (count + 1));
+	if (!var)
+		return (NULL);
 	var = stcopy(var, content, '\'');
 	/*printf("var_': %s\n", var);*/
 	return (var);
@@ -252,134 +252,122 @@ char	*ft_strjoins(char *s1, char *s2)
 	return (s1);
 }
 
+void	count_dollar(t_hold *var, char *content)
+{
+	var->coun = 0;
+	var->var = NULL;
+	var.i = 0;
+	var.len1 = 0;
+	var.len = 0;
+	var.var1 = NULL;
+	while (content[var->i])
+	{
+		if (content[var->i] == '$')
+			var->coun++;
+		var->i++;
+	}
+	var->env = gc_malloc(sizeof(char *) * (var->coun + 1));
+	if (!var->env)
+		return ;
+	var->env[0] = NULL;
+	var->env_var = gc_malloc(sizeof(char *) * (var->coun + 1));
+	if (!var->env_var)
+		return ;
+	var->env_var[0] = NULL;
+}
+
+void	let_var_ready(t_hold *var, char *content, t_env **env_t)
+{
+	var->counts = 0;
+	var->count = 0;
+	var->i = 0;
+	var->exp = NULL;
+	var->get_v = NULL;
+	while (content[var->i])
+	{
+		if (content[var->i] == '$')
+		{
+			var->get_v = get_var1(&content[var->i]);
+			var->env_var[var->counts] = ft_strdup(var->get_v);
+			var->exp = ft_get(env_t, var->get_v);
+			if (var->exp)
+				var->env[var->counts] = ft_strdup(var->exp);
+			else
+				var->env[var->counts] = ft_strdup("");
+			var->counts++;
+		}
+		if (content[var->i] == '"')
+		{
+			var->i++;
+			continue;
+		}
+		var->i++;
+		var->count++;
+	}
+	var->env[var->counts] = NULL;
+	var->env_var[var->counts] = NULL;
+}
+
+void	ft_get_var(t_hold *var, char *content)
+{
+	var->i = 0;
+	while (var->env[var->i])
+	{
+		var->len1 += ft_strlen(var->env[var->i]);
+		var->i++;
+	}
+	var->i = 0;
+	while (var->env_var[var->i])
+	{
+		var->len += ft_strlen(var->env_var[var->i]);
+		var->i++;
+	}
+	var->var = gc_malloc(sizeof(char) * (var->count + 1));
+	if (!var->var)
+		return ;
+	var->var = stcopy(var->var, content, '"');
+	var->i = 0;
+	var->k = 0;
+	var->j = 0;
+	var->var1 = NULL;
+	var->size_all = 0;
+	var->size_all = var->count + var->len1 - (var->len + var->coun);
+	var->var1 = gc_malloc(sizeof(char) * (var->size_all + 1));
+	if (!var->var1)
+		return ;
+}
 
 char	*double_quote(char *content, t_env **env_t)
 {
-	int	i;
-	char	*var = NULL;
-	int	count = 0;
-	char	*exp = NULL;
-	char	*get_v = NULL;
-	char	*var1 = NULL;
-	int	len = 0;
-	int	len1;
-	char	**env;
-	char	**env_var;
-	int	coun;
-	int	*track_size = NULL;
-	int	*track_s = NULL;
+	t_hold	var;
+	int	s;
+	int	c;
 
-	i = 0;
-	len1 = 0;
-	coun = 0;
-	var = NULL;
-	while (content[i])
+	count_dollar(&var, content);
+	let_var_ready(&var, content, env_t);
+	ft_get_var(&var, content);
+	while (var.var[var.i])
 	{
-		if (content[i] == '$')
-			coun++;
-		i++;
-	}
-	i = 0;
-	env = gc_malloc(sizeof(char *) * (coun + 1));
-	if (!env)
-		return NULL;
-	env[0] = NULL;
-	env_var = gc_malloc(sizeof(char *) * (coun + 1));
-	if (!env_var)
-		return NULL;
-	env_var[0] = NULL;
-	int counts = 0;
-	while (content[i])
-	{
-		if (content[i] == '$')
-		{
-			get_v = get_var1(&content[i]);
-			env_var[counts] = ft_strdup(get_v);
-			exp = ft_get(env_t, get_v);
-			if (exp)
-				env[counts] = ft_strdup(exp);
-			else
-				env[counts] = ft_strdup("");
-			counts++;
-		}
-		if (content[i] == '"')
-		{
-			i++;
-			continue;
-		}
-		i++;
-		count++;
-	}
-	env[counts] = NULL;
-	env_var[counts] = NULL;
-	i = 0;
-	track_size = gc_malloc(sizeof(int) * coun);
-	if (!track_size)
-		return (NULL);
-	track_s = gc_malloc(sizeof(int) * coun);
-	if (!track_s)
-		return (NULL);
-	while (env[i])
-	{
-		track_size[i] = ft_strlen(env[i]);
-		i++;
-	}
-	i = 0;
-	while (env_var[i])
-	{
-		track_s[i] = ft_strlen(env_var[i]);
-		i++;
-	}
-	i = 0;
-	while (i < coun)
-	{
-		len1 += track_s[i];
-		i++;
-	}
-	i = 0;
-	while (i < coun)
-	{
-		len += track_size[i];
-		i++;
-	}
-	var = gc_malloc(sizeof(char) * (count + 1));
-	if (!var)
-		return NULL;
-	var = stcopy(var, content, '"');
-	i = 0;
-	int k = 0;
-	int	j = 0;
-	int size_all = count + len - (len1 + coun);
-	var1 = gc_malloc(sizeof(char) * size_all + 1);
-	if (!var1)
-		return (NULL);
-	while (var[i])
-	{
-		if (var[i] != '$')
-		{
-			var1[j] = var[i];
-		}
+		if (var.var[var.i] != '$')
+			var.var1[var.j] = var.var[var.i];
 		else
 		{
-			var1[j] = '\0';
-			var1 = ft_strjoins(var1, env[k]);
-			int s = ft_strlen(env[k]);
-			int c = ft_strlen(env_var[k]);
-			k++;
-			i += c + 1;
-			j += s;
+			var.var1[var.j] = '\0';
+			var.var1 = ft_strjoins(var.var1, var.env[var.k]);
+			s = ft_strlen(var.env[var.k]);
+			c = ft_strlen(var.env_var[var.k]);
+			var.k++;
+			var.i += c + 1;
+			var.j += s;
 			continue;
 		}
-		j++;
-		i++;
+		var.j++;
+		var.i++;
 	}
-	var1[j] = '\0';
-	/*printf("var_\": %s\n", var1);*/
-	free_2d(env);
-	free_2d(env_var);
-	gc_free_one(track_size);
-	gc_free_one(track_s);
-	return (var1);
+	var.var1[var.j] = '\0';
+	free_2d(var.env);
+	free_2d(var.env_var);
+	return (var.var1);
 }
 
 char	*when_quote(char *var, char *quote, int i)
@@ -449,7 +437,7 @@ int	h_export(t_command *cmd, t_env **env)
 		j = 0;
 		while (spl[i])
 		{
-			cmd->argv[j] = spl[i];
+			cmd->argv[j] = ft_strdup(spl[i]);
 			i++;
 			j++;
 		}

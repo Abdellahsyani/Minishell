@@ -45,6 +45,29 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+
+/**struct to hold all double quote variable*/
+typedef struct s_hold
+{
+	int	i;
+	char	*var;
+	int	count;
+	char	*exp;
+	char	*get_v;
+	char	*var1;
+	int	len;
+	int	len1;
+	char	**env;
+	char	**env_var;
+	int	coun;
+	int	*track_size; 
+	int	*track_s;
+	int	counts;
+	int	j;
+	int	k;
+	int	size_all;
+}	t_hold;
+
 /*** enum struct for get type of tokens ****/
 typedef enum e_type
 {
