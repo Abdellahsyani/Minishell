@@ -256,10 +256,10 @@ void	count_dollar(t_hold *var, char *content)
 {
 	var->coun = 0;
 	var->var = NULL;
-	var.i = 0;
-	var.len1 = 0;
-	var.len = 0;
-	var.var1 = NULL;
+	var->i = 0;
+	var->len1 = 0;
+	var->len = 0;
+	var->var1 = NULL;
 	while (content[var->i])
 	{
 		if (content[var->i] == '$')
