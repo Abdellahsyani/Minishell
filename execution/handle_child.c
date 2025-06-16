@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/16 11:45:09 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/16 18:30:41 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void exec_cmd(t_command *cmd, t_extra ptr)
 	}
 	else
 	{
+	
 		if (cmd->argv[0] == NULL)
 			return ;
 		path = find_path(cmd->argv[0], ptr.env);

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/05 15:03:31 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/16 18:41:51 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int main(int ac, char **argv, char **envp)
 			
 			int ex = pars_command(list, &cmd_list);
 			if (ex == 0)
+			{
+				free(line);
 				return (0);
+			}
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
 		}
@@ -69,9 +72,11 @@ int main(int ac, char **argv, char **envp)
 			free(line);
 			continue;
 		}
+		// printf("%s\n",cmd_list->argv[0]);
 		ft_exec(&cmd_tmp, env);
 		free(line);
 	}
-	// ft_free_gc();
+	gc_free_one(env);
 	
 }
+
