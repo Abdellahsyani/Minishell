@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 16:34:22 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 19:19:58 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static void    ft_handle_n(char **arg)
     
     while (arg[i])
     {
-        printf("%s ", arg[i]);
+        printf("%s", arg[i]);
+        if (arg[i + 1])
+                printf(" ");
         i++;
     }
 }
@@ -48,7 +50,6 @@ int    ft_echo(char **arg)
 {
     int i;
     int flag;
-    
     if (!arg[1])
     {
         printf("\n");
@@ -62,7 +63,9 @@ int    ft_echo(char **arg)
         i = 1;
         while (arg[i])
         {
-            printf("%s ",arg[i]);
+            printf("%s",arg[i]);
+            if (arg[i + 1])
+                printf(" ");
             i++;
         }
         printf("\n");

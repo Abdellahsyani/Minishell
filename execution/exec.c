@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 11:57:31 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/16 11:37:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,25 +94,24 @@ int **built_pipline(t_command **cmd ,t_env **env, int size)
 	return (tube);
 }
 
-
-
 void ft_exec(t_command **cmd, t_env **env)
 {
 	t_extra ptr;
 	t_command *tmp;
+	
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
-	ptr.envp = chr_envirment(env);
 	(*env)->pid = getpid();
+	ptr.env = env;
+	ft_herdoc(cmd, ptr.env);
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
 	if (!ptr.pipline)
 		return ;
-	ptr.env = env;
 	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
 	if (!ptr.pid)
 		return ;
-	ft_herdoc(cmd, ptr.env);
+	ptr.envp = chr_envirment(env);
 	while (ptr.i <= ptr.size)
 	{
 		ptr.pid[ptr.i] = fork();

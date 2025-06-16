@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 11:56:37 by abhimi           ###   ########.fr       */
-/*   Updated: 2025/06/04 11:37:01 by asyani           ###   ########.fr       */
+/*   Updated: 2025/06/10 19:05:50 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -163,7 +163,7 @@ int     ft_cmd_size(t_command **cmd);
 
 int    ft_echo(char **arg);
 int     ft_cd(char **args, t_env **env);
-int    ft_pwd(char **args, t_env **env);
+int    ft_pwd(t_env **env);
 int     ft_env(t_env **env, char **argv);
 int     ft_export(char **arg, t_env **env);
 int     ft_unset(char **arg, t_env **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 11:58:50 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/16 11:45:09 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void exec_cmd(t_command *cmd, t_extra ptr)
 {
 	int status;
 	char *path;
+	
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, ptr.env);
@@ -79,6 +80,8 @@ void exec_cmd(t_command *cmd, t_extra ptr)
 	}
 	else
 	{
+		if (cmd->argv[0] == NULL)
+			return ;
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
 		{

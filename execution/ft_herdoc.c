@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 17:13:36 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/11 11:08:37 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,21 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 	while (1)
 	{
 		line = readline("> ");
+		if (!*line)
+		 	continue;
 		if (!line)
 		{
 			write(2, err, ft_strlen(err));
+			free(limiter);
+			free(line);
 			exit(0);
 		}
 		if (!ft_strncmp(line, limiter,ft_strlen(line)))
 		{
 			free(limiter);
 			free(line);
-			break;
+			exit(0);
 		}
-		if (!*line)
-			continue;
 		helper_herdoc(line,fd,env);
 		free(line);
 	}

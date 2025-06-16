@@ -6,7 +6,7 @@
 // /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 // /*                                                +#+#+#+#+#+   +#+           */
 // /*   Created: 2025/04/26 15:58:53 by abhimi            #+#    #+#             */
-// /*   Updated: 2025/05/30 15:44:17 by abhimi           ###   ########.fr       */
+// /*   Updated: 2025/06/11 10:50:04 by abhimi           ###   ########.fr       */
 // /*                                                                            */
 // /* ************************************************************************** */
 
@@ -19,11 +19,5 @@
 // #include <readline/history.h>
 // #include <readline/readline.h>
 
-// int main() {
-
-//     char *input;
-//     input = readline("enter smithing : ");
-//     printf("%s\n", input);
-//     return (0);
-// }
+// /
 

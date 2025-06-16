@@ -3,38 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:50:39 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 13:30:56 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 19:14:36 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_pwd(char **args, t_env **env)
+int ft_pwd(t_env **env)
 {
-    int i;
     char *path;
-
-    i = 1;
-    
-    while(args[i])
-    {
-        if (args[i][0] != ' ' && args[i][0] != '\0')
-        {
-            printf("pwd : too many arguments\n");
-            return (0);
-        }
-        i++;
-    }
+ 
     path = ft_get(env, "PWD");
     if(!path)
     {
         printf("pwd: getcwd failed\n");
+        update_exit_status(env, 1);
         free(path);
-        return (0);
+        return (1);
     }
     printf("%s\n", path);
-    return (1);
-}
+    update_exit_status(env, 0);
+    return (0);
+} 

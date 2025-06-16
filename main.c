@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 15:45:05 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:03:31 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int main(int ac, char **argv, char **envp)
 		line = readline("\033[1;32mminishell $ \033[0m");
 		if (!line)
 		{
-			gc_free_all();
+			//gc_free_all();
 			printf("exit\n");
-			break;
+			exit(0);
 		}
 		if (!*line && line)
 			continue ;
@@ -70,7 +70,6 @@ int main(int ac, char **argv, char **envp)
 			continue;
 		}
 		ft_exec(&cmd_tmp, env);
-		//ft_free_gc();
 		free(line);
 	}
 	// ft_free_gc();

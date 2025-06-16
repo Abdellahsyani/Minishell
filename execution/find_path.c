@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 15:42:47 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/16 11:48:37 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ char *find_path(char *cmd, t_env **env)
 	char    *path;
 
 	i = 0;
-
-	if (cmd == NULL)
-		return NULL;
 	if (!access(cmd, X_OK))
 		return (cmd);
 	cur = *env;
@@ -35,14 +32,18 @@ char *find_path(char *cmd, t_env **env)
 	{
 		ppth = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(ppth, cmd);
-		free(ppth);
+		gc_free_one(ppth);
 		if (!access(path, X_OK))
+		{
+			gc_free_one(paths[i]);
 			return (path);
-		free(paths[i]);
-		free(path);
+		}
+		gc_free_one(paths[i]);
+		gc_free_one(path);
 		i++;
 	}
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	exit(127);
 }
+

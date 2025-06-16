@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 10:06:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/10 18:49:43 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ void    set_new_env(char *key, char *value, t_env **env)
 	exist = ft_find(*env, key);
 	if (exist)
 	{
-		//free(exist->value);
+		free(exist->value);
 		exist->value = ft_strdup(value);
 		return ;
 	}
 	else
 	{
 		create = gc_malloc(sizeof(t_env));
-		create->key = key;
+		create->key = ft_strdup(key);
 		if(value)
-			create->value= value;
+			create->value= ft_strdup(value);
 		create->next = *env;
 		
 		*env = create;
@@ -100,7 +100,7 @@ int ft_export(char **arg, t_env **env)
 	if (!arg[1])
 	{
 		print_export(env);
-		return (1);
+		return (0);
 	}
 	else
 	{
@@ -109,9 +109,11 @@ int ft_export(char **arg, t_env **env)
 			if (!check_arg(arg[i],env))
 			{
 				printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
+				if(!arg[i + 1])
+					return (1);
 			}
 			i++;    
 			}
 	}
-		return (1);
+		return (0);
 }
