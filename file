@@ -1,5 +1,0 @@
-cat < "./a/file"
-echo hello'world'
-echo "exit_code ->$? user ->$USER home -> $HOME"
-echo "$" 
-echo $?HELLO 
