@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:51:37 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/16 09:48:48 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 19:13:53 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -512,6 +512,7 @@ void	expand_var(t_command *cmd, t_env **env)
 		if (!cmd->argv)
 			return ;
 		i = 0;
+	
 		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$'))
 		{
 			h_export(cmd, env);

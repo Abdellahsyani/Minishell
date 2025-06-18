@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   update_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:07:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 16:50:43 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/18 09:57:17 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+char	*ft_strdup1(const char *s1)
+{
+	char	*p;
+	int		i;
+	if (!s1)
+		return (NULL);
+	p = gc_malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		p[i] = s1[i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
+}
 void update_path(char *arg, t_env **env)
 {
     t_env *tmp;
@@ -36,8 +53,6 @@ void update_path(char *arg, t_env **env)
     if (!new_value)
         return ;
     set_new_env("_", new_value, env);
-    /*free(str);*/
-    /*free(value);*/
 }
 
 

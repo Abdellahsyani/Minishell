@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/05 15:03:31 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 19:02:03 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ char	*trim_whitespace(char *str)
 	return str;
 }
 
+
+void ft_free_env(t_env **p)
+{
+	t_env *tmp;
+	
+	while (*p)
+	{
+		tmp = *p;
+		(*p) = (*p)->next;
+		free(tmp);
+	}
+	free(p);
+}
 int main(int ac, char **argv, char **envp)
 {
 	char        *line;
@@ -48,7 +61,9 @@ int main(int ac, char **argv, char **envp)
 		line = readline("minishell $ ");
 		if (!line)
 		{
-			//gc_free_all();
+			ft_free_env(env);
+			gc_free_all();
+			rl_clear_history();
 			printf("exit\n");
 			exit(0);
 		}
@@ -73,8 +88,12 @@ int main(int ac, char **argv, char **envp)
 			
 			int ex = pars_command(list, &cmd_list);
 			if (ex == 0)
+			{
+				free(line);
 				return (0);
+			}
 			cmd_tmp = cmd_list;
+			
 			expand_var(cmd_list, env);
 		}
 		else
@@ -82,9 +101,12 @@ int main(int ac, char **argv, char **envp)
 			free(line);
 			continue;
 		}
-		ft_exec(&cmd_tmp, env);
 		free(line);
+		
+		ft_exec(&cmd_tmp, env);
 	}
-	// ft_free_gc();
-	
+	ft_free_env(env);
+	gc_free_all();
+	rl_clear_history();
 }
+

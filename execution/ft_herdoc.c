@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_herdoc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/11 11:08:37 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:59:05 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 		if (!line)
 		{
 			write(2, err, ft_strlen(err));
-			free(limiter);
 			free(line);
+			ft_free_env(env);
+			rl_clear_history();
+			gc_free_all();
 			exit(0);
 		}
 		if (!ft_strncmp(line, limiter,ft_strlen(line)))
 		{
-			free(limiter);
 			free(line);
+			ft_free_env(env);
+			rl_clear_history();
+			gc_free_all();
 			exit(0);
 		}
 		helper_herdoc(line,fd,env);
@@ -43,8 +47,8 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 void write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char *delimiter;
-
-	signal(SIGINT, handle_child_sig);
+	
+	signal(SIGINT, SIG_DFL);
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");
 	else
