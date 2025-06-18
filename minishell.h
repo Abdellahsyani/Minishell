@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/10 19:05:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 11:18:12 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ char    *ft_key(char *str);
 void    update_path(char *arg, t_env **env);
 char    *ft_get(t_env **env, char *key);
 int     ft_cmd_size(t_command **cmd);
+void ft_free_env(t_env **p);
 
 //**************Builtin****************
 
@@ -167,7 +168,7 @@ int    ft_pwd(t_env **env);
 int     ft_env(t_env **env, char **argv);
 int     ft_export(char **arg, t_env **env);
 int     ft_unset(char **arg, t_env **env);
-int     ft_exit(char **arg,int last_status);
+int     ft_exit(char **arg,int last_status, t_env **env);
 
 //***************Execution**************
 void ft_exec(t_command **cmd, t_env **env);

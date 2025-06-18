@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:32:15 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/10 19:06:01 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 11:18:50 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
 	else if (!ft_strcmp(cmd, "env"))
 		return (ft_env(env, args));
 	else if (!ft_strcmp(cmd, "exit"))
-		return (ft_exit(args, 0));
+		return (ft_exit(args, 0,env));
 	return (1);
 }
 

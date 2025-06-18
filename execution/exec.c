@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/16 18:36:41 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 18:46:36 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int set_pipes(int **tube, int size)
 int **built_pipline(t_command **cmd ,t_env **env, int size)
 {
 	t_command *tmp;
-	int **tube;
+	int **tube=NULL;
 	int fd;
 	fd = -1;
 	tmp  = *cmd;
@@ -98,19 +98,20 @@ void ft_exec(t_command **cmd, t_env **env)
 {
 	t_extra ptr;
 	t_command *tmp;
-	
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
 	(*env)->pid = getpid();
 	ptr.env = env;
 	ft_herdoc(cmd, ptr.env);
+	
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
 	if (!ptr.pipline)
 		return ;
 	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
 	if (!ptr.pid)
 		return ;
+	
 	ptr.envp = chr_envirment(env);
 	while (ptr.i <= ptr.size)
 	{
@@ -120,7 +121,5 @@ void ft_exec(t_command **cmd, t_env **env)
 		ptr.i++;
 		tmp = tmp->next;
 	}
-	//gc_free_one();
-	free_2d((*cmd)->argv);
 	wait_and_free(ptr);
 }

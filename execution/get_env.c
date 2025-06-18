@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/05 10:10:16 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/18 09:56:16 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ char    *ft_key(char *str)
 	int i;
 	int j = 0;
 	i = 0;
-	char *key;
+	char *key = NULL;
 
 	while (str[i] && str[i] != '=')
 		i++;
-	key = malloc(sizeof(char) * (i + 1));
+	key = gc_malloc(sizeof(char) * (i + 1));
 	if (!key)
 		return (NULL);
 	while (j < i)
@@ -46,7 +46,7 @@ char    *get_value(char *str)
 	i++;
 	if(str[i] == '\0')
 		return (NULL);
-	value = malloc(sizeof(char) * (l - i + 1));
+	value = gc_malloc(sizeof(char) * (l - i + 1));
 	if (!value)
 		return NULL;
 	while (i < l)
@@ -89,7 +89,7 @@ char **chr_envirment(t_env **env)
 		i++;
 		(envy) = (envy)->next;
 	}
-	envp = malloc(sizeof(char *) * (i + 1));
+	envp = gc_malloc(sizeof(char *) * (i + 1));
 	if (!envp)
 		return (NULL);
 	i = 0;
@@ -97,7 +97,7 @@ char **chr_envirment(t_env **env)
 	{
 		str = ft_strjoin(tmp->key, "=");
 		envp[i] = ft_strjoin(str, tmp->value);
-		free(str);
+		gc_free_one(str);
 		i++;
 		tmp = tmp->next;
 	}

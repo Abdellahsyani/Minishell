@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/16 18:30:41 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 19:16:36 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,15 @@ void exec_cmd(t_command *cmd, t_extra ptr)
 	}
 	else
 	{
-	
 		if (cmd->argv[0] == NULL)
 			return ;
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
 		{
-			exit(1);
+			gc_free_all();
+			rl_clear_history();
+			ft_free_env(ptr.env);
+			exit(127);
 		}
 		execve(path, cmd->argv, ptr.envp);
 		perror("execve failed.");
@@ -96,7 +98,6 @@ void exec_cmd(t_command *cmd, t_extra ptr)
 
 void    handle_child(t_command *cmd, t_extra ptr)
 {
-
 	input_handle1(cmd->in,ptr, cmd->fd);
 	output_handle1(cmd->out, ptr); 
 	closingfds(ptr.pipline, ptr.size);
@@ -104,5 +105,5 @@ void    handle_child(t_command *cmd, t_extra ptr)
 	{
 		exec_cmd(cmd, ptr);
 	}
-	exit(1);
+	exit(130);
 }

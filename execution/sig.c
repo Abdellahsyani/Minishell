@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:01:58 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/04 16:41:48 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:14:44 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void    handle_sig(int signum)
 {
     (void)signum;
-    
     rl_replace_line("", 0);
     rl_on_new_line();
     printf("\n");

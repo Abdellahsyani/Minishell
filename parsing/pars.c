@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:12:20 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/05 09:51:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/18 19:17:39 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	add_to_argv(t_command *cmd, char *str)
 	int	i;
 
 	i = 0;
-	if (!cmd || !str)
+	if (!cmd || !str || !cmd->argv_t)
 		return ;
 	while (cmd->argv_t[i] != NULL)
 		i++;
@@ -221,7 +221,19 @@ void	create_new_node(t_token *list, t_command **cmd, t_command **cur)
 	if (!cur)
 		return ;
 }
+int fcheckar(t_token *list)
+{
+	t_token *tmp;
 
+	tmp = list;
+	while (tmp && tmp->type != pipe_line)
+	{
+		if (tmp->type == word)
+			return (1);
+		tmp = tmp->next;
+	}
+	return 0;
+}
 int pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command	*current_cmd;
@@ -231,6 +243,13 @@ int pars_command(t_token *list, t_command **cmd_list)
 	current = list;
 	while (current)
 	{
+		// if (fcheckar(current) == 0)
+		// {
+		// 	(*cmd_list)->argv_t = gc_malloc(sizeof(char *));
+		// 	if (!(*cmd_list)->argv_t)
+		// 		return 0;
+		// 	(*cmd_list)->argv_t[0] = NULL;
+		// }
 		if (current_cmd == NULL)
 			create_new_node(list, cmd_list, &current_cmd);
 		if (current->type == word)
@@ -256,5 +275,6 @@ int pars_command(t_token *list, t_command **cmd_list)
 		if (current)
 			current = current->next;
 	}
+
 	return (1);
 }

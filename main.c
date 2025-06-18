@@ -6,12 +6,25 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/16 18:41:51 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/18 19:02:03 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+void ft_free_env(t_env **p)
+{
+	t_env *tmp;
+	
+	while (*p)
+	{
+		tmp = *p;
+		(*p) = (*p)->next;
+		free(tmp);
+	}
+	free(p);
+}
 int main(int ac, char **argv, char **envp)
 {
 	char        *line;
@@ -37,7 +50,9 @@ int main(int ac, char **argv, char **envp)
 		line = readline("\033[1;32mminishell $ \033[0m");
 		if (!line)
 		{
-			//gc_free_all();
+			ft_free_env(env);
+			gc_free_all();
+			rl_clear_history();
 			printf("exit\n");
 			exit(0);
 		}
@@ -65,6 +80,7 @@ int main(int ac, char **argv, char **envp)
 				return (0);
 			}
 			cmd_tmp = cmd_list;
+			
 			expand_var(cmd_list, env);
 		}
 		else
@@ -72,11 +88,12 @@ int main(int ac, char **argv, char **envp)
 			free(line);
 			continue;
 		}
-		// printf("%s\n",cmd_list->argv[0]);
-		ft_exec(&cmd_tmp, env);
 		free(line);
+		
+		ft_exec(&cmd_tmp, env);
 	}
-	gc_free_one(env);
-	
+	ft_free_env(env);
+	gc_free_all();
+	rl_clear_history();
 }
 
