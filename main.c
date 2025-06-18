@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+char	*trim_whitespace(char *str)
+{
+	int len;
+
+	while (*str == ' ' || *str == '\t' || *str == '\n')
+		str++;
+	len = ft_strlen(str);
+	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len - 1] == '\n'))
+		str[--len] = '\0';
+	return str;
+}
+
 int main(int ac, char **argv, char **envp)
 {
 	char        *line;
@@ -33,14 +45,15 @@ int main(int ac, char **argv, char **envp)
 	{
 		list = NULL;
 		cmd_list = NULL;
-
-		line = readline("\033[1;32mminishell $ \033[0m");
+		line = readline("minishell $ ");
 		if (!line)
 		{
 			//gc_free_all();
 			printf("exit\n");
 			exit(0);
 		}
+		line = trim_whitespace(line);
+		/*printf("line1: %s\n", line);*/
 		if (!*line && line)
 			continue ;
 		if (*line)

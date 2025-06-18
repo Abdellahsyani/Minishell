@@ -51,8 +51,32 @@ char *ft_get(t_env **env, char *key)
 char	*get_status(char *str, t_env **env)
 {
 	char	*var;
+	char	*exp;
+	char	*last;
+	int	i;
+	int	j;
 
-	var = ft_strdup(ft_get(env, str));
+	i = 0;
+	j = 0;
+	int len = ft_strlen(str);
+	last = gc_malloc(sizeof(char) * len);
+	if (!last)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == '?')
+			exp = ft_strdup("?");
+		else
+		{
+			last[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	last[j] = '\0';
+	var = ft_strdup(ft_get(env, exp));
+	if (last)
+		var = ft_strjoin(var, last);
 	return (var);
 }
 
@@ -140,7 +164,7 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 	if (str[ft_strlen(str) - 1] == ' ' && get_last)
 		result = ft_strjoin(result, " ");
 	if (get_last)
-		ft_strjoin(result, get_last);
+		result = ft_strjoin(result, get_last);
 	return (result);
 }
 
@@ -170,7 +194,11 @@ char *get_var(char *str, t_env **env)
 	start = i;
 	var_quote = NULL;
 	get_last = NULL;
-	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]) || str[i] == '?')
+	if (str[i] == '?')
+		return (get_status(&str[i], env));
+	if (*str == '$' && !ft_isalpha(str[i + 1]))
+		return ("$");
+	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i++;
 	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i] && ft_isalpha(str[i + 1])))
 		var_quote = double_quote(&str[i], env);
@@ -208,7 +236,7 @@ char	*get_var1(char *str)
 	return (var);
 }
 
-char	*single_qoute(char *content)
+char	*single_quote(char *content)
 {
 	int	i;
 	int	count;
@@ -343,6 +371,14 @@ char	*double_quote(char *content, t_env **env_t)
 	int	s;
 	int	c;
 
+	var.i = 0;
+	while (content[var.i])
+	{
+		if (content[var.i] == '$' && (!ft_isalpha(content[var.i + 1])
+			|| content[var.i+1] != '_'))
+			printf("$");
+		var.i++;
+	}
 	count_dollar(&var, content);
 	let_var_ready(&var, content, env_t);
 	ft_get_var(&var, content);
@@ -403,6 +439,11 @@ char	*copy_var(char *content, t_env **env)
 		if (var[i] == '"')
 		{
 			quote = double_quote(&var[i], env);
+			break;
+		}
+		if (var[i] == '\'')
+		{
+			quote = single_quote(&var[i]);
 			break;
 		}
 		i++;
@@ -479,7 +520,7 @@ void	expand_var(t_command *cmd, t_env **env)
 		while (cmd->argv_t[i])
 		{
 			if (cmd->argv_t[i][0] == '\'')
-				cmd->argv[i] = single_qoute(cmd->argv_t[i]);
+				cmd->argv[i] = single_quote(cmd->argv_t[i]);
 			else if (cmd->argv_t[i][0] == '"')
 				cmd->argv[i] = double_quote(cmd->argv_t[i], env);
 			else if (cmd->argv_t[i][0] == '$')
