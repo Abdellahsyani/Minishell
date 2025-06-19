@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/18 18:46:36 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/19 17:25:32 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void exec_builtins(t_command **cmd, t_env **env, int fd)
 		close(fd);
 	}
 }
+
 
 int **allocate_tube(int size)
 {
