@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/10 19:19:58 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/19 17:28:04 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void    ft_handle_n(char **arg)
     
     while (arg[i])
     {
-        printf("%s", arg[i]);
+        ft_putstr_fd(arg[i], 1);
         if (arg[i + 1])
-                printf(" ");
+                ft_putstr_fd(" ", 1);
         i++;
     }
 }
@@ -52,7 +52,7 @@ int    ft_echo(char **arg)
     int flag;
     if (!arg[1])
     {
-        printf("\n");
+        ft_putstr_fd("\n", 1);
         return (0);
     }
     flag = ft_check_flag(arg);
@@ -63,12 +63,12 @@ int    ft_echo(char **arg)
         i = 1;
         while (arg[i])
         {
-            printf("%s",arg[i]);
+             ft_putstr_fd(arg[i], 1);
             if (arg[i + 1])
-                printf(" ");
+                ft_putstr_fd(" ", 1);
             i++;
         }
-        printf("\n");
+        ft_putstr_fd("\n", 1);
     }
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/10 20:16:48 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/19 16:44:58 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int output_handle(t_redi *redir)
 {
 	t_redi *tmp;
 	int fd;
-	int ret;
+	int redout;
 
 	tmp = redir;
 	if (!tmp)
@@ -64,14 +64,14 @@ int output_handle(t_redi *redir)
 				close(fd);
 			else
 			{
-				ret = dup(1);
+				redout = dup(1);
 				dup2(fd,1);
 				close(fd);
 			}
 		}
 			tmp = tmp->next;
 	}
-	return (ret);
+	return (redout);
 }
 
 int redirect_handler(int *fd, t_command **cmd , t_env **env)

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/18 19:02:03 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/19 15:24:06 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int main(int ac, char **argv, char **envp)
 			exit(0);
 		}
 		line = trim_whitespace(line);
-		/*printf("line1: %s\n", line);*/
 		if (!*line && line)
 			continue ;
 		if (*line)
@@ -94,7 +93,6 @@ int main(int ac, char **argv, char **envp)
 			}
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
-			/*printf("main: %s\n", cmd_tmp->next->argv[0]);*/
 		}
 		else
 		{
