@@ -118,8 +118,6 @@ typedef struct s_extra
     struct s_extra *next;
 } t_extra;
 
-/*test*/
-int	pars_command(t_token *list, t_command **cmd_list);
 
 /** expand functions **/
 void	expand_var(t_command *cmd, t_env **env);
@@ -128,6 +126,7 @@ char	*get_var(char *str, t_env **env);
 char	*get_var1(char *str);
 
 /***** parsing functions *****/
+void	pars_command(t_token *list, t_command **cmd_list);
 t_token	*create_node(char *c);
 void	add_list(t_shell *mini, t_token **list);
 int	handle_blank(t_shell *mini, t_token **list, char *line);

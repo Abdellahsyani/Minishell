@@ -47,7 +47,14 @@ void	clean_line(t_env **env)
 	exit(0);
 }
 
-int main(int ac, char **argv, char **envp)
+void	clean_all(t_env **env)
+{
+	ft_free_env(env);
+	gc_free_all();
+	rl_clear_history();
+}
+
+void	program_run(t_env **env)
 {
 	char        *line;
 	t_token     *list = NULL;
@@ -55,15 +62,7 @@ int main(int ac, char **argv, char **envp)
 	t_command   *cmd_list = NULL;
 	t_command	*cmd_tmp = NULL;
 	int         parse_status;
-	t_env **env;
-	(void)ac;
-	(void)argv;
 
-	init_gc();
-	signal(SIGINT, handle_sig);
-	signal(SIGQUIT, SIG_IGN);
-	env = get_env(envp);
-	update_exit_status(env, 0);
 	while (1)
 	{
 		list = NULL;
@@ -82,13 +81,7 @@ int main(int ac, char **argv, char **envp)
 		parse_status = start_parsing(list, env);
 		if (parse_status == 1)
 		{
-			
-			int ex = pars_command(list, &cmd_list);
-			if (ex == 0)
-			{
-				free(line);
-				return (0);
-			}
+			pars_command(list, &cmd_list);
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
 		}
@@ -100,8 +93,20 @@ int main(int ac, char **argv, char **envp)
 		free(line);
 		ft_exec(&cmd_tmp, env);
 	}
-	ft_free_env(env);
-	gc_free_all();
-	rl_clear_history();
+}
+
+int main(int ac, char **argv, char **envp)
+{
+	t_env **env;
+	(void)ac;
+	(void)argv;
+
+	init_gc();
+	signal(SIGINT, handle_sig);
+	signal(SIGQUIT, SIG_IGN);
+	env = get_env(envp);
+	update_exit_status(env, 0);
+	program_run(env);
+	clean_all(env);
 }
 

@@ -221,7 +221,7 @@ void	create_new_node(int count, t_command **cmd, t_command **cur)
 		return ;
 }
 
-int pars_command(t_token *list, t_command **cmd_list)
+void	pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command	*current_cmd;
 	t_token	*current;
@@ -259,6 +259,4 @@ int pars_command(t_token *list, t_command **cmd_list)
 		if (current)
 			current = current->next;
 	}
-
-	return (1);
 }
