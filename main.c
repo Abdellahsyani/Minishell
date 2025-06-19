@@ -93,8 +93,8 @@ int main(int ac, char **argv, char **envp)
 				return (0);
 			}
 			cmd_tmp = cmd_list;
-			
 			expand_var(cmd_list, env);
+			/*printf("main: %s\n", cmd_tmp->next->argv[0]);*/
 		}
 		else
 		{
@@ -102,7 +102,6 @@ int main(int ac, char **argv, char **envp)
 			continue;
 		}
 		free(line);
-		
 		ft_exec(&cmd_tmp, env);
 	}
 	ft_free_env(env);

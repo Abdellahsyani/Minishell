@@ -501,10 +501,13 @@ void	expand_var(t_command *cmd, t_env **env)
 	int	i;
 	int	count;
 
-	if (!cmd->argv_t)
-		return ;
 	while (cmd)
 	{
+		if (!cmd->argv_t)
+        	{
+            		cmd = cmd->next;
+            		continue;
+		}
 		count = 0;
 		while (cmd && cmd->argv_t[count])
 			count++;

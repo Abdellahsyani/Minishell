@@ -142,7 +142,7 @@ int	start_parsing(t_token *list, t_env **env);
 
 /******** helper functions ************/
 void	free_2d(char **arr);
-void	add_cmd_list(t_token *list, t_command **cmd);
+void	add_cmd_list(int count, t_command **cmd);
 void	*gc_malloc(size_t size);
 int	is_operator(char op);
 int     ft_strcmp(char *s1, char *s2);

@@ -103,12 +103,10 @@ int	count_word_tokens(t_token *list)
 	return count;
 }
 
-t_command	*create_cmd_node(t_token *list)
+t_command	*create_cmd_node(int count)
 {
 	t_command	*new_node;
-	int	count;
 
-	count = count_word_tokens(list);
 	new_node = gc_malloc(sizeof(t_command));
 	if (!new_node)
 		return (NULL);
@@ -121,7 +119,6 @@ t_command	*create_cmd_node(t_token *list)
 		new_node->argv_t = gc_malloc(sizeof(char *) * (count + 2));
 		if (!new_node->argv_t)
 			return (NULL);
-		new_node->argv_t[0] = NULL;
 		for (int i = 0; i < count + 1; i++)
         		new_node->argv_t[i] = NULL;
 	}
@@ -129,11 +126,11 @@ t_command	*create_cmd_node(t_token *list)
 	return (new_node);
 }
 
-void	add_cmd_list(t_token *list, t_command **cmd)
+void	add_cmd_list(int count, t_command **cmd)
 {
 	t_command	*new_node;
 
-	new_node = create_cmd_node(list);
+	new_node = create_cmd_node(count);
 	if (*cmd == NULL)
 		*cmd = new_node;
 	else
@@ -214,9 +211,9 @@ void	fill_operation(t_command *cmd, t_token **cur, int i)
 	}
 }
 
-void	create_new_node(t_token *list, t_command **cmd, t_command **cur)
+void	create_new_node(int count, t_command **cmd, t_command **cur)
 {
-	add_cmd_list(list, cmd);
+	add_cmd_list(count, cmd);
 	*cur = get_last_cmd(*cmd);
 	if (!cur)
 		return ;
@@ -238,7 +235,9 @@ int pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command	*current_cmd;
 	t_token	*current;
+	int	count;
 
+	count = 0;
 	current_cmd = NULL;
 	current = list;
 	while (current)
@@ -250,8 +249,11 @@ int pars_command(t_token *list, t_command **cmd_list)
 		// 		return 0;
 		// 	(*cmd_list)->argv_t[0] = NULL;
 		// }
+
+		if (current->type == word)
+			count = count_word_tokens(current);
 		if (current_cmd == NULL)
-			create_new_node(list, cmd_list, &current_cmd);
+			create_new_node(count, cmd_list, &current_cmd);
 		if (current->type == word)
 			add_to_argv(current_cmd, current->content);
 		else if ((current->type == redir_output || current->type == redir_o_app) && current->next)
