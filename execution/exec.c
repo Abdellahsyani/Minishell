@@ -28,7 +28,6 @@ void exec_builtins(t_command **cmd, t_env **env, int fd)
 		dup2(fd, 1);
 		close(fd);
 	}
-	
 }
 
 int **allocate_tube(int size)
@@ -68,6 +67,7 @@ int set_pipes(int **tube, int size)
 	}
 	return (1);
 }
+
 int **built_pipline(t_command **cmd ,t_env **env, int size)
 {
 	t_command *tmp;
@@ -101,7 +101,6 @@ void ft_exec(t_command **cmd, t_env **env)
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
 	ptr.i = 0;
-	(*env)->pid = getpid();
 	ptr.env = env;
 	ft_herdoc(cmd, ptr.env);
 	

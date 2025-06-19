@@ -37,6 +37,16 @@ void ft_free_env(t_env **p)
 	}
 	free(p);
 }
+
+void	clean_line(t_env **env)
+{
+	ft_free_env(env);
+	gc_free_all();
+	rl_clear_history();
+	printf("exit\n");
+	exit(0);
+}
+
 int main(int ac, char **argv, char **envp)
 {
 	char        *line;
@@ -60,29 +70,16 @@ int main(int ac, char **argv, char **envp)
 		cmd_list = NULL;
 		line = readline("minishell $ ");
 		if (!line)
-		{
-			ft_free_env(env);
-			gc_free_all();
-			rl_clear_history();
-			printf("exit\n");
-			exit(0);
-		}
+			clean_line(env);
 		line = trim_whitespace(line);
-		/*printf("line1: %s\n", line);*/
 		if (!*line && line)
 			continue ;
 		if (*line)
 			add_history(line);
 		get_input(line, &list);
 		tmp = list;
-		while (tmp)
-		{
-			token_type(tmp);
-			tmp = tmp->next;
-		}
-		
+		token_type(tmp);
 		parse_status = start_parsing(list, env);
-		
 		if (parse_status == 1)
 		{
 			
@@ -94,7 +91,6 @@ int main(int ac, char **argv, char **envp)
 			}
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
-			/*printf("main: %s\n", cmd_tmp->next->argv[0]);*/
 		}
 		else
 		{

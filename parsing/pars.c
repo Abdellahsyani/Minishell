@@ -33,8 +33,7 @@ static int	is_consecutive_operator(t_token *list)
 		return (1);
 	while (list && list->type != word)
 	{
-		if (list->next && (list->type == list->next->type
-			|| list->next->type != word))
+		if (list->next && (list->type == list->next->type))
 		{
 			return (0);
 		}
@@ -129,13 +128,14 @@ t_command	*create_cmd_node(int count)
 void	add_cmd_list(int count, t_command **cmd)
 {
 	t_command	*new_node;
+	t_command	*tmp;
 
 	new_node = create_cmd_node(count);
 	if (*cmd == NULL)
 		*cmd = new_node;
 	else
 	{
-		t_command *tmp = *cmd;
+		tmp = *cmd;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
@@ -192,19 +192,21 @@ void	add_lis(t_redi **list, t_redi *new_node)
 
 void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
+	t_redi *new_redi;
+
 	if (!(*cur) || !(*cur)->next)
 		return;
 	if (i == 1)
 	{
 
-		t_redi *new_redi = create_nod();
+		new_redi = create_nod();
 		new_redi->file = ft_strdup((*cur)->next->content);
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->in, new_redi);
 	}
 	else if (i == 0)
 	{
-		t_redi *new_redi = create_nod();
+		new_redi = create_nod();
 		new_redi->file = ft_strdup((*cur)->next->content);
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->out, new_redi);
@@ -218,19 +220,7 @@ void	create_new_node(int count, t_command **cmd, t_command **cur)
 	if (!cur)
 		return ;
 }
-int fcheckar(t_token *list)
-{
-	t_token *tmp;
 
-	tmp = list;
-	while (tmp && tmp->type != pipe_line)
-	{
-		if (tmp->type == word)
-			return (1);
-		tmp = tmp->next;
-	}
-	return 0;
-}
 int pars_command(t_token *list, t_command **cmd_list)
 {
 	t_command	*current_cmd;
@@ -242,14 +232,6 @@ int pars_command(t_token *list, t_command **cmd_list)
 	current = list;
 	while (current)
 	{
-		// if (fcheckar(current) == 0)
-		// {
-		// 	(*cmd_list)->argv_t = gc_malloc(sizeof(char *));
-		// 	if (!(*cmd_list)->argv_t)
-		// 		return 0;
-		// 	(*cmd_list)->argv_t[0] = NULL;
-		// }
-
 		if (current->type == word)
 			count = count_word_tokens(current);
 		if (current_cmd == NULL)

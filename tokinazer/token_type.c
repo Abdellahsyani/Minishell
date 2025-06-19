@@ -18,17 +18,21 @@ void	*token_type(t_token *list)
 {
 	if (!list->content)
 		return (NULL);
-	if (!ft_strcmp(list->content, ">"))
-		list->type = redir_output;
-	else if (!ft_strcmp(list->content, "<"))
-		list->type = redir_input;
-	else if (!ft_strcmp(list->content, "<<"))
-		list->type = d_herdoc;
-	else if (!ft_strcmp(list->content, ">>"))
-		list->type = redir_o_app;
-	else if (!ft_strcmp(list->content, "|"))
-		list->type = pipe_line;
-	else
-		list->type = word;
+	while (list)
+	{
+		if (!ft_strcmp(list->content, ">"))
+			list->type = redir_output;
+		else if (!ft_strcmp(list->content, "<"))
+			list->type = redir_input;
+		else if (!ft_strcmp(list->content, "<<"))
+			list->type = d_herdoc;
+		else if (!ft_strcmp(list->content, ">>"))
+			list->type = redir_o_app;
+		else if (!ft_strcmp(list->content, "|"))
+			list->type = pipe_line;
+		else
+			list->type = word;
+		list = list->next;
+	}
 	return (NULL);
 }

@@ -47,6 +47,7 @@ int input_handle(t_redi *redir)
 	}
 	return (1);
 }
+
 int output_handle(t_redi *redir)
 {
 	t_redi *tmp;

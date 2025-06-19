@@ -374,8 +374,9 @@ char	*double_quote(char *content, t_env **env_t)
 	var.i = 0;
 	while (content[var.i])
 	{
-		if (content[var.i] == '$' && (!ft_isalpha(content[var.i + 1])
-			|| content[var.i+1] != '_'))
+		if (ft_isalpha(content[var.i + 1]) || content[var.i + 1] == '_')
+			break;
+		if (content[var.i] == '$')
 			printf("$");
 		var.i++;
 	}
@@ -503,7 +504,7 @@ void	expand_var(t_command *cmd, t_env **env)
 
 	while (cmd)
 	{
-		if (!cmd->argv_t)
+		if (!cmd->argv_t || !cmd->argv_t[0])
         	{
             		cmd = cmd->next;
             		continue;
@@ -515,7 +516,6 @@ void	expand_var(t_command *cmd, t_env **env)
 		if (!cmd->argv)
 			return ;
 		i = 0;
-	
 		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$'))
 		{
 			h_export(cmd, env);

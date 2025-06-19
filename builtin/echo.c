@@ -64,7 +64,7 @@ int    ft_echo(char **arg)
         while (arg[i])
         {
             printf("%s",arg[i]);
-            if (arg[i + 1])
+            if (arg[i + 1] && arg[i][0] != '$')
                 printf(" ");
             i++;
         }

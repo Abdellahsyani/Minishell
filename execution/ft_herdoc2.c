@@ -49,15 +49,3 @@ void helper_herdoc(char *line, int fd, t_env **env)
 	}
 	write(fd,"\n", 1);
 }
-
-// int main(int ac, char **arg, char **env)
-// {
-//     t_env **envp;
-
-//     envp = get_env(env);
-
-//     helper_herdoc(arg[1], 1, *envp);
-//     write(1,"\n", 1);
-
-//     return 0;
-// }
