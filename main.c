@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/19 15:24:06 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 11:13:24 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,15 @@ void ft_free_env(t_env **p)
 	free(p);
 }
 
-void	clean_line(t_env **env)
+void	clean_all(t_env **env, int n, int flag)
 {
+	
 	ft_free_env(env);
 	gc_free_all();
 	rl_clear_history();
-	printf("exit\n");
-	exit(0);
-}
-
-void	clean_all(t_env **env)
-{
-	ft_free_env(env);
-	gc_free_all();
-	rl_clear_history();
+	if (flag)
+		write(2,"exit\n", 5);
+	exit(n);
 }
 
 void	program_run(t_env **env)
@@ -69,7 +64,7 @@ void	program_run(t_env **env)
 		cmd_list = NULL;
 		line = readline("minishell $ ");
 		if (!line)
-			clean_line(env);
+			clean_all(env, 1 , 1);
 		line = trim_whitespace(line);
 		if (!*line && line)
 			continue ;
@@ -107,6 +102,6 @@ int main(int ac, char **argv, char **envp)
 	env = get_env(envp);
 	update_exit_status(env, 0);
 	program_run(env);
-	clean_all(env);
+	clean_all(env, 0, 0);
 }
 

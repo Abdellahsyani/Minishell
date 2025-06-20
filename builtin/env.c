@@ -10,12 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
-int ft_check_value(char *str, t_env *env)
+int	ft_check_value(char *str, t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -29,20 +28,20 @@ int ft_check_value(char *str, t_env *env)
 	return (0);
 }
 
-
-int ft_env(t_env **env, char **argv)
+int	ft_env(t_env **env, char **argv)
 {
-	t_env *tmp = NULL;
-	(void)argv;
+	t_env	*tmp;
 
+	tmp = NULL;
+	(void)argv;
 	update_path(argv[0], env);
 	tmp = *env;
 	if (!tmp)
 		return (1);
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->value && strcmp(tmp->key, "?"))
-			printf("%s=%s\n",tmp->key,tmp->value);
+			printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 	return (0);
