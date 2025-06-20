@@ -63,7 +63,7 @@ int	op_error_syntax(t_token *list, t_env **env)
 int	start_parsing(t_token *list, t_env **env)
 {
 	t_token	*current;
-	int	error;
+	int		error;
 
 	current = list;
 	error = 1;
@@ -99,7 +99,7 @@ int	count_word_tokens(t_token *list)
 			count++;
 		list = list->next;
 	}
-	return count;
+	return (count);
 }
 
 t_command	*create_cmd_node(int count)
@@ -118,8 +118,6 @@ t_command	*create_cmd_node(int count)
 		new_node->argv_t = gc_malloc(sizeof(char *) * (count + 2));
 		if (!new_node->argv_t)
 			return (NULL);
-		for (int i = 0; i < count + 1; i++)
-        		new_node->argv_t[i] = NULL;
 	}
 	new_node->next = NULL;
 	return (new_node);
@@ -179,11 +177,13 @@ t_redi	*create_nod(void)
 
 void	add_lis(t_redi **list, t_redi *new_node)
 {
+	t_redi	*tmp;
+
 	if (*list == NULL)
 		*list = new_node;
 	else
 	{
-		t_redi *tmp = *list;
+		tmp = *list;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_node;
@@ -192,13 +192,12 @@ void	add_lis(t_redi **list, t_redi *new_node)
 
 void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
-	t_redi *new_redi;
+	t_redi	*new_redi;
 
 	if (!(*cur) || !(*cur)->next)
-		return;
+		return ;
 	if (i == 1)
 	{
-
 		new_redi = create_nod();
 		new_redi->file = ft_strdup((*cur)->next->content);
 		new_redi->type = (*cur)->type;
@@ -221,38 +220,46 @@ void	create_new_node(int count, t_command **cmd, t_command **cur)
 		return ;
 }
 
-void	pars_command(t_token *list, t_command **cmd_list)
+void	check_args(t_token *current, t_command **cmd, t_command **list)
 {
-	t_command	*current_cmd;
-	t_token	*current;
 	int	count;
 
 	count = 0;
+	if (current->type == word)
+		count = count_word_tokens(current);
+	if (*cmd == NULL)
+		create_new_node(count, list, cmd);
+	if (current->type == word)
+		add_to_argv(*cmd, current->content);
+}
+
+void	pars_command(t_token *list, t_command **cmd_list)
+{
+	t_command	*current_cmd;
+	t_token		*current;
+
 	current_cmd = NULL;
 	current = list;
 	while (current)
 	{
-		if (current->type == word)
-			count = count_word_tokens(current);
-		if (current_cmd == NULL)
-			create_new_node(count, cmd_list, &current_cmd);
-		if (current->type == word)
-			add_to_argv(current_cmd, current->content);
-		else if ((current->type == redir_output || current->type == redir_o_app) && current->next)
+		check_args(current, &current_cmd, cmd_list);
+		if ((current->type == redir_output || current->type == redir_o_app)
+			&& current->next)
 		{
 			fill_operation(current_cmd, &current, 0);
 			if (!current->next->next)
-				break;
+				break ;
 			current = current->next->next;
-			continue;
+			continue ;
 		}
-		else if ((current->type == redir_input || current->type == d_herdoc) && current->next)
+		else if ((current->type == redir_input || current->type == d_herdoc)
+			&& current->next)
 		{
 			fill_operation(current_cmd, &current, 1);
 			if (!current->next->next)
-				break;
+				break ;
 			current = current->next->next;
-			continue;
+			continue ;
 		}
 		else if (current->type == pipe_line)
 			current_cmd = NULL;

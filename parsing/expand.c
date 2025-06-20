@@ -24,7 +24,7 @@ char	*stcopy(char *var, char *content, char del)
 		if (content[i] == del)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		var[count] = content[i];
 		count++;
@@ -34,9 +34,9 @@ char	*stcopy(char *var, char *content, char del)
 	return (var);
 }
 
-char *ft_get(t_env **env, char *key)
+char	*ft_get(t_env **env, char *key)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *env;
 	while (tmp)
@@ -53,13 +53,12 @@ char	*get_status(char *str, t_env **env)
 	char	*var;
 	char	*exp;
 	char	*last;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	int len = ft_strlen(str);
-	last = gc_malloc(sizeof(char) * len);
+	last = gc_malloc(sizeof(char) * ft_strlen(str));
 	if (!last)
 		return (NULL);
 	while (str[i])
@@ -83,7 +82,7 @@ char	*get_status(char *str, t_env **env)
 int	get_space_size(char *str, int temp_i)
 {
 	int	result_len;
-	int in_whitespace;
+	int	in_whitespace;
 
 	in_whitespace = 1;
 	result_len = 0;
@@ -91,13 +90,13 @@ int	get_space_size(char *str, int temp_i)
 	{
 		if (str[temp_i] == ' ' || str[temp_i] == '\t')
 		{
-			if (!in_whitespace && str[temp_i + 1] && 
-				str[temp_i + 1] != ' ' && str[temp_i + 1] != '\t')
+			if (!in_whitespace && str[temp_i + 1]
+				&& str[temp_i + 1] != ' ' && str[temp_i + 1] != '\t')
 				result_len++;
 			in_whitespace = 0;
 		}
 		else
-	{
+		{
 			result_len++;
 			in_whitespace = 1;
 		}
@@ -106,12 +105,11 @@ int	get_space_size(char *str, int temp_i)
 	return (result_len);
 }
 
-char	*fill_nonspace(char *str, int i, char *result)
+char	*fill_nonspace(char *str, int i, char *result, int j)
 {
-	int in_whitespace;
-	int j;
+	int	in_whitespace;
+	int	k;
 
-	j = 0;
 	in_whitespace = 0;
 	while (str[i])
 	{
@@ -119,7 +117,7 @@ char	*fill_nonspace(char *str, int i, char *result)
 		{
 			if (!in_whitespace)
 			{
-				int k = i;
+				k = i;
 				while (str[k] && (str[k] == ' ' || str[k] == '\t'))
 					k++;
 				if (str[k])
@@ -138,14 +136,12 @@ char	*fill_nonspace(char *str, int i, char *result)
 	return (result);
 }
 
-char	*norm_whitespace(char *str, char *var_quote, char *get_last)
+char	*norm_whitespace(char *str, char *var_quote, char *get_last, int i)
 {
-	char *result;
-	int i;
-	int result_len;
-	int temp_i;
+	char	*result;
+	int		result_len;
+	int		temp_i;
 
-	i = 0;
 	result_len = 0;
 	if (!*str)
 		return (NULL);
@@ -157,8 +153,8 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 		result_len += 1;
 	result = gc_malloc(sizeof(char) * result_len + 1);
 	if (!result)
-		return NULL;
-	result = fill_nonspace(str, i, result);
+		return (NULL);
+	result = fill_nonspace(str, i, result, 0);
 	if (var_quote)
 		result = ft_strjoin(result, var_quote);
 	if (str[ft_strlen(str) - 1] == ' ' && get_last)
@@ -168,25 +164,25 @@ char	*norm_whitespace(char *str, char *var_quote, char *get_last)
 	return (result);
 }
 
-char *get_allstr(char *str)
+char	*get_allstr(char *str)
 {
-	int	i;
+	int		i;
 	char	*value;
 
 	i = 0;
 	while (str[i])
 		i++;
 	value = ft_substr(str, 0, i);
-	return value;
+	return (value);
 }
 
-char *get_var(char *str, t_env **env)
+char	*get_var(char *str, t_env **env)
 {
-	int i;
-	int start;
-	int len;
-	char *var_name;
-	char *var_value;
+	int		i;
+	int		start;
+	int		len;
+	char	*var_name;
+	char	*var_value;
 	char	*var_quote;
 	char	*get_last;
 
@@ -196,11 +192,12 @@ char *get_var(char *str, t_env **env)
 	get_last = NULL;
 	if (str[i] == '?')
 		return (get_status(&str[i], env));
-	if (*str == '$' && !ft_isalpha(str[i + 1]))
+	if (str[0] == '$' && !ft_isalpha(str[i]))
 		return ("$");
 	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i++;
-	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i] && ft_isalpha(str[i + 1])))
+	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i]
+			&& ft_isalpha(str[i + 1])))
 		var_quote = double_quote(&str[i], env);
 	else if (!ft_isalpha(str[i]))
 		get_last = ft_strdup(get_allstr(&str[i]));
@@ -209,15 +206,15 @@ char *get_var(char *str, t_env **env)
 	var_value = ft_get(env, var_name);
 	if (!var_value)
 		var_value = ft_strdup("");
-	return (norm_whitespace(var_value, var_quote, get_last));
+	return (norm_whitespace(var_value, var_quote, get_last, 0));
 }
 
 char	*get_var1(char *str)
 {
 	char	*var;
-	int	i;
-	int	start;
-	int	len;
+	int		i;
+	int		start;
+	int		len;
 
 	i = 1;
 	len = 0;
@@ -227,19 +224,18 @@ char	*get_var1(char *str)
 	while (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?')
 	{
 		if (str[i] == ' ' || str[i] == '"')
-			break;
+			break ;
 		i++;
 	}
 	len = i - 1;
 	var = ft_strlcpy(var, str, len, start);
-	/*printf("\nvar1_$: %s\n", var);*/
 	return (var);
 }
 
 char	*single_quote(char *content)
 {
-	int	i;
-	int	count;
+	int		i;
+	int		count;
 	char	*var;
 
 	i = 0;
@@ -249,7 +245,7 @@ char	*single_quote(char *content)
 		if (content[i] == '\'')
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		i++;
 		count++;
@@ -258,14 +254,13 @@ char	*single_quote(char *content)
 	if (!var)
 		return (NULL);
 	var = stcopy(var, content, '\'');
-	/*printf("var_': %s\n", var);*/
 	return (var);
 }
 
 char	*ft_strjoins(char *s1, char *s2)
 {
-	size_t		i;
-	size_t		j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -288,6 +283,9 @@ void	count_dollar(t_hold *var, char *content)
 	var->len1 = 0;
 	var->len = 0;
 	var->var1 = NULL;
+	var->exp = NULL;
+	var->get_v = NULL;
+	var->counts = 0;
 	while (content[var->i])
 	{
 		if (content[var->i] == '$')
@@ -306,11 +304,8 @@ void	count_dollar(t_hold *var, char *content)
 
 void	let_var_ready(t_hold *var, char *content, t_env **env_t)
 {
-	var->counts = 0;
 	var->count = 0;
 	var->i = 0;
-	var->exp = NULL;
-	var->get_v = NULL;
 	while (content[var->i])
 	{
 		if (content[var->i] == '$')
@@ -327,7 +322,7 @@ void	let_var_ready(t_hold *var, char *content, t_env **env_t)
 		if (content[var->i] == '"')
 		{
 			var->i++;
-			continue;
+			continue ;
 		}
 		var->i++;
 		var->count++;
@@ -368,16 +363,16 @@ void	ft_get_var(t_hold *var, char *content)
 char	*double_quote(char *content, t_env **env_t)
 {
 	t_hold	var;
-	int	s;
-	int	c;
+	int		s;
+	int		c;
 
 	var.i = 0;
 	while (content[var.i])
 	{
 		if (ft_isalpha(content[var.i + 1]) || content[var.i + 1] == '_')
-			break;
+			break ;
 		if (content[var.i] == '$')
-			printf("$");
+			write(1, "$", 1);
 		var.i++;
 	}
 	count_dollar(&var, content);
@@ -396,7 +391,7 @@ char	*double_quote(char *content, t_env **env_t)
 			var.k++;
 			var.i += c + 1;
 			var.j += s;
-			continue;
+			continue ;
 		}
 		var.j++;
 		var.i++;
@@ -414,44 +409,39 @@ char	*when_quote(char *var, char *quote, int i)
 	copy = NULL;
 	copy = ft_strlcpy(copy, var, i, 0);
 	copy = ft_strjoin(copy, quote);
-	/*printf("copy_all: %s\n", copy);*/
 	return (copy);
 }
 
 char	*copy_var(char *content, t_env **env)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*var;
-	int	start;
+	int		start;
 	char	*quote;
 
 	i = 0;
 	start = i;
 	var = NULL;
 	quote = NULL;
-	while (content[i])
-		i++;
-	len = i;
+	len = ft_strlen(content);
 	var = ft_strlcpy(var, content, len, start);
-	i = 0;
 	while (var[i])
 	{
 		if (var[i] == '"')
 		{
 			quote = double_quote(&var[i], env);
-			break;
+			break ;
 		}
 		if (var[i] == '\'')
 		{
 			quote = single_quote(&var[i]);
-			break;
+			break ;
 		}
 		i++;
 	}
 	if (quote)
 		return (when_quote(var, quote, i));
-	/*printf("var_all: %s\n", var);*/
 	return (var);
 }
 
@@ -459,12 +449,14 @@ int	h_export(t_command *cmd, t_env **env)
 {
 	char	*var;
 	char	**spl;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+
 	spl = NULL;
 	if (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$')
 	{
-		printf("bash: %s: command not found\n", get_var(&cmd->argv_t[0][1], env));
+		printf("bash: %s: command not found\n", get_var(&cmd->argv_t[0][1],
+					env));
 		return (0);
 	}
 	if (cmd->argv_t[0][0] == '$')
@@ -475,7 +467,7 @@ int	h_export(t_command *cmd, t_env **env)
 			return (0);
 		}
 		var = get_var(cmd->argv_t[0], env);
-		if(!var)
+		if (!var)
 			return (0);
 		spl = ft_split(var, ' ');
 		i = 0;
@@ -505,9 +497,9 @@ void	expand_var(t_command *cmd, t_env **env)
 	while (cmd)
 	{
 		if (!cmd->argv_t || !cmd->argv_t[0])
-        	{
-            		cmd = cmd->next;
-            		continue;
+		{
+			cmd = cmd->next;
+			continue ;
 		}
 		count = 0;
 		while (cmd && cmd->argv_t[count])
@@ -516,10 +508,11 @@ void	expand_var(t_command *cmd, t_env **env)
 		if (!cmd->argv)
 			return ;
 		i = 0;
-		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$'))
+		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"'
+				&& cmd->argv_t[0][1] == '$'))
 		{
 			h_export(cmd, env);
-			break;
+			break ;
 		}
 		while (cmd->argv_t[i])
 		{
