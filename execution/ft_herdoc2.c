@@ -36,7 +36,7 @@ int	ft_expand_dolar(char *line, t_env **env, int *i, int fd)
 	if (!line)
 		return (0);
 	var = get_var1(&line[*i]);
-	var1 = get_var(&line[*i], env);
+	var1 = get_var(&line[*i], env, 1);
 	ft_putstr_fd(var1, fd);
 	len = ft_strlen(var);
 	return (len);

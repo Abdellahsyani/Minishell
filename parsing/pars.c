@@ -207,20 +207,28 @@ void	fill_operation(t_command *cmd, t_token **cur, int i)
 	t_redi	*new_redi;
 	char	*var;
 
+	var = NULL;
 	if (!(*cur) || !(*cur)->next)
 		return ;
-	var = rem_double((*cur)->next->content);
+	if ((*cur)->next->content[0] == '"')
+		var = rem_double((*cur)->next->content);
 	if (i == 1)
 	{
 		new_redi = create_nod();
-		new_redi->file = ft_strdup(var);
+		if (var)
+			new_redi->file = ft_strdup(var);
+		else
+			new_redi->file = ft_strdup((*cur)->next->content);
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->in, new_redi);
 	}
 	else if (i == 0)
 	{
 		new_redi = create_nod();
-		new_redi->file = ft_strdup(var);
+		if (var)
+			new_redi->file = ft_strdup(var);
+		else
+			new_redi->file = ft_strdup((*cur)->next->content);
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->out, new_redi);
 	}
