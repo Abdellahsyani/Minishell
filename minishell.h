@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/18 11:18:12 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 17:40:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include "libft/libft.h"
 # include "gc.h"
-
+#include <sys/stat.h>
 /*** struct for tokinization ***/
 typedef struct s_shell
 {
@@ -139,8 +139,12 @@ char	*ft_strlcpy(char *token, char *input, int len, int j);
 void	*token_type(t_token *list);
 int	start_parsing(t_token *list, t_env **env);
 
-/******** helper functions ************/
+/************** free functions  ******************/
+void	clean_all(t_env **env, int n, int flag);
 void	free_2d(char **arr);
+void ft_free_env(t_env **p);
+
+/******** helper functions ************/
 void	add_cmd_list(int count, t_command **cmd);
 void	*gc_malloc(size_t size);
 int	is_operator(char op);
@@ -157,7 +161,7 @@ char    *ft_key(char *str);
 void    update_path(char *arg, t_env **env);
 char    *ft_get(t_env **env, char *key);
 int     ft_cmd_size(t_command **cmd);
-void ft_free_env(t_env **p);
+
 
 //**************Builtin****************
 
@@ -167,7 +171,7 @@ int    ft_pwd(t_env **env);
 int     ft_env(t_env **env, char **argv);
 int     ft_export(char **arg, t_env **env);
 int     ft_unset(char **arg, t_env **env);
-int     ft_exit(char **arg,int last_status, t_env **env);
+void     ft_exit(char **arg,int last_status, t_env **env);
 
 //***************Execution**************
 void ft_exec(t_command **cmd, t_env **env);

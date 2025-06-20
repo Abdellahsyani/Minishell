@@ -10,33 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
-int pass_out(t_redi *tmp ,int *fd)
+int	pass_out(t_redi *tmp, int *fd)
 {
 	if (tmp->type == redir_output && tmp->file)
 		*fd = open(tmp->file, O_RDWR | O_CREAT | O_TRUNC, 0640);
-	else if (tmp->type == redir_o_app  && tmp->file)
+	else if (tmp->type == redir_o_app && tmp->file)
 		*fd = open(tmp->file, O_RDWR | O_CREAT | O_APPEND, 0640);
 	else
 		return (-1);
 	if (*fd == -1)
 	{
 		perror("open failed");
-		return 0;
+		return (0);
 	}
 	return (1);
 }
 
-int input_handle(t_redi *redir)
+int	input_handle(t_redi *redir)
 {
-	t_redi *tmp;
-	
+	t_redi	*tmp;
+
 	tmp = redir;
 	if (!tmp)
 		return (1);
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->type == redir_input && access(tmp->file, R_OK) == -1)
 		{
@@ -48,38 +47,39 @@ int input_handle(t_redi *redir)
 	return (1);
 }
 
-int output_handle(t_redi *redir)
+int	output_handle(t_redi *redir)
 {
-	t_redi *tmp;
-	int fd;
-	int redout;
+	t_redi	*tmp;
+	int		fd;
+	int		redout;
 
 	tmp = redir;
 	if (!tmp)
 		return (-2);
 	while (tmp)
 	{
-		if ((tmp->type == redir_output || tmp->type == redir_o_app)	&& pass_out(tmp, &fd))
+		if ((tmp->type == redir_output || tmp->type == redir_o_app)
+			&& pass_out(tmp, &fd))
 		{
 			if (tmp->next)
 				close(fd);
 			else
 			{
 				redout = dup(1);
-				dup2(fd,1);
+				dup2(fd, 1);
 				close(fd);
 			}
 		}
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
 	return (redout);
 }
 
-int redirect_handler(int *fd, t_command **cmd , t_env **env)
+int	redirect_handler(int *fd, t_command **cmd, t_env **env)
 {
-	t_command *tmp;
-	(void)env;
+	t_command	*tmp;
 
+	(void)env;
 	tmp = *cmd;
 	if (!input_handle(tmp->in))
 	{

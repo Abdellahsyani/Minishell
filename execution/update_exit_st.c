@@ -6,20 +6,21 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/18 18:38:30 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 10:46:21 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void update_exit_status(t_env **env,int status)
+void	update_exit_status(t_env **env, int status)
 {
-	char *value;
+	char	*value;
 
 	value = ft_itoa(status);
 	set_new_env("?", value, env);
 }
-void    closingfds(int **tube, int pos)
+
+void	closingfds(int **tube, int pos)
 {
 	while (pos > 0)
 	{
@@ -28,11 +29,12 @@ void    closingfds(int **tube, int pos)
 		pos--;
 	}
 }
-int ft_cmd_size(t_command **cmd)
+
+int	ft_cmd_size(t_command **cmd)
 {
-	t_command *tmp;
-	int count;
-	
+	t_command	*tmp;
+	int			count;
+
 	count = 0;
 	if (!cmd)
 		return (0);
@@ -42,15 +44,14 @@ int ft_cmd_size(t_command **cmd)
 		count++;
 		tmp = tmp->next;
 	}
-	return(count);
+	return (count);
 }
 
-
-void wait_and_free(t_extra ptr)
+void	wait_and_free(t_extra ptr)
 {
-	int status;
-	int i;
-	int new_status;
+	int	status;
+	int	i;
+	int	new_status;
 
 	i = 0;
 	closingfds(ptr.pipline, ptr.size);
@@ -59,8 +60,8 @@ void wait_and_free(t_extra ptr)
 		waitpid(ptr.pid[i], &status, 0);
 		if (WIFEXITED(status))
 		{
-			new_status =  WEXITSTATUS(status);
-			update_exit_status(ptr.env,new_status);
+			new_status = WEXITSTATUS(status);
+			update_exit_status(ptr.env, new_status);
 		}
 		else
 		{
@@ -69,5 +70,4 @@ void wait_and_free(t_extra ptr)
 		}
 		i++;
 	}
-	// gc_free_all();
 }

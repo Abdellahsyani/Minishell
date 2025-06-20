@@ -6,13 +6,13 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:32:15 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/18 11:18:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 11:16:05 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_exec_builtin(char *cmd, char **args, t_env **env)
+int	ft_exec_builtin(char *cmd, char **args, t_env **env)
 {
 	if (!ft_strcmp(cmd, "cd"))
 		return (ft_cd(args, env));
@@ -27,11 +27,11 @@ int ft_exec_builtin(char *cmd, char **args, t_env **env)
 	else if (!ft_strcmp(cmd, "env"))
 		return (ft_env(env, args));
 	else if (!ft_strcmp(cmd, "exit"))
-		return (ft_exit(args, 0,env));
+		return (ft_exit(args, 0, env), 0);
 	return (1);
 }
 
-int is_builtin(t_command *cmd)
+int	is_builtin(t_command *cmd)
 {
 	if (!cmd || !cmd->argv)
 		return (0);
@@ -39,9 +39,11 @@ int is_builtin(t_command *cmd)
 	{
 		if (!ft_strcmp(cmd->argv[0], "echo") || !ft_strcmp(cmd->argv[0], "cd"))
 			return (1);
-		else if (!ft_strcmp(cmd->argv[0], "export") || !ft_strcmp(cmd->argv[0], "unset"))
+		else if (!ft_strcmp(cmd->argv[0], "export") || !ft_strcmp(cmd->argv[0],
+				"unset"))
 			return (1);
-		else if (!ft_strcmp(cmd->argv[0], "env") || !ft_strcmp(cmd->argv[0], "pwd"))
+		else if (!ft_strcmp(cmd->argv[0], "env") || !ft_strcmp(cmd->argv[0],
+				"pwd"))
 			return (1);
 		else if (!ft_strcmp(cmd->argv[0], "exit"))
 			return (1);

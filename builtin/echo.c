@@ -6,15 +6,15 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:44:53 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/19 17:28:04 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 09:49:40 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int ft_check_flag(char **arg)
+static int	ft_check_flag(char **arg)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (arg[1][0] == '-')
@@ -25,18 +25,16 @@ static int ft_check_flag(char **arg)
 				return (0);
 			i++;
 		}
-		return 1;
+		return (1);
 	}
-
-	return 0;
+	return (0);
 }
 
-static void    ft_handle_n(char **arg)
+static void	ft_handle_n(char **arg)
 {
-	int i;
+	int	i;
 
 	i = 2;
-
 	while (arg[i])
 	{
 		ft_putstr_fd(arg[i], 1);
@@ -46,10 +44,11 @@ static void    ft_handle_n(char **arg)
 	}
 }
 
-int    ft_echo(char **arg)
+int	ft_echo(char **arg)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
+
 	if (!arg[1])
 	{
 		ft_putstr_fd("\n", 1);

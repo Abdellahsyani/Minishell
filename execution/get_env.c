@@ -6,19 +6,21 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/18 09:56:16 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 10:59:55 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char    *ft_key(char *str)
+char	*ft_key(char *str)
 {
-	int i;
-	int j = 0;
-	i = 0;
-	char *key = NULL;
+	int		i;
+	int		j;
+	char	*key;
 
+	j = 0;
+	i = 0;
+	key = NULL;
 	while (str[i] && str[i] != '=')
 		i++;
 	key = gc_malloc(sizeof(char) * (i + 1));
@@ -33,22 +35,25 @@ char    *ft_key(char *str)
 	return (key);
 }
 
-char    *get_value(char *str)
+char	*get_value(char *str)
 {
-	int i;
-	char *value = NULL;
-	int j = 0;
+	int		i;
+	char	*value;
+	int		j;
+	int		l;
+
+	value = NULL;
+	j = 0;
 	i = 0;
-	int l;
 	l = strlen(str);
 	while (str[i] && str[i] != '=')
 		i++;
 	i++;
-	if(str[i] == '\0')
+	if (str[i] == '\0')
 		return (NULL);
 	value = gc_malloc(sizeof(char) * (l - i + 1));
 	if (!value)
-		return NULL;
+		return (NULL);
 	while (i < l)
 	{
 		value[j] = str[i];
@@ -59,12 +64,12 @@ char    *get_value(char *str)
 	return (value);
 }
 
-t_env *new_node(char *key, char *value)
+t_env	*new_node(char *key, char *value)
 {
-	t_env *new;
+	t_env	*new;
 
 	new = malloc(sizeof(t_env));
-	if(!new)
+	if (!new)
 		return (NULL);
 	new->key = key;
 	new->value = value;
@@ -72,45 +77,12 @@ t_env *new_node(char *key, char *value)
 	return (new);
 }
 
-char **chr_envirment(t_env **env)
+t_env	**get_env(char **list)
 {
-	char **envp=NULL;
-	t_env   *tmp;
-	t_env   *envy;
-	char    *str;
-	int i = 0;
+	t_env	**tmp;
+	t_env	*cur;
 
-	if (!env)
-		return (NULL);
-	tmp = *env;
-	envy = *env;
-	while (envy)
-	{
-		i++;
-		(envy) = (envy)->next;
-	}
-	envp = gc_malloc(sizeof(char *) * (i + 1));
-	if (!envp)
-		return (NULL);
-	i = 0;
-	while (tmp)
-	{
-		str = ft_strjoin(tmp->key, "=");
-		envp[i] = ft_strjoin(str, tmp->value);
-		gc_free_one(str);
-		i++;
-		tmp = tmp->next;
-	}
-	envp[i] = NULL;
-	return (envp);
-}
-	
-t_env   **get_env(char **list)
-{
-	t_env **tmp;
-	t_env *cur;
-
-	tmp = malloc(sizeof(t_env*));
+	tmp = malloc(sizeof(t_env *));
 	if (!tmp)
 		return (NULL);
 	cur = new_node(ft_key(*list), get_value(*list));

@@ -12,20 +12,20 @@
 
 #include "../minishell.h"
 
-t_env *ft_find(t_env *env, char *key)
+t_env	*ft_find(t_env *env, char *key)
 {
 	while (env)
 	{
 		if (!ft_strcmp(env->key, key))
 			return (env);
-		env = env->next;  
+		env = env->next;
 	}
 	return (NULL);
 }
 
-void    print_export(t_env **env)
+void	print_export(t_env **env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *env;
 	while (tmp)
@@ -36,17 +36,17 @@ void    print_export(t_env **env)
 			continue ;
 		}
 		if (!tmp->value)
-			printf("declare -x %s\n",tmp->key);
+			printf("declare -x %s\n", tmp->key);
 		else
-			printf("declare -x %s=\"%s\"\n",tmp->key,tmp->value);
+			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }
 
-void    set_new_env(char *key, char *value, t_env **env)
+void	set_new_env(char *key, char *value, t_env **env)
 {
-	t_env *exist;
-	t_env *create;
+	t_env	*exist;
+	t_env	*create;
 
 	exist = ft_find(*env, key);
 	if (exist)
@@ -58,20 +58,20 @@ void    set_new_env(char *key, char *value, t_env **env)
 	{
 		create = malloc(sizeof(t_env));
 		create->key = key;
-		if(value)
-			create->value= value;
+		if (value)
+			create->value = value;
 		create->next = *env;
 		*env = create;
 	}
 }
 
-int check_arg(char *str,t_env **env)
+int	check_arg(char *str, t_env **env)
 {
-	int i;
-	char *key;
-	char *value;
-	int l;
-	
+	int		i;
+	char	*key;
+	char	*value;
+	int		l;
+
 	value = NULL;
 	l = ft_strlen(str);
 	i = 0;
@@ -89,9 +89,9 @@ int check_arg(char *str,t_env **env)
 	return (1);
 }
 
-int ft_export(char **arg, t_env **env)
+int	ft_export(char **arg, t_env **env)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	update_path(arg[0], env);
@@ -104,14 +104,15 @@ int ft_export(char **arg, t_env **env)
 	{
 		while (arg[i])
 		{
-			if (!check_arg(arg[i],env))
+			if (!check_arg(arg[i], env))
 			{
-				printf("minishell:export: '%s' : not a valid identifier\n", arg[i]);
-				if(!arg[i + 1])
+				printf("minishell:export: '%s' : not a valid identifier\n",
+					arg[i]);
+				if (!arg[i + 1])
 					return (1);
 			}
-			i++;    
-			}
+			i++;
+		}
 	}
-		return (0);
+	return (0);
 }
