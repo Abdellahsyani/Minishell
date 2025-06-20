@@ -6,11 +6,22 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 11:09:07 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 17:39:03 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	is_regular_executable(const char *path)
+{
+	struct stat	sb;
+
+	if (access(path, X_OK) != 0)
+		return (0);
+	if (stat(path, &sb) != 0)
+		return (0);
+	return (S_ISREG(sb.st_mode));
+}
 
 char	*find_path(char *cmd, t_env **env)
 {
@@ -21,7 +32,7 @@ char	*find_path(char *cmd, t_env **env)
 	char	*path;
 
 	i = -1;
-	if (!access(cmd, X_OK))
+	if (is_regular_executable(cmd))
 		return (cmd);
 	cur = *env;
 	while (ft_strncmp(cur->key, "PATH", 4))

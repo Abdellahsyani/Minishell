@@ -6,45 +6,59 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:22:45 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/16 12:52:17 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 16:24:46 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	helper_herdoc(char *line, int fd, t_env **env)
+void	ft_write_fd(t_env **env, char c, char next, int fd)
 {
-	int		i;
-	t_env	*envp;
+	char	*var;
+
+	if (c == '$' && next == '?')
+	{
+		var = ft_get(env, "?");
+		ft_putstr_fd(var, fd);
+	}
+	else if (c == '$' && next == '0')
+		ft_putstr_fd("minishell", fd);
+}
+
+int	ft_expand_dolar(char *line, t_env **env, int *i, int fd)
+{
 	char	*var;
 	char	*var1;
 	int		len;
 
-	i = 0;
 	var = NULL;
 	var1 = NULL;
+	if (!line)
+		return (0);
+	var = get_var1(&line[*i]);
+	var1 = get_var(&line[*i], env);
+	ft_putstr_fd(var1, fd);
+	len = ft_strlen(var);
+	return (len);
+}
+
+void	helper_herdoc(char *line, int fd, t_env **env)
+{
+	int		i;
+	int		len;
+
+	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '$' && line[i + 1] == '?')
+		if (line[i] == '$' && (line[i + 1] == '?' || line[i + 1] == '0'))
 		{
-			envp = ft_find(*env, "?");
-			write(fd, envp->value, ft_strlen(envp->value));
+			ft_write_fd(env, line[i], line[i + 1], fd);
 			i += 2;
 			continue ;
 		}
-		else if (line[i] == '$' && line[i + 1] == '0')
-		{
-			write(fd, "minishell", 9);
-			i += 2;
-		}
-		else if (line[i] == '$' && line[i + 1] == '\0')
-			write(fd, "$1", 1);
 		else if (line[i] == '$' && (ft_isalpha(line[i + 1])))
 		{
-			var = get_var1(&line[i]);
-			var1 = get_var(&line[i], env);
-			write(fd, var1, ft_strlen(var1));
-			len = ft_strlen(var);
+			len = ft_expand_dolar(line, env, &i, fd);
 			i += len;
 		}
 		else

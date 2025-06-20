@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/20 11:15:08 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 17:40:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include "libft/libft.h"
 # include "gc.h"
-
+#include <sys/stat.h>
 /*** struct for tokinization ***/
 typedef struct s_shell
 {

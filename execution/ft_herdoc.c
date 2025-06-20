@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 10:51:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 19:31:44 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	write_in_file(int fd, t_env **env, char *limiter)
 	while (1)
 	{
 		line = readline("> ");
+		if (limiter[0] == '\0' && limiter[1] == '\n')
+			exit(0);
 		if (!*line)
 			continue ;
 		if (!line)
 		{
-			write(2, err, ft_strlen(err));
+			ft_putstr_fd(err, 1);
 			free(line);
 			clean_all(env, 0, 0);
 		}
@@ -44,7 +46,7 @@ void	write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char	*delimiter;
 
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, handle_child_sig);
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");
 	else
@@ -61,7 +63,7 @@ int	ft_handle_herdoc(char *value, t_env **env)
 	pid_t	pid;
 	int		fd;
 	int		status;
-
+	printf("%ld\n", ft_strlen(value));
 	pid = fork();
 	fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0774);
 	if (pid < 0)
@@ -69,7 +71,9 @@ int	ft_handle_herdoc(char *value, t_env **env)
 	else if (pid == 0)
 		write_to_herdoc(fd, env, value);
 	else
+	{
 		waitpid(pid, &status, 0);
+	}
 	unlink("/tmp/heredoc");
 	return (fd);
 }
