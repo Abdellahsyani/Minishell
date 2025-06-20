@@ -413,7 +413,6 @@ char	*copy_var(char *content, t_env **env, int i)
 {
 	int		len;
 	char	*var;
-	int		start;
 	char	*quote;
 
 	var = NULL;
