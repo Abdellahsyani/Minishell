@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 19:31:44 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/20 19:57:17 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	write_in_file(int fd, t_env **env, char *limiter)
 	while (1)
 	{
 		line = readline("> ");
-		if (limiter[0] == '\0' && limiter[1] == '\n')
-			exit(0);
+		if (limiter[0] == '\n')
+		{
+			free(line);
+			clean_all(env, 0, 0);	
+		}
 		if (!*line)
 			continue ;
 		if (!line)
@@ -63,7 +66,7 @@ int	ft_handle_herdoc(char *value, t_env **env)
 	pid_t	pid;
 	int		fd;
 	int		status;
-	printf("%ld\n", ft_strlen(value));
+	
 	pid = fork();
 	fd = open("/tmp/heredoc", O_RDWR | O_CREAT | O_TRUNC, 0774);
 	if (pid < 0)
