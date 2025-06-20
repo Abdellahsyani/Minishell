@@ -33,12 +33,10 @@ void helper_herdoc(char *line, int fd, t_env **env)
 			write(fd, "minishell", 9);
 			i += 2;
 		}
-		else if (line[i] == '$' && line[i + 1] == '\0')
-			write(fd, "$1", 1);
 		else if (line[i] == '$' && (ft_isalpha(line[i+1])))
 		{
 			var = get_var1(&line[i]);
- 			var1 = get_var(&line[i], env);
+ 			var1 = get_var(&line[i], env, 1);
 			write(fd, var1, ft_strlen(var1));
 			int len = ft_strlen(var);
 			i += len;

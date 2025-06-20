@@ -17,6 +17,7 @@ void    write_in_file(int fd, t_env **env, char *limiter)
 	char *line;
 	char *err = "minishell: warning: here-document at line 1 delimited by end-of-file\n";
 	
+	printf("%s", limiter);
 	while (1)
 	{
 		line = readline("> ");

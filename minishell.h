@@ -122,7 +122,7 @@ typedef struct s_extra
 /** expand functions **/
 void	expand_var(t_command *cmd, t_env **env);
 char	*double_quote(char *str, t_env **env);
-char	*get_var(char *str, t_env **env);
+char	*get_var(char *str, t_env **env, int i);
 char	*get_var1(char *str);
 
 /***** parsing functions *****/

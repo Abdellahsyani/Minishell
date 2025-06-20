@@ -190,23 +190,37 @@ void	add_lis(t_redi **list, t_redi *new_node)
 	}
 }
 
+char	*rem_double(char *content)
+{
+	int	i;
+	char	*var;
+	int	len;
+
+	i = 1;
+	len = ft_strlen(content);
+	var = ft_strlcpy(NULL, content, len - 2, i);
+	return (var);
+}
+
 void	fill_operation(t_command *cmd, t_token **cur, int i)
 {
 	t_redi	*new_redi;
+	char	*var;
 
 	if (!(*cur) || !(*cur)->next)
 		return ;
+	var = rem_double((*cur)->next->content);
 	if (i == 1)
 	{
 		new_redi = create_nod();
-		new_redi->file = ft_strdup((*cur)->next->content);
+		new_redi->file = ft_strdup(var);
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->in, new_redi);
 	}
 	else if (i == 0)
 	{
 		new_redi = create_nod();
-		new_redi->file = ft_strdup((*cur)->next->content);
+		new_redi->file = ft_strdup(var);
 		new_redi->type = (*cur)->type;
 		add_lis(&cmd->out, new_redi);
 	}

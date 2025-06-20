@@ -48,16 +48,12 @@ char	*ft_get(t_env **env, char *key)
 	return (NULL);
 }
 
-char	*get_status(char *str, t_env **env)
+char	*get_status(char *str, t_env **env, int i, int j)
 {
 	char	*var;
 	char	*exp;
 	char	*last;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
 	last = gc_malloc(sizeof(char) * ft_strlen(str));
 	if (!last)
 		return (NULL);
@@ -96,7 +92,7 @@ int	get_space_size(char *str, int temp_i)
 			in_whitespace = 0;
 		}
 		else
-		{
+	{
 			result_len++;
 			in_whitespace = 1;
 		}
@@ -132,8 +128,7 @@ char	*fill_nonspace(char *str, int i, char *result, int j)
 		}
 		i++;
 	}
-	result[j] = '\0';
-	return (result);
+	return (result[j] = '\0', result);
 }
 
 char	*norm_whitespace(char *str, char *var_quote, char *get_last, int i)
@@ -176,33 +171,29 @@ char	*get_allstr(char *str)
 	return (value);
 }
 
-char	*get_var(char *str, t_env **env)
+char	*get_var(char *str, t_env **env, int i)
 {
-	int		i;
-	int		start;
 	int		len;
 	char	*var_name;
 	char	*var_value;
 	char	*var_quote;
 	char	*get_last;
 
-	i = 1;
-	start = i;
 	var_quote = NULL;
 	get_last = NULL;
 	if (str[i] == '?')
-		return (get_status(&str[i], env));
+		return (get_status(&str[i], env, 0, 0));
 	if (str[0] == '$' && !ft_isalpha(str[i]))
 		return ("$");
 	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i++;
 	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i]
-			&& ft_isalpha(str[i + 1])))
+		&& ft_isalpha(str[i + 1])))
 		var_quote = double_quote(&str[i], env);
 	else if (!ft_isalpha(str[i]))
 		get_last = ft_strdup(get_allstr(&str[i]));
-	len = i - start;
-	var_name = ft_strlcpy(NULL, str, len, start);
+	len = i - 1;
+	var_name = ft_strlcpy(NULL, str, len, 1);
 	var_value = ft_get(env, var_name);
 	if (!var_value)
 		var_value = ft_strdup("");
@@ -360,11 +351,35 @@ void	ft_get_var(t_hold *var, char *content)
 		return ;
 }
 
+void	fill_var(t_hold *var)
+{
+	int		s;
+	int		c;
+
+	while (var->var[var->i])
+	{
+		if (var->var[var->i] != '$')
+			var->var1[var->j] = var->var[var->i];
+		else
+		{
+			var->var1[var->j] = '\0';
+			var->var1 = ft_strjoins(var->var1, var->env[var->k]);
+			s = ft_strlen(var->env[var->k]);
+			c = ft_strlen(var->env_var[var->k]);
+			var->k++;
+			var->i += c + 1;
+			var->j += s;
+			continue ;
+		}
+		var->j++;
+		var->i++;
+	}
+	var->var1[var->j] = '\0';
+}
+
 char	*double_quote(char *content, t_env **env_t)
 {
 	t_hold	var;
-	int		s;
-	int		c;
 
 	var.i = 0;
 	while (content[var.i])
@@ -378,25 +393,7 @@ char	*double_quote(char *content, t_env **env_t)
 	count_dollar(&var, content);
 	let_var_ready(&var, content, env_t);
 	ft_get_var(&var, content);
-	while (var.var[var.i])
-	{
-		if (var.var[var.i] != '$')
-			var.var1[var.j] = var.var[var.i];
-		else
-		{
-			var.var1[var.j] = '\0';
-			var.var1 = ft_strjoins(var.var1, var.env[var.k]);
-			s = ft_strlen(var.env[var.k]);
-			c = ft_strlen(var.env_var[var.k]);
-			var.k++;
-			var.i += c + 1;
-			var.j += s;
-			continue ;
-		}
-		var.j++;
-		var.i++;
-	}
-	var.var1[var.j] = '\0';
+	fill_var(&var);
 	free_2d(var.env);
 	free_2d(var.env_var);
 	return (var.var1);
@@ -412,20 +409,17 @@ char	*when_quote(char *var, char *quote, int i)
 	return (copy);
 }
 
-char	*copy_var(char *content, t_env **env)
+char	*copy_var(char *content, t_env **env, int i)
 {
-	int		i;
 	int		len;
 	char	*var;
 	int		start;
 	char	*quote;
 
-	i = 0;
-	start = i;
 	var = NULL;
 	quote = NULL;
 	len = ft_strlen(content);
-	var = ft_strlcpy(var, content, len, start);
+	var = ft_strlcpy(var, content, len, 0);
 	while (var[i])
 	{
 		if (var[i] == '"')
@@ -445,53 +439,93 @@ char	*copy_var(char *content, t_env **env)
 	return (var);
 }
 
-int	h_export(t_command *cmd, t_env **env)
+void	expansion_spl(t_command *cmd, t_env **env, char **spl)
 {
-	char	*var;
-	char	**spl;
 	int		i;
 	int		j;
+	char	*var;
+
+	var = get_var(cmd->argv_t[0], env, 1);
+	if (!var)
+		return ;
+	spl = ft_split(var, ' ');
+	i = 0;
+	while (spl[i])
+		i++;
+	cmd->argv = gc_malloc(sizeof(char *) * (i + 1));
+	if (!cmd->argv)
+		return ;
+	i = 0;
+	j = 0;
+	while (spl[i])
+	{
+		cmd->argv[j] = ft_strdup(spl[i]);
+		i++;
+		j++;
+	}
+	cmd->argv[j] = NULL;
+	free_2d(spl);
+}
+
+void	failure_alloc(t_command *cmd, char *ex)
+{
+	cmd->argv = gc_malloc(sizeof(char *) * 2);
+	if (!cmd->argv)
+		return ;
+	if (!ex)
+		cmd->argv[0] = ft_strdup("$");
+	else
+		cmd->argv[0] = ft_strdup(ex);
+	cmd->argv[1] = NULL;
+}
+
+int	h_export(t_command *cmd, t_env **env)
+{
+	char	**spl;
+	char	*ex;
 
 	spl = NULL;
 	if (cmd->argv_t[0][0] == '"' && cmd->argv_t[0][1] == '$')
 	{
-		printf("bash: %s: command not found\n", get_var(&cmd->argv_t[0][1],
-					env));
+		ex = get_var(&cmd->argv_t[0][1], env, 1);
+		failure_alloc(cmd, ex);
 		return (0);
 	}
 	if (cmd->argv_t[0][0] == '$')
 	{
 		if (cmd->argv_t[0][0] == '$' && cmd->argv_t[0][1] == '\0')
 		{
-			printf(" command not found\n");
+			failure_alloc(cmd, NULL);
 			return (0);
 		}
-		var = get_var(cmd->argv_t[0], env);
-		if (!var)
-			return (0);
-		spl = ft_split(var, ' ');
-		i = 0;
-		while (spl[i])
-			i++;
-		cmd->argv = gc_malloc(sizeof(char *) * (i + 1));
-		i = 0;
-		j = 0;
-		while (spl[i])
-		{
-			cmd->argv[j] = ft_strdup(spl[i]);
-			i++;
-			j++;
-		}
-		cmd->argv[j] = NULL;
+		expansion_spl(cmd, env, spl);
 	}
-	free_2d(spl);
 	free_2d(cmd->argv_t);
 	return (1);
 }
 
-void	expand_var(t_command *cmd, t_env **env)
+void	fill_argvs(t_command *cmd, t_env **env)
 {
 	int	i;
+
+	i = 0;
+	while (cmd->argv_t[i])
+	{
+		if (cmd->argv_t[i][0] == '\'')
+			cmd->argv[i] = single_quote(cmd->argv_t[i]);
+		else if (cmd->argv_t[i][0] == '"')
+			cmd->argv[i] = double_quote(cmd->argv_t[i], env);
+		else if (cmd->argv_t[i][0] == '$')
+			cmd->argv[i] = get_var(cmd->argv_t[i], env, 1);
+		else
+			cmd->argv[i] = copy_var(cmd->argv_t[i], env, 0);
+		i++;
+	}
+	cmd->argv[i] = NULL;
+}
+
+void	expand_var(t_command *cmd, t_env **env)
+{
 	int	count;
 
 	while (cmd)
@@ -507,26 +541,18 @@ void	expand_var(t_command *cmd, t_env **env)
 		cmd->argv = gc_malloc(sizeof(char *) * (count + 1));
 		if (!cmd->argv)
 			return ;
-		i = 0;
 		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"'
-				&& cmd->argv_t[0][1] == '$'))
+			&& cmd->argv_t[0][1] == '$'))
 		{
 			h_export(cmd, env);
+			if (cmd->next)
+			{
+				cmd = cmd->next;
+				continue;
+			}
 			break ;
 		}
-		while (cmd->argv_t[i])
-		{
-			if (cmd->argv_t[i][0] == '\'')
-				cmd->argv[i] = single_quote(cmd->argv_t[i]);
-			else if (cmd->argv_t[i][0] == '"')
-				cmd->argv[i] = double_quote(cmd->argv_t[i], env);
-			else if (cmd->argv_t[i][0] == '$')
-				cmd->argv[i] = get_var(cmd->argv_t[i], env);
-			else
-				cmd->argv[i] = copy_var(cmd->argv_t[i], env);
-			i++;
-		}
-		cmd->argv[i] = NULL;
+		fill_argvs(cmd, env);
 		cmd = cmd->next;
 	}
 }
