@@ -84,7 +84,6 @@ typedef struct s_env
 {
     char    *key;
     char    *value;
-    pid_t     pid;
     int     flag;
     struct s_env *next;
 } t_env;
@@ -124,9 +123,19 @@ void	expand_var(t_command *cmd, t_env **env);
 char	*double_quote(char *str, t_env **env);
 char	*get_var(char *str, t_env **env, int i);
 char	*get_var1(char *str);
+char	*single_quote(char *content);
+char	*copy_var(char *content, t_env **env, int i);
 
 /***** parsing functions *****/
-void	pars_command(t_token *list, t_command **cmd_list);
+char	*split_part(t_token **cur, char *content, t_env **env, int i);
+void	add_to_argv(t_command *cmd, char *str);
+void	create_new_node(int count, t_command **cmd, t_command **cur);
+void	add_lis(t_redi **list, t_redi *new_node);
+t_redi	*create_nod(void);
+void	pars_command(t_token *list, t_command **cmd_list, t_env **env);
+int	start_parsing(t_token *list, t_env **env);
+
+/** tokinazation functions **/
 t_token	*create_node(char *c);
 void	add_list(t_shell *mini, t_token **list);
 int	handle_blank(t_shell *mini, t_token **list, char *line);
@@ -137,7 +146,6 @@ int	handle_dollar(t_shell *mini, t_token **list, char *line);
 int	get_input(char *line, t_token **tokens_list);
 char	*ft_strlcpy(char *token, char *input, int len, int j);
 void	*token_type(t_token *list);
-int	start_parsing(t_token *list, t_env **env);
 
 /************** free functions  ******************/
 void	clean_all(t_env **env, int n, int flag);
@@ -145,6 +153,11 @@ void	free_2d(char **arr);
 void ft_free_env(t_env **p);
 
 /******** helper functions ************/
+char	*rem_double(char *content);
+char	*stcopy(char *var, char *content, char del);
+char	*get_status(char *str, t_env **env, int i, int j);
+void	failure_alloc(t_command *cmd, char *ex);
+char	*ft_strjoins(char *s1, char *s2);
 void	add_cmd_list(int count, t_command **cmd);
 void	*gc_malloc(size_t size);
 int	is_operator(char op);

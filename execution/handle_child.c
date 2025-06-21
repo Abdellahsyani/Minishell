@@ -103,5 +103,5 @@ void	handle_child(t_command *cmd, t_extra ptr)
 	{
 		exec_cmd(cmd, ptr);
 	}
-	exit(0);
+	exit(1);
 }

@@ -14,21 +14,21 @@
 
 char	*trim_whitespace(char *str)
 {
-	int len;
+	int	len;
 
 	while (*str == ' ' || *str == '\t' || *str == '\n')
 		str++;
 	len = ft_strlen(str);
-	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len - 1] == '\n'))
+	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len
+			- 1] == '\n'))
 		str[--len] = '\0';
-	return str;
+	return (str);
 }
 
-
-void ft_free_env(t_env **p)
+void	ft_free_env(t_env **p)
 {
-	t_env *tmp;
-	
+	t_env	*tmp;
+
 	while (*p)
 	{
 		tmp = *p;
@@ -40,31 +40,34 @@ void ft_free_env(t_env **p)
 
 void	clean_all(t_env **env, int n, int flag)
 {
-	
 	ft_free_env(env);
 	gc_free_all();
 	rl_clear_history();
 	if (flag)
-		write(2,"exit\n", 5);
+		write(2, "exit\n", 5);
 	exit(n);
 }
 
 void	program_run(t_env **env)
 {
-	char        *line;
-	t_token     *list = NULL;
-	t_token     *tmp = NULL;
-	t_command   *cmd_list = NULL;
-	t_command	*cmd_tmp = NULL;
-	int         parse_status;
+	char		*line;
+	t_token		*list;
+	t_token		*tmp;
+	t_command	*cmd_list;
+	t_command	*cmd_tmp;
+	int			parse_status;
 
+	list = NULL;
+	tmp = NULL;
+	cmd_list = NULL;
+	cmd_tmp = NULL;
 	while (1)
 	{
 		list = NULL;
 		cmd_list = NULL;
 		line = readline("minishell $ ");
 		if (!line)
-			clean_all(env, 1 , 1);
+			clean_all(env, 1, 1);
 		line = trim_whitespace(line);
 		if (!*line && line)
 			continue ;
@@ -76,26 +79,26 @@ void	program_run(t_env **env)
 		parse_status = start_parsing(list, env);
 		if (parse_status == 1)
 		{
-			pars_command(list, &cmd_list);
+			pars_command(list, &cmd_list, env);
 			cmd_tmp = cmd_list;
 			expand_var(cmd_list, env);
 		}
 		else
 		{
 			free(line);
-			continue;
+			continue ;
 		}
 		free(line);
 		ft_exec(&cmd_tmp, env);
 	}
 }
 
-int main(int ac, char **argv, char **envp)
+int	main(int ac, char **argv, char **envp)
 {
-	t_env **env;
+	t_env	**env;
+
 	(void)ac;
 	(void)argv;
-
 	init_gc();
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
@@ -104,4 +107,3 @@ int main(int ac, char **argv, char **envp)
 	program_run(env);
 	clean_all(env, 0, 0);
 }
-

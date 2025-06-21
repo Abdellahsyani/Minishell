@@ -14,6 +14,54 @@
 
 #include "../minishell.h"
 
+int	create_token(t_shell *mini, t_token **list, char *line)
+{
+	if (mini->len == 0)
+		return (0);
+	mini->tok = ft_strlcpy(mini->tok, line, mini->len, mini->st);
+	if (!mini->tok)
+		return (0);
+	add_list(mini, list);
+	mini->len = 0;
+	mini->tok = NULL;
+	mini->st = mini->i;
+	return (1);
+}
+
+t_token	*create_node(char *c)
+{
+	t_token	*new_node;
+
+	new_node = gc_malloc(sizeof(t_token));
+	if (!new_node)
+		return (NULL);
+	new_node->content = c;
+	new_node->next = NULL;
+	new_node->type = -1;
+	return (new_node);
+}
+
+void	add_list(t_shell *mini, t_token **list)
+{
+	t_token	*new_node;
+	t_token	*tmp;
+
+	if (!mini->tok)
+		return ;
+	new_node = create_node(mini->tok);
+	if (!new_node)
+		return ;
+	if (*list == NULL)
+		*list = new_node;
+	else
+	{
+		tmp = *list;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new_node;
+	}
+}
+
 void	*token_type(t_token *list)
 {
 	if (!list->content)
