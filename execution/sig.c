@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:01:58 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 17:05:01 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 10:41:53 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,24 @@ void	handle_child_sig(int signum)
 {
 	(void)signum;
 	exit(130);
+}
+
+char	*rm_newline(char *limit)
+{
+	int		l;
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (!*limit)
+		return (ft_strdup(""));
+	l = ft_strlen(limit);
+	str = gc_malloc(sizeof(char) * l);
+	while (limit[i] != '\n')
+	{
+		str[i] = limit[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

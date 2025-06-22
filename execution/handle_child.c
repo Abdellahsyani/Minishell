@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 18:32:40 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 10:44:21 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,5 @@ void	handle_child(t_command *cmd, t_extra ptr)
 	{
 		exec_cmd(cmd, ptr);
 	}
-	exit(1);
+	exit(0);
 }

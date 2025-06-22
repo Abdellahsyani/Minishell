@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:07:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 11:01:34 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 11:14:48 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,16 @@ void	update_path(char *arg, t_env **env)
 	if (!new_value)
 		return ;
 	set_new_env("_", new_value, env);
+}
+
+int	ft_strccmp(const char *s1, const char *s2, int l)
+{
+	int	i;
+
+	i = 0;
+	if (l == 0)
+		return (0);
+	while (i < l && (s1[i] != '\0' || s2[i] != '\0') && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
