@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 11:14:14 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 18:46:28 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ void	update_exit_status(t_env **env, int status)
 
 void	init_extra(t_extra *ptr, t_env **env)
 {
+	(void)env;
 	if (!ptr)
 		return ;
 	ptr->i = 0;
-	ptr->env = env;
+	// ptr->env = env;
 	ptr->flag_sig = 0;
 }
 
@@ -79,4 +80,5 @@ void	wait_and_free(t_extra ptr)
 		}
 		i++;
 	}
+	gc_free_all();
 }

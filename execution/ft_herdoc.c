@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 11:10:25 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 19:03:26 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ void	write_in_file(int fd, t_env **env, char *limiter)
 
 	while (1)
 	{
-		line = readline("> ");
+		line = readline(">");
 		if (!line)
 			ft_clean_exit(env, line, 1);
 		new_limiter = rm_newline(limiter);
 		if (ft_strccmp(new_limiter, line, ft_strlen(new_limiter)) == 0)
 			ft_clean_exit(env, line, 0);
+		gc_free_one(new_limiter);
 		if (!*line && limiter[0] == '\n')
 			ft_clean_exit(env, line, 0);
 		if (!*line)
@@ -65,6 +66,7 @@ void	write_to_herdoc(int fd, t_env **env, char *limiter)
 	}
 	write_in_file(fd, env, delimiter);
 	close(fd);
+	gc_free_all();
 	exit(0);
 }
 

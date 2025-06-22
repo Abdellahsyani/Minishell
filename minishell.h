@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/22 11:35:23 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 18:58:11 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,5 +212,5 @@ void					handle_sig(int signum);
 void					handle_child_sig(int signum);
 void					handle_child(t_command *cmd, t_extra ptr);
 void					init_extra(t_extra *ptr, t_env **env);
-
+char	*ft_strdup1(const char *s1);
 #endif

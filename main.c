@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/20 11:13:24 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 18:32:20 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ void	program_run(t_env **env)
 	{
 		list = NULL;
 		cmd_list = NULL;
+		if (!gc_global)
+		{
+			init_gc();
+		}
 		line = readline("minishell $ ");
 		if (!line)
 			clean_all(env, 1, 1);

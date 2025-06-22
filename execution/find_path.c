@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 17:39:03 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 18:35:53 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*find_path(char *cmd, t_env **env)
 	if (is_regular_executable(cmd))
 		return (cmd);
 	cur = *env;
+	if (!cur)
+		return(NULL);
 	while (ft_strncmp(cur->key, "PATH", 4))
 		cur = cur->next;
 	paths = ft_split(cur->value, ':');
