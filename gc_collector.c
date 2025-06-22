@@ -69,10 +69,13 @@ void	gc_free_one(void *ptr)
 
 void	gc_free_all(void)
 {
-	c_list *curr = gc_global->head;
+	c_list	*next;
+	c_list	*curr;
+
+	curr = gc_global->head;
 	while (curr)
 	{
-		c_list *next = curr->next;
+		next = curr->next;
 		free(curr->ptr);
 		free(curr);
 		curr = next;
