@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:30:46 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/04 11:39:59 by asyani           ###   ########.fr       */
+/*   Updated: 2025/06/22 11:36:15 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GC_H
 
 # include "minishell.h"
+# include <stddef.h>
 
 /* struct for gc_collector */
 typedef struct j_list

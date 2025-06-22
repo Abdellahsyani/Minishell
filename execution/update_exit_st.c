@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 10:46:21 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/22 11:14:14 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,15 @@ void	update_exit_status(t_env **env, int status)
 
 	value = ft_itoa(status);
 	set_new_env("?", value, env);
+}
+
+void	init_extra(t_extra *ptr, t_env **env)
+{
+	if (!ptr)
+		return ;
+	ptr->i = 0;
+	ptr->env = env;
+	ptr->flag_sig = 0;
 }
 
 void	closingfds(int **tube, int pos)

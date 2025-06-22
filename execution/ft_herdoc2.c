@@ -44,8 +44,8 @@ int	ft_expand_dolar(char *line, t_env **env, int *i, int fd)
 
 void	helper_herdoc(char *line, int fd, t_env **env)
 {
-	int		i;
-	int		len;
+	int	i;
+	int	len;
 
 	i = 0;
 	while (line[i])
@@ -56,7 +56,7 @@ void	helper_herdoc(char *line, int fd, t_env **env)
 			i += 2;
 			continue ;
 		}
-		else if (line[i] == '$' && (ft_isalpha(line[i+1])))
+		else if (line[i] == '$' && (ft_isalpha(line[i + 1])))
 		{
 			len = ft_expand_dolar(line, env, &i, fd);
 			i += len;
