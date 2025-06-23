@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:01:58 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 15:56:23 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 18:44:25 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ void	handle_sig(int signum)
 {
 	(void)signum;
 	rl_replace_line("", 0);
+	write(1, "\n", 1);
 	rl_on_new_line();
-	printf("\n");
-	rl_redisplay();
 }
 
 void	handle_child_sig(int signum)
 {
 	(void)signum;
+	write(1, "\n", 1);
+	gc_free_all();
 	exit(130);
 }
 

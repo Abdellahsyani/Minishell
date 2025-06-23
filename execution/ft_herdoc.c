@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 11:05:36 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 18:32:57 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char	*delimiter;
 
-	signal(SIGINT, SIG_DFL);
+	gc_global->env = env;
+	signal(SIGINT, handle_child_sig);
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");
 	else
@@ -84,11 +85,10 @@ int	ft_handle_herdoc(char *value, t_env **env, int *n)
 	{
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
-		if (WIFSIGNALED(status) && WTERMSIG(status) == 2)
+		if (WEXITSTATUS(status) == 130)
 		{
 			*n = 1;
-			write(1, "\n", 1);
-			update_exit_status(env, 128 + WTERMSIG(status));
+			update_exit_status(env, 130);
 		}
 		signal(SIGINT, handle_sig);
 	}

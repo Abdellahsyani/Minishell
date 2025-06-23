@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:30:46 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/22 11:36:15 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 18:25:44 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <signal.h>
 
 /* struct for gc_collector */
+
 typedef struct j_list
 {
 	int             type;
@@ -27,6 +28,7 @@ typedef struct j_list
 typedef struct s_gc
 {
 	c_list *head;
+	struct s_env	**env;
 }	t_gc;
 
 extern t_gc *gc_global;
