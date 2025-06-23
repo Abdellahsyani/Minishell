@@ -67,10 +67,8 @@ void	program_run(t_env **env)
 	{
 		list = NULL;
 		cmd_list = NULL;
-		if (!gc_global)
-		{
+		if (!g_global)
 			init_gc();
-		}
 		line = readline("minishell $ ");
 		if (!line)
 			clean_all(env, 1, 1);

@@ -58,7 +58,7 @@ void	set_new_env(char *key, char *value, t_env **env)
 	else
 	{
 		create = malloc(sizeof(t_env));
-		create->key = ft_strdup1(key);;
+		create->key = ft_strdup1(key);
 		if (value)
 			create->value = ft_strdup1(value);
 		create->next = *env;

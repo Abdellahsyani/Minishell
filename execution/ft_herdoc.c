@@ -57,7 +57,7 @@ void	write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char	*delimiter;
 
-	gc_global->env = env;
+	g_global->env = env;
 	signal(SIGINT, handle_child_sig);
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");

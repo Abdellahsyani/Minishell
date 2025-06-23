@@ -13,29 +13,29 @@
 #ifndef GC_H
 # define GC_H
 # include "minishell.h"
-# include <stddef.h>
 # include <signal.h>
+# include <stddef.h>
 
 /* struct for gc_collector */
 
 typedef struct j_list
 {
-	int             type;
- 	void			*ptr;
- 	struct j_list	*next;
-}	c_list;
+	int				type;
+	void			*ptr;
+	struct j_list	*next;
+}					t_llist;
 
 typedef struct s_gc
 {
-	c_list *head;
+	t_llist			*head;
 	struct s_env	**env;
-}	t_gc;
+}					t_gc;
 
-extern t_gc *gc_global;
+extern t_gc			*g_global;
 
-void	gc_free_all(void);
-void	*gc_malloc(size_t size);
-void	init_gc(void);
-void	gc_free_one(void *ptr);
+void				gc_free_all(void);
+void				*gc_malloc(size_t size);
+void				init_gc(void);
+void				gc_free_one(void *ptr);
 
 #endif

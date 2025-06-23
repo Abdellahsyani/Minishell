@@ -21,13 +21,13 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <stddef.h>
 
 /*** struct for tokinization ***/
 typedef struct s_shell
@@ -157,7 +157,7 @@ void					free_2d(char **arr);
 void					ft_free_env(t_env **p);
 
 /******** helper functions ************/
-void	count_space(char *str, char *result, int *i, int *j);
+void					count_space(char *str, char *result, int *i, int *j);
 char					*rem_double(char *content);
 char					*stcopy(char *var, char *content, char del);
 char					*get_status(char *str, t_env **env, int i, int j);
@@ -213,5 +213,5 @@ void					handle_sig(int signum);
 void					handle_child_sig(int signum);
 void					handle_child(t_command *cmd, t_extra ptr);
 void					init_extra(t_extra *ptr, t_env **env);
-char	*ft_strdup1(const char *s1);
+char					*ft_strdup1(const char *s1);
 #endif

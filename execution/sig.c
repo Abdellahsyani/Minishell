@@ -18,12 +18,17 @@ void	handle_sig(int signum)
 	rl_replace_line("", 0);
 	write(1, "\n", 1);
 	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	handle_child_sig(int signum)
 {
+	t_env	**tmp;
+
 	(void)signum;
 	write(1, "\n", 1);
+	tmp = g_global->env;
+	ft_free_env(tmp);
 	gc_free_all();
 	exit(130);
 }
