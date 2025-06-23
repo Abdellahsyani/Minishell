@@ -74,7 +74,8 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, ptr.env);
-		update_exit_status(ptr.env, status);
+		gc_free_all();
+		ft_free_env(ptr.env);
 		exit(status);
 	}
 	else

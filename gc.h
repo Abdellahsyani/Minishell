@@ -12,9 +12,9 @@
 
 #ifndef GC_H
 # define GC_H
-
 # include "minishell.h"
 # include <stddef.h>
+# include <signal.h>
 
 /* struct for gc_collector */
 typedef struct j_list
