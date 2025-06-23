@@ -41,7 +41,6 @@ static int	get_space_size(char *str, int temp_i)
 static char	*fill_nonspace(char *str, int i, char *result, int j)
 {
 	int	in_whitespace;
-	int	k;
 
 	in_whitespace = 0;
 	while (str[i])
@@ -49,13 +48,7 @@ static char	*fill_nonspace(char *str, int i, char *result, int j)
 		if (str[i] == ' ' || str[i] == '\t')
 		{
 			if (!in_whitespace)
-			{
-				k = i;
-				while (str[k] && (str[k] == ' ' || str[k] == '\t'))
-					k++;
-				if (str[k])
-					result[j++] = ' ';
-			}
+				count_space(str, result, &i, &j);
 			in_whitespace = 1;
 		}
 		else

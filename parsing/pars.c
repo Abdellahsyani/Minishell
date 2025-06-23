@@ -57,34 +57,32 @@ static void	check_args(t_token *current, t_command **cmd, t_command **list)
 		add_to_argv(*cmd, current->content);
 }
 
-static void	pars_cmd2(t_token *cur, t_command *c_cmd, t_command **cmd_l,
+static void	pars_cmd2(t_token *c, t_command *c_cmd, t_command **cmd_l,
 		t_env **en)
 {
-	while (cur)
+	while (c)
 	{
-		check_args(cur, &c_cmd, cmd_l);
-		if ((cur->type == redir_output || cur->type == redir_o_app)
-			&& cur->next)
+		check_args(c, &c_cmd, cmd_l);
+		if ((c->type == redir_output || c->type == redir_o_app) && c->next)
 		{
-			fill_operation(c_cmd, &cur, 0, en);
-			if (!cur->next->next)
+			fill_operation(c_cmd, &c, 0, en);
+			if (!c->next->next)
 				break ;
-			cur = cur->next->next;
+			c = c->next->next;
 			continue ;
 		}
-		else if ((cur->type == redir_input || cur->type == d_herdoc)
-			&& cur->next)
+		else if ((c->type == redir_input || c->type == d_herdoc) && c->next)
 		{
-			fill_operation(c_cmd, &cur, 1, en);
-			if (!cur->next->next)
+			fill_operation(c_cmd, &c, 1, en);
+			if (!c->next->next)
 				break ;
-			cur = cur->next->next;
+			c = c->next->next;
 			continue ;
 		}
-		else if (cur->type == pipe_line)
+		else if (c->type == pipe_line)
 			c_cmd = NULL;
-		if (cur)
-			cur = cur->next;
+		if (c)
+			c = c->next;
 	}
 }
 

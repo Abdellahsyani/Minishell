@@ -12,6 +12,17 @@
 
 #include "../minishell.h"
 
+void	count_space(char *str, char *result, int *i, int *j)
+{
+	int	k;
+
+	k = *i;
+	while (str[k] && (str[k] == ' ' || str[k] == '\t'))
+		k++;
+	if (str[k])
+		result[(*j)++] = ' ';
+}
+
 void	failure_alloc(t_command *cmd, char *ex)
 {
 	cmd->argv = gc_malloc(sizeof(char *) * 2);
