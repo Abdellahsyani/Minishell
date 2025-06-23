@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 19:00:40 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 15:05:37 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,18 @@ void	ft_exec(t_command **cmd, t_env **env)
 	tmp = *cmd;
 	ptr.size = ft_cmd_size(cmd) - 1;
 	init_extra(&ptr, env);
-	ptr.env = env;
 	ft_herdoc(cmd, &ptr);
 	if (ptr.flag_sig == 1)
 	{
 		gc_free_all();
 		return ;
 	}
-
 	ptr.pipline = built_pipline(cmd, env, ptr.size);
 	if (!ptr.pipline)
+	{
+		gc_free_all();
 		return ;
+	}
 	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
 	if (!ptr.pid)
 		return ;

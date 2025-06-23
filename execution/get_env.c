@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 18:56:23 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 16:09:46 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*get_value(char *str)
 	value[j] = '\0';
 	return (value);
 }
+
 char	*ft_strdup1(const char *s1)
 {
 	char	*p;
@@ -82,6 +83,7 @@ char	*ft_strdup1(const char *s1)
 	p[i] = '\0';
 	return (p);
 }
+
 t_env	*new_node(char *key, char *value)
 {
 	t_env	*new;

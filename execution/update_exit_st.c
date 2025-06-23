@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 18:46:28 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 15:33:53 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	update_exit_status(t_env **env, int status)
 
 	value = ft_itoa(status);
 	set_new_env("?", value, env);
+	gc_free_one(value);
 }
 
 void	init_extra(t_extra *ptr, t_env **env)
@@ -26,7 +27,7 @@ void	init_extra(t_extra *ptr, t_env **env)
 	if (!ptr)
 		return ;
 	ptr->i = 0;
-	// ptr->env = env;
+	ptr->env = env;
 	ptr->flag_sig = 0;
 }
 

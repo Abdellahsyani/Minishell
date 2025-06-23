@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 19:03:26 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 11:05:36 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_clean_exit(t_env **env, char *line, int n)
 	err = "minishell: warning: here-document at\
 	line 1 delimited by end-of-file\n";
 	if (n == 1)
-		ft_putstr_fd(err, 1);
+		ft_putstr_fd(err, 2);
 	if (n == 2)
 	{
 		(void)line;
@@ -66,8 +66,6 @@ void	write_to_herdoc(int fd, t_env **env, char *limiter)
 	}
 	write_in_file(fd, env, delimiter);
 	close(fd);
-	gc_free_all();
-	exit(0);
 }
 
 int	ft_handle_herdoc(char *value, t_env **env, int *n)

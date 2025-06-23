@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/22 18:32:20 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 11:04:31 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_free_env(t_env **p)
 	{
 		tmp = *p;
 		(*p) = (*p)->next;
+		free(tmp->key);
+		free(tmp->value);
 		free(tmp);
 	}
 	free(p);

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 18:54:37 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 15:57:39 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	set_new_env(char *key, char *value, t_env **env)
 	exist = ft_find(*env, key);
 	if (exist)
 	{
+		free(exist->value);
 		exist->value = ft_strdup1(value);
 		return ;
 	}
@@ -59,7 +60,7 @@ void	set_new_env(char *key, char *value, t_env **env)
 		create = malloc(sizeof(t_env));
 		create->key = ft_strdup1(key);;
 		if (value)
-			create->value = value;
+			create->value = ft_strdup1(value);
 		create->next = *env;
 		*env = create;
 	}

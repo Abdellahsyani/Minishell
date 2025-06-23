@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 10:44:21 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/23 16:00:52 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 			ft_putstr_fd(": command not found\n", 2);
 			clean_all(ptr.env, 127, 0);
 		}
+		ft_free_env(ptr.env);
 		execve(path, cmd->argv, ptr.envp);
 		perror("execve failed.");
 		exit(127);
@@ -103,5 +104,7 @@ void	handle_child(t_command *cmd, t_extra ptr)
 	{
 		exec_cmd(cmd, ptr);
 	}
+	gc_free_all();
+	ft_free_env(ptr.env);
 	exit(0);
 }
