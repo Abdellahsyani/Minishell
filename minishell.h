@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 10:39:52 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 15:21:02 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,8 @@ char					*ft_get(t_env **env, char *key);
 int						ft_cmd_size(t_command **cmd);
 char					*rm_newline(char *limit);
 int						ft_strccmp(const char *s1, const char *s2, int l);
-
+int	is_regular_executable(const char *path);
+void	ft_error(t_env **env, char *str1, char *str2, int n);
 //**************Builtin****************
 
 int						ft_echo(char **arg);

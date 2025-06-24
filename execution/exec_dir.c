@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/19 16:44:58 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 17:30:41 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,17 @@ int	input_handle(t_redi *redir)
 
 int	output_handle(t_redi *redir)
 {
-	t_redi	*tmp;
-	int		fd;
-	int		redout;
+	int	fd;
+	int	redout;
 
-	tmp = redir;
-	if (!tmp)
+	if (!redir)
 		return (-2);
-	while (tmp)
+	while (redir)
 	{
-		if ((tmp->type == redir_output || tmp->type == redir_o_app)
-			&& pass_out(tmp, &fd))
+		if ((redir->type == redir_output || redir->type == redir_o_app)
+			&& pass_out(redir, &fd))
 		{
-			if (tmp->next)
+			if (redir->next)
 				close(fd);
 			else
 			{
@@ -70,7 +68,9 @@ int	output_handle(t_redi *redir)
 				close(fd);
 			}
 		}
-		tmp = tmp->next;
+		else
+			return (-1);
+		redir = redir->next;
 	}
 	return (redout);
 }

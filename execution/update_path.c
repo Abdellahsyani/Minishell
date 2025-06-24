@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:07:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/22 11:14:48 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 18:47:14 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,11 @@ int	ft_strccmp(const char *s1, const char *s2, int l)
 	while (i < l && (s1[i] != '\0' || s2[i] != '\0') && s1[i] == s2[i])
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	ft_error(t_env **env, char *str1, char *str2, int n)
+{
+	ft_putstr_fd(str1, 2);
+	ft_putstr_fd(str2, 2);
+	clean_all(env, n, 0);
 }

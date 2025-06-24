@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 10:40:14 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 17:12:59 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ int	**built_pipline(t_command **cmd, t_env **env, int size)
 	if (size == 0 && is_builtin(tmp) && tmp->argv)
 	{
 		exec_builtins(cmd, env, fd);
-		return (0);
+		return (NULL);
 	}
 	tube = allocate_tube(size);
 	if (!tube)
-		return (0);
+		return (NULL);
 	if (!tube || !set_pipes(tube, size))
 	{
 		printf("Error: pipe failed or allocation.\n");
 		update_exit_status(env, 1);
 		closingfds(tube, size);
-		return (0);
+		return (NULL);
 	}
 	return (tube);
 }

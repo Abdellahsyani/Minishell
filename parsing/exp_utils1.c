@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 18:45:22 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/21 18:45:45 by asyani           ###   ########.fr       */
+/*   Updated: 2025/06/24 18:40:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*get_var(char *str, t_env **env, int i)
 	if (str[i] == '?')
 		return (get_status(&str[i], env, 0, 0));
 	if (str[0] == '$' && (!ft_isalpha(str[i]) || str[i] == '_'))
-		return ("$");
+		return (ft_strdup("$"));
 	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
 		i++;
 	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i]

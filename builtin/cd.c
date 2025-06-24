@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 10:39:56 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 17:53:35 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	cd_change_directory(t_env **env, char *target)
 	set_pwd_env(env, "OLDPWD", cwd);
 	if (chdir(target) != 0)
 	{
-		printf("cd : %s : %s\n", target, strerror(errno));
+		ft_putstr_fd(" No such file or directory\n", 2);
 		return (1);
 	}
 	return (cd_update_env(env, "PWD", target));
@@ -87,7 +87,7 @@ int	ft_cd(char **args, t_env **env)
 
 	if (args[2])
 	{
-		ft_putstr_fd("too many arguments", 2);
+		ft_putstr_fd(" too many arguments", 2);
 		update_exit_status(env, 1);
 		return (1);
 	}

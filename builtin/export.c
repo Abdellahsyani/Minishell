@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 15:57:39 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 17:48:13 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	check_arg(char *str, t_env **env)
 		i++;
 	key = ft_substr(str, 0, i);
 	if (!is_valid(key))
-		return (free(key), 0);
+		return (0);
 	if (str[i] == '=')
 	{
 		i += 1;
@@ -107,8 +107,7 @@ int	ft_export(char **arg, t_env **env)
 		{
 			if (!check_arg(arg[i], env))
 			{
-				printf("minishell:export: '%s' : not a valid identifier\n",
-					arg[i]);
+				ft_putstr_fd(" not a valid identifier\n", 2);
 				if (!arg[i + 1])
 					return (1);
 			}

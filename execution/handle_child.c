@@ -6,13 +6,13 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 10:21:31 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 18:23:56 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	output_handle1(t_redi *tmp, t_extra ptr)
+int	output_handle1(t_redi *tmp, t_extra ptr)
 {
 	int	fd;
 
@@ -22,6 +22,7 @@ void	output_handle1(t_redi *tmp, t_extra ptr)
 		{
 			dup2(ptr.pipline[ptr.i][1], 1);
 		}
+		return (1);
 	}
 	while (tmp)
 	{
@@ -30,8 +31,11 @@ void	output_handle1(t_redi *tmp, t_extra ptr)
 			dup2(fd, 1);
 			close(fd);
 		}
+		else
+			return (0);
 		tmp = tmp->next;
 	}
+	return (1);
 }
 
 void	pass_in(t_redi *tmp, int fd)
@@ -78,13 +82,11 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 	}
 	else
 	{
+		if (is_regular_executable(cmd->argv[0]) == 2)
+			ft_error(ptr.env, cmd->argv[0], " :is directory\n", 126);
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
-		{
-			ft_putstr_fd(cmd->argv[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			clean_all(ptr.env, 127, 0);
-		}
+			ft_error(ptr.env, cmd->argv[0], ": command not found\n", 127);
 		ft_free_env(ptr.env);
 		rl_clear_history();
 		execve(path, cmd->argv, ptr.envp);
@@ -97,9 +99,12 @@ void	handle_child(t_command *cmd, t_extra ptr)
 {
 	signal(SIGINT, handle_child_sig);
 	input_handle1(cmd->in, ptr, cmd->fd);
-	output_handle1(cmd->out, ptr);
+	if (!output_handle1(cmd->out, ptr))
+	{
+		clean_all(ptr.env, 1, 0);
+	}
 	closingfds(ptr.pipline, ptr.size);
-	if (cmd->argv != NULL)
+	if (cmd->argv != NULL && cmd->argv[0])
 	{
 		exec_cmd(cmd, ptr);
 	}

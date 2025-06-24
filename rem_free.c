@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helper_main.c                                      :+:      :+:    :+:   */
+/*   rem_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:33:19 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 11:34:28 by asyani           ###   ########.fr       */
+/*   Updated: 2025/06/24 15:33:56 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ void	ft_free_env(t_env **p)
 
 void	clean_all(t_env **env, int n, int flag)
 {
+	(void)flag;
 	ft_free_env(env);
 	gc_free_all();
 	rl_clear_history();
-	if (flag)
-		write(2, "exit\n", 5);
+	// if (flag)
+	// 	write(2, "exit\n", 5);
 	exit(n);
 }
