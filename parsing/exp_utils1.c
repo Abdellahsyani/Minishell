@@ -130,7 +130,7 @@ char	*get_var(char *str, t_env **env, int i)
 	if (str[i] == '?')
 		return (get_status(&str[i], env, 0, 0));
 	if (str[0] == '$' && str[1] == '\0')
-		return (ft_stdup("$"));
+		return (ft_strdup("$"));
 	i = get_all_var(str, &i);
 	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i]
 			&& ft_isalpha(str[i + 1])))
