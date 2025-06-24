@@ -68,22 +68,24 @@ static char	*norm_whitespace(char *str, char *var_quote, char *get_last, int i)
 	int		temp_i;
 
 	result_len = 0;
-	if (!*str)
-		return (NULL);
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-	temp_i = i;
-	result_len = get_space_size(str, temp_i);
-	if (str && str[ft_strlen(str) - 1] == ' ' && get_last)
-		result_len += 1;
-	result = gc_malloc(sizeof(char) * result_len + 1);
-	if (!result)
-		return (NULL);
-	result = fill_nonspace(str, i, result, 0);
-	if (var_quote)
-		result = ft_strjoin(result, var_quote);
-	if (str[ft_strlen(str) - 1] == ' ' && get_last)
-		result = ft_strjoin(result, " ");
+	result = NULL;
+	if (*str)
+	{
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+			i++;
+		temp_i = i;
+		result_len = get_space_size(str, temp_i);
+		if (str && str[ft_strlen(str) - 1] == ' ' && get_last)
+			result_len += 1;
+		result = gc_malloc(sizeof(char) * result_len + 1);
+		if (!result)
+			return (NULL);
+		result = fill_nonspace(str, i, result, 0);
+		if (var_quote)
+			result = ft_strjoin(result, var_quote);
+		if (str[ft_strlen(str) - 1] == ' ' && get_last)
+			result = ft_strjoin(result, " ");
+	}
 	if (get_last)
 		result = ft_strjoin(result, get_last);
 	return (result);
@@ -101,6 +103,20 @@ static char	*get_allstr(char *str)
 	return (value);
 }
 
+int	get_all_var(char *str, int *i)
+{
+	while (ft_isalpha(str[*i]) || str[*i] == '_' || ft_isdigit(str[*i]))
+	{
+		if (ft_isdigit(str[1]))
+		{
+			(*i)++;
+			break ;
+		}
+		(*i)++;
+	}
+	return (*i);
+}
+
 char	*get_var(char *str, t_env **env, int i)
 {
 	int		len;
@@ -113,10 +129,9 @@ char	*get_var(char *str, t_env **env, int i)
 	get_last = NULL;
 	if (str[i] == '?')
 		return (get_status(&str[i], env, 0, 0));
-	if (str[0] == '$' && (!ft_isalpha(str[i]) || str[i] == '_'))
-		return (ft_strdup("$"));
-	while (ft_isalpha(str[i]) || str[i] == '_' || ft_isdigit(str[i]))
-		i++;
+	if (str[0] == '$' && str[1] == '\0')
+		return (ft_stdup("$"));
+	i = get_all_var(str, &i);
 	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i]
 			&& ft_isalpha(str[i + 1])))
 		var_quote = double_quote(&str[i], env);

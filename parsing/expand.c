@@ -76,7 +76,8 @@ void	fill_argvs(t_command *cmd, t_env **env)
 			cmd->argv[i] = single_quote(cmd->argv_t[i]);
 		else if (cmd->argv_t[i][0] == '"')
 			cmd->argv[i] = double_quote(cmd->argv_t[i], env);
-		else if (cmd->argv_t[i][0] == '$')
+		else if (cmd->argv_t[i][0] == '$' && (ft_isalnum(cmd->argv_t[i][1])
+			|| cmd->argv_t[i][1] == '_' || cmd->argv_t[i][1] == '?'))
 			cmd->argv[i] = get_var(cmd->argv_t[i], env, 1);
 		else
 			cmd->argv[i] = copy_var(cmd->argv_t[i], env, 0);
