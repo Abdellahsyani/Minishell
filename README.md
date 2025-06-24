@@ -70,22 +70,26 @@ This project is part of the 42 curriculum, and this implementation includes **on
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/minishell.git
+git clone https://github.com/Abdellahsyani/Minishell.git
 cd minishell
 ```
 - `make`
 - `./minishell`
 ```
-$ echo Hello World
+minishell $ echo Hello World
 Hello World
 
-$ export NAME=John
-$ echo $NAME
-John
+minishell $ echo "Hello World" > file | cat file
+Hello World
 
-$ ls | grep minishell | wc -l
+minishell $ export NAME=42_school
+minishell $ echo $NAME
+42_school
 
-$ cat << EOF
+minishell $ ls | grep main.c | wc -l
+21
+
+minishell $ cat << EOF
 > line1
 > line2
 > EOF
