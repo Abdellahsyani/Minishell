@@ -50,17 +50,26 @@ void	clean_all(t_env **env, int n, int flag)
 	exit(n);
 }
 
+void	norm_program(char *line, t_token **list)
+{
+	t_token	*tmp;
+
+	tmp = NULL;
+	if (*line)
+		add_history(line);
+	get_input(line, list);
+	tmp = *list;
+	token_type(tmp);
+}
+
 void	program_run(t_env **env)
 {
 	char		*line;
 	t_token		*list;
-	t_token		*tmp;
 	t_command	*cmd_list;
 	t_command	*cmd_tmp;
-	int			parse_status;
 
 	list = NULL;
-	tmp = NULL;
 	cmd_list = NULL;
 	cmd_tmp = NULL;
 	while (1)
@@ -75,13 +84,8 @@ void	program_run(t_env **env)
 		line = trim_whitespace(line);
 		if (!*line && line)
 			continue ;
-		if (*line)
-			add_history(line);
-		get_input(line, &list);
-		tmp = list;
-		token_type(tmp);
-		parse_status = start_parsing(list, env);
-		if (parse_status == 1)
+		norm_program(line, &list);
+		if (start_parsing(list, env))
 		{
 			pars_command(list, &cmd_list, env);
 			cmd_tmp = cmd_list;
