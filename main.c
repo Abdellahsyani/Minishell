@@ -6,49 +6,11 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/23 11:04:31 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 11:34:32 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*trim_whitespace(char *str)
-{
-	int	len;
-
-	while (*str == ' ' || *str == '\t' || *str == '\n')
-		str++;
-	len = ft_strlen(str);
-	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len
-			- 1] == '\n'))
-		str[--len] = '\0';
-	return (str);
-}
-
-void	ft_free_env(t_env **p)
-{
-	t_env	*tmp;
-
-	while (*p)
-	{
-		tmp = *p;
-		(*p) = (*p)->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
-	free(p);
-}
-
-void	clean_all(t_env **env, int n, int flag)
-{
-	ft_free_env(env);
-	gc_free_all();
-	rl_clear_history();
-	if (flag)
-		write(2, "exit\n", 5);
-	exit(n);
-}
 
 void	norm_program(char *line, t_token **list)
 {
@@ -62,15 +24,22 @@ void	norm_program(char *line, t_token **list)
 	token_type(tmp);
 }
 
-void	program_run(t_env **env)
+int	norm1_p_run(t_token *list, t_command **tmp, t_command *cmd, t_env **env)
 {
-	char		*line;
-	t_token		*list;
-	t_command	*cmd_list;
+	if (start_parsing(list, env))
+	{
+		pars_command(list, &cmd, env);
+		*tmp = cmd;
+		expand_var(cmd, env);
+		return (1);
+	}
+	return (0);
+}
+
+void	program_run(t_env **env, char *line, t_command *cmd_list, t_token *list)
+{
 	t_command	*cmd_tmp;
 
-	list = NULL;
-	cmd_list = NULL;
 	cmd_tmp = NULL;
 	while (1)
 	{
@@ -85,13 +54,7 @@ void	program_run(t_env **env)
 		if (!*line && line)
 			continue ;
 		norm_program(line, &list);
-		if (start_parsing(list, env))
-		{
-			pars_command(list, &cmd_list, env);
-			cmd_tmp = cmd_list;
-			expand_var(cmd_list, env);
-		}
-		else
+		if (!norm1_p_run(list, &cmd_tmp, cmd_list, env))
 		{
 			free(line);
 			continue ;
@@ -103,15 +66,21 @@ void	program_run(t_env **env)
 
 int	main(int ac, char **argv, char **envp)
 {
-	t_env	**env;
+	t_env		**env;
+	char		*line;
+	t_command	*cmd_list;
+	t_token		*list;
 
 	(void)ac;
 	(void)argv;
+	line = NULL;
+	cmd_list = NULL;
+	list = NULL;
 	init_gc();
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
 	env = get_env(envp);
 	update_exit_status(env, 0);
-	program_run(env);
+	program_run(env, line, cmd_list, list);
 	clean_all(env, 0, 0);
 }
