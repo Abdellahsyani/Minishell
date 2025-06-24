@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:23:33 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 20:47:22 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 19:48:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,12 @@ int	redirect_handler(int *fd, t_command **cmd, t_env **env)
 	}
 	return (1);
 }
-
-int	slash(char *str)
+int slash(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	while (str[i])
+	while(str[i])
 	{
 		if (str[i] == '/')
 			return (1);

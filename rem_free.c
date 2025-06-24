@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:33:19 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 15:33:56 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 19:39:00 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,5 @@ void	clean_all(t_env **env, int n, int flag)
 	ft_free_env(env);
 	gc_free_all();
 	rl_clear_history();
-	// if (flag)
-	// 	write(2, "exit\n", 5);
 	exit(n);
 }

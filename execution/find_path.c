@@ -6,13 +6,13 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 15:15:24 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 20:43:07 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_regular_executable(const char *path)
+int	is_regular_executable(char *path)
 {
 	struct stat	sb;
 
@@ -20,9 +20,12 @@ int	is_regular_executable(const char *path)
 		return (0);
 	if (stat(path, &sb) != 0)
 		return (0);
-	if (S_ISDIR(sb.st_mode))
+	if (S_ISDIR(sb.st_mode) && slash(path))
 		return (2);
-	return (S_ISREG(sb.st_mode));
+	if (S_ISREG(sb.st_mode) && slash(path))
+		return (1);
+	else
+		return (0);
 }
 
 char	*find_path(char *cmd, t_env **env)
