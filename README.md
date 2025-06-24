@@ -44,11 +44,51 @@ This project is part of the 42 curriculum, and this implementation includes **on
 
 ---
 
+## ⚙️ Requirements
+
+   - No memory leaks or file descriptor leaks
+
+   - Code follows Norminette standards
+
+   - Must work on bash-like behavior for the features above
+
+----
+
+## 🚫 Limitations (as per mandatory part)
+
+   - No support for wildcards (e.g. *, ?)
+
+   - No support for logical operators (&&, ||)
+
+   - No support for advanced line editing (no arrow keys)
+
+   - Only mandatory builtins are implemented
+
+-----
+
 ## 🛠️ How to Use
 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/yourusername/minishell.git
 cd minishell
+```
+- `make`
+- `./minishell`
+```
+$ echo Hello World
+Hello World
 
+$ export NAME=John
+$ echo $NAME
+John
 
+$ ls | grep minishell | wc -l
+
+$ cat << EOF
+> line1
+> line2
+> EOF
+line1
+line2
+```
