@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 16:00:52 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 10:21:31 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,10 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, ptr.env);
-		gc_free_all();
-		ft_free_env(ptr.env);
-		exit(status);
+		clean_all(ptr.env, status, 0);
 	}
 	else
 	{
-		if (cmd->argv[0] == NULL)
-			return ;
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
 		{
@@ -90,14 +86,16 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 			clean_all(ptr.env, 127, 0);
 		}
 		ft_free_env(ptr.env);
+		rl_clear_history();
 		execve(path, cmd->argv, ptr.envp);
 		perror("execve failed.");
-		exit(127);
+		clean_all(ptr.env, 127, 0);
 	}
 }
 
 void	handle_child(t_command *cmd, t_extra ptr)
 {
+	signal(SIGINT, handle_child_sig);
 	input_handle1(cmd->in, ptr, cmd->fd);
 	output_handle1(cmd->out, ptr);
 	closingfds(ptr.pipline, ptr.size);
@@ -105,7 +103,5 @@ void	handle_child(t_command *cmd, t_extra ptr)
 	{
 		exec_cmd(cmd, ptr);
 	}
-	gc_free_all();
-	ft_free_env(ptr.env);
-	exit(0);
+	clean_all(ptr.env, 0, 0);
 }

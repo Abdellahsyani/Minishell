@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 15:05:37 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 10:40:14 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,6 @@ void	exec_builtins(t_command **cmd, t_env **env, int fd)
 		dup2(fd, 1);
 		close(fd);
 	}
-}
-
-int	**allocate_tube(int size)
-{
-	int	**tube;
-	int	i;
-
-	i = 0;
-	if (size < 0)
-		return (0);
-	tube = gc_malloc(sizeof(int *) * size);
-	if (!tube)
-		return (0);
-	while (i < size)
-	{
-		tube[i] = gc_malloc(sizeof(int) * 2);
-		if (!tube[i])
-			return (0);
-		i++;
-	}
-	return (tube);
 }
 
 int	set_pipes(int **tube, int size)
@@ -94,6 +73,20 @@ int	**built_pipline(t_command **cmd, t_env **env, int size)
 	return (tube);
 }
 
+static void	ft_fork(t_extra ptr, t_env **env, t_command *tmp)
+{
+	ptr.envp = chr_envirment(env);
+	while (ptr.i <= ptr.size)
+	{
+		ptr.pid[ptr.i] = fork();
+		if (ptr.pid[ptr.i] == 0)
+			handle_child(tmp, ptr);
+		ptr.i++;
+		tmp = tmp->next;
+	}
+	wait_and_free(ptr);
+}
+
 void	ft_exec(t_command **cmd, t_env **env)
 {
 	t_extra		ptr;
@@ -117,14 +110,5 @@ void	ft_exec(t_command **cmd, t_env **env)
 	ptr.pid = gc_malloc(sizeof(pid_t) * (ptr.size + 1));
 	if (!ptr.pid)
 		return ;
-	ptr.envp = chr_envirment(env);
-	while (ptr.i <= ptr.size)
-	{
-		ptr.pid[ptr.i] = fork();
-		if (ptr.pid[ptr.i] == 0)
-			handle_child(tmp, ptr);
-		ptr.i++;
-		tmp = tmp->next;
-	}
-	wait_and_free(ptr);
+	ft_fork(ptr, env, tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:53:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 13:37:22 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 10:41:20 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ char	*find_path(char *cmd, t_env **env)
 	if (is_regular_executable(cmd))
 		return (cmd);
 	cur = *env;
-	if (!cur)
-		return (NULL);
 	while (ft_strncmp(cur->key, "PATH", 4))
 		cur = cur->next;
 	paths = ft_split(cur->value, ':');
@@ -52,4 +50,25 @@ char	*find_path(char *cmd, t_env **env)
 		}
 	}
 	return (NULL);
+}
+
+int	**allocate_tube(int size)
+{
+	int	**tube;
+	int	i;
+
+	i = 0;
+	if (size < 0)
+		return (0);
+	tube = gc_malloc(sizeof(int *) * size);
+	if (!tube)
+		return (0);
+	while (i < size)
+	{
+		tube[i] = gc_malloc(sizeof(int) * 2);
+		if (!tube[i])
+			return (0);
+		i++;
+	}
+	return (tube);
 }

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:01:58 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 18:44:25 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 09:47:48 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	handle_child_sig(int signum)
 	tmp = g_global->env;
 	ft_free_env(tmp);
 	gc_free_all();
+	rl_clear_history();
 	exit(130);
 }
 

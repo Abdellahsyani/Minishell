@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 15:33:53 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 10:36:13 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	wait_and_free(t_extra ptr)
 
 	i = 0;
 	closingfds(ptr.pipline, ptr.size);
+	signal(SIGINT, SIG_IGN);
 	while (i <= ptr.size)
 	{
 		waitpid(ptr.pid[i], &status, 0);
@@ -76,10 +77,12 @@ void	wait_and_free(t_extra ptr)
 		}
 		else
 		{
-			new_status = 128 + WEXITSTATUS(status);
+			write(1, "\n", 1);
+			new_status = 128 + WTERMSIG(status);
 			update_exit_status(ptr.env, new_status);
 		}
 		i++;
 	}
+	signal(SIGINT, handle_sig);
 	gc_free_all();
 }
