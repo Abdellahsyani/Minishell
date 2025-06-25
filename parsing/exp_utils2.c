@@ -87,7 +87,8 @@ char	*get_var1(char *str)
 	start = 0;
 	var = NULL;
 	start = i;
-	while (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?' || ft_isdigit(str[i]))
+	while (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?'
+		|| ft_isdigit(str[i]))
 	{
 		if (ft_isdigit(str[i]))
 		{
