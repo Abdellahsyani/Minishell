@@ -17,6 +17,7 @@ void	norm_program(char *line, t_token **list)
 	t_token	*tmp;
 
 	tmp = NULL;
+	g_global->count_quote = 0;
 	if (*line)
 		add_history(line);
 	get_input(line, list);

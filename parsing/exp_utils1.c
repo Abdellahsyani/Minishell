@@ -132,8 +132,7 @@ char	*get_var(char *str, t_env **env, int i)
 	if (str[0] == '$' && str[1] == '\0')
 		return (ft_strdup("$"));
 	i = get_all_var(str, &i);
-	if ((str[i] && str[i] == '"' && str[i + 1] == '$') || (str[i]
-			&& ft_isalpha(str[i + 1])))
+	if ((str[i] && str[i] == '"' && str[i + 1]))
 		var_quote = double_quote(&str[i], env);
 	else if (!ft_isalpha(str[i]))
 		get_last = ft_strdup(get_allstr(&str[i]));
