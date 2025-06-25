@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 18:32:07 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/25 17:11:33 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ void	program_run(t_env **env, char *line, t_command *cmd_list, t_token *list)
 		if (!g_global)
 			init_gc();
 		line = readline("minishell $ ");
+		line = trim_whitespace(line);
 		if (!line)
 			clean_all(env, 1, 1);
-		line = trim_whitespace(line);
 		if (!*line && line)
 			continue ;
 		norm_program(line, &list);
 		if (!norm1_p_run(list, &cmd_tmp, cmd_list, env))
 		{
-			free(line);
+			gc_free_one(line);
 			continue ;
 		}
-		free(line);
+		gc_free_one(line);
 		ft_exec(&cmd_tmp, env);
 	}
 }

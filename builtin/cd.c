@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 17:53:35 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/25 12:32:57 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_cd(char **args, t_env **env)
 
 	if (args[2])
 	{
-		ft_putstr_fd(" too many arguments", 2);
+		ft_putstr_fd(" too many arguments\n", 2);
 		update_exit_status(env, 1);
 		return (1);
 	}

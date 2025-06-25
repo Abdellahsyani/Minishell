@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:33:19 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 19:39:00 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/25 17:20:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,22 @@
 
 char	*trim_whitespace(char *str)
 {
-	int	len;
+	int		len;
+	char	*p;
+	char	*str1;
 
+	str1 = str;
+	if (!str)
+		return (NULL);
 	while (*str == ' ' || *str == '\t' || *str == '\n')
 		str++;
 	len = ft_strlen(str);
-	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t'
-			|| str[len - 1] == '\n'))
+	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len
+				- 1] == '\n'))
 		str[--len] = '\0';
-	return (str);
+	p = ft_strdup(str);
+	free(str1);
+	return (p);
 }
 
 void	ft_free_env(t_env **p)
