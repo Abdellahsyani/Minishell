@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 18:32:57 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/25 17:17:24 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ void	ft_herdoc(t_command **cmd, t_extra *ptr)
 	t_redi		*in;
 	int			count;
 
-	if (!*cmd)
-		return ;
 	tmp = *cmd;
 	count = 0;
 	tmp->fd = -1;

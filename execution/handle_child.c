@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 18:23:56 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/25 17:12:41 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,14 @@ int	output_handle1(t_redi *tmp, t_extra ptr)
 	return (1);
 }
 
-void	pass_in(t_redi *tmp, int fd)
+void	pass_in(t_redi *tmp, int fd, t_env **env)
 {
 	if (fd == -3)
 		fd = open(tmp->file, O_RDONLY);
 	if (fd == -1)
 	{
-		write(1, "minishell: ", 11);
 		perror(tmp->file);
-		exit(1);
+		clean_all(env, 1, 0);
 	}
 	dup2(fd, 0);
 	close(fd);
@@ -63,9 +62,9 @@ void	input_handle1(t_redi *in, t_extra ptr, int fd)
 	while (in)
 	{
 		if (in->type == redir_input)
-			pass_in(in, -3);
+			pass_in(in, -3, ptr.env);
 		else if (in->type == d_herdoc && !in->next)
-			pass_in(in, fd);
+			pass_in(in, fd, ptr.env);
 		in = in->next;
 	}
 }
@@ -82,8 +81,8 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 	}
 	else
 	{
-		if (is_regular_executable(cmd->argv[0]) == 2)
-			ft_error(ptr.env, cmd->argv[0], " :is directory\n", 126);
+		if (is_regular_executable(cmd->argv[0]) == 2 && slash(cmd->argv[0]))
+			ft_error(ptr.env, cmd->argv[0], " :is a directory\n", 126);
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
 			ft_error(ptr.env, cmd->argv[0], ": command not found\n", 127);

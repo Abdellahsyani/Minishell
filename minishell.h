@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 15:21:02 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/24 20:42:19 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,9 @@ char					*ft_get(t_env **env, char *key);
 int						ft_cmd_size(t_command **cmd);
 char					*rm_newline(char *limit);
 int						ft_strccmp(const char *s1, const char *s2, int l);
-int	is_regular_executable(const char *path);
-void	ft_error(t_env **env, char *str1, char *str2, int n);
+int						is_regular_executable(char *path);
+void					ft_error(t_env **env, char *str1, char *str2, int n);
+int						slash(char *str);
 //**************Builtin****************
 
 int						ft_echo(char **arg);
@@ -217,4 +218,5 @@ void					handle_child(t_command *cmd, t_extra ptr);
 void					init_extra(t_extra *ptr, t_env **env);
 char					*ft_strdup1(const char *s1);
 int						**allocate_tube(int size);
+
 #endif
