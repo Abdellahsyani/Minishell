@@ -102,6 +102,8 @@ void	ft_herdoc(t_command **cmd, t_extra *ptr)
 	t_redi		*in;
 	int			count;
 
+	if (!*cmd)
+		return ;
 	tmp = *cmd;
 	count = 0;
 	tmp->fd = -1;

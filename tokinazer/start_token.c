@@ -72,7 +72,7 @@ int	handle_dollar(t_shell *mini, t_token **list, char *line)
 		create_token(mini, list, line);
 	start_d = mini->i;
 	mini->i++;
-	while ((ft_isalpha(line[mini->i]) != 0) || line[mini->i] == '_')
+	while (ft_isalpha(line[mini->i]) || line[mini->i] == '_')
 		mini->i++;
 	mini->len += mini->i - start_d;
 	return (1);
@@ -86,6 +86,13 @@ int	get_input(char *line, t_token **tokens_list)
 	mini.st = 0;
 	mini.len = 0;
 	mini.tok = NULL;
+	int j = 0;
+	while (line[j])
+	{
+		if (line[j] == '"' || line[j] == '\'')
+			g_global->count_quote++;
+		j++;
+	}
 	while (line[mini.i] != '\0')
 	{
 		if (handle_op(&mini, tokens_list, line))

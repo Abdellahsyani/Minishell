@@ -91,6 +91,12 @@ void	pars_command(t_token *list, t_command **cmd_list, t_env **env)
 	t_command	*current_cmd;
 	t_token		*current;
 
+	if (g_global->count_quote % 2 != 0)
+	{
+		ft_putstr_fd("minishell: error: unexpected quote\n", 2);
+		update_exit_status(env, 2);
+		return ;
+	}
 	(*env)->flag = 0;
 	current_cmd = NULL;
 	current = list;
