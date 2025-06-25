@@ -23,18 +23,60 @@ void	expansion_spl(t_command *cmd, t_env **env, char **spl)
 		return ;
 	spl = ft_split(var, ' ');
 	i = 0;
+	j = 0;
+	int flag = 1;
 	while (spl[i])
 		i++;
+	if (cmd->argv_t[1])
+	{
+		int k = 1;
+		while (cmd->argv_t[k])
+		{
+			k++;
+			i++;
+		}
+	}
 	cmd->argv = gc_malloc(sizeof(char *) * (i + 1));
 	if (!cmd->argv)
 		return ;
-	i = 0;
-	j = 0;
-	while (spl[i])
+	if (spl[0])
 	{
-		cmd->argv[j] = ft_strdup(spl[i]);
-		i++;
-		j++;
+		i = 0;
+		while (spl[i])
+		{
+			cmd->argv[j] = ft_strdup(spl[i]);
+			i++;
+			j++;
+		}
+	}
+	else
+	{
+		flag = 0;
+		i = 1;
+		while (cmd->argv_t[i])
+		{
+			if (cmd->argv_t[i][0] == '\'')
+				cmd->argv[j] = single_quote(cmd->argv_t[i]);
+			else if (cmd->argv_t[i][0] == '"')
+				cmd->argv[j] = double_quote(cmd->argv_t[i], env);
+			else if (cmd->argv_t[i][0] == '$' && (ft_isalnum(cmd->argv_t[i][1])
+				|| cmd->argv_t[i][1] == '_' || cmd->argv_t[i][1] == '?'))
+				cmd->argv[j] = get_var(cmd->argv_t[i], env, 1);
+			else
+				cmd->argv[j] = copy_var(cmd->argv_t[i], env, 0);
+			i++;
+			j++;
+		}
+	}
+	if (flag == 1)
+	{
+		i = 1;
+		while (cmd->argv_t[i])
+		{
+			cmd->argv[j] = ft_strdup(cmd->argv_t[i]);
+			j++;
+			i++;
+		}
 	}
 	cmd->argv[j] = NULL;
 	free_2d(spl);
