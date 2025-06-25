@@ -81,12 +81,13 @@ int	handle_dollar(t_shell *mini, t_token **list, char *line)
 int	get_input(char *line, t_token **tokens_list)
 {
 	t_shell	mini;
+	int		j;
 
 	mini.i = 0;
 	mini.st = 0;
 	mini.len = 0;
 	mini.tok = NULL;
-	int j = 0;
+	j = 0;
 	while (line[j])
 	{
 		if (line[j] == '"' || line[j] == '\'')

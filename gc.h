@@ -28,7 +28,7 @@ typedef struct j_list
 typedef struct s_gc
 {
 	t_llist			*head;
-	int	count_quote;
+	int				count_quote;
 	struct s_env	**env;
 }					t_gc;
 

@@ -29,7 +29,8 @@ int	norm1_p_run(t_token *list, t_command **tmp, t_command *cmd, t_env **env)
 {
 	if (start_parsing(list, env))
 	{
-		pars_command(list, &cmd, env);
+		if (!pars_command(list, &cmd, env))
+			return (0);
 		*tmp = cmd;
 		expand_var(cmd, env);
 		return (1);

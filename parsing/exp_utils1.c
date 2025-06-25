@@ -78,8 +78,6 @@ static char	*norm_whitespace(char *str, char *var_quote, char *get_last, int i)
 		if (str && str[ft_strlen(str) - 1] == ' ' && get_last)
 			result_len += 1;
 		result = gc_malloc(sizeof(char) * result_len + 1);
-		if (!result)
-			return (NULL);
 		result = fill_nonspace(str, i, result, 0);
 		if (var_quote)
 			result = ft_strjoin(result, var_quote);
@@ -101,20 +99,6 @@ static char	*get_allstr(char *str)
 		i++;
 	value = ft_substr(str, 0, i);
 	return (value);
-}
-
-int	get_all_var(char *str, int *i)
-{
-	while (ft_isalpha(str[*i]) || str[*i] == '_' || ft_isdigit(str[*i]))
-	{
-		if (ft_isdigit(str[1]))
-		{
-			(*i)++;
-			break ;
-		}
-		(*i)++;
-	}
-	return (*i);
 }
 
 char	*get_var(char *str, t_env **env, int i)

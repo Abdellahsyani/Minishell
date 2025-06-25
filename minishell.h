@@ -133,7 +133,7 @@ void					create_new_node(int count, t_command **cmd,
 							t_command **cur);
 void					add_lis(t_redi **list, t_redi *new_node);
 t_redi					*create_nod(void);
-void					pars_command(t_token *list, t_command **cmd_list,
+int						pars_command(t_token *list, t_command **cmd_list,
 							t_env **env);
 int						start_parsing(t_token *list, t_env **env);
 
@@ -157,6 +157,9 @@ void					free_2d(char **arr);
 void					ft_free_env(t_env **p);
 
 /******** helper functions ************/
+int	get_all_var(char *str, int *i);
+void					hanlde_allafter_var(t_command *cmd, char **spl,
+							t_env **env, int i);
 void					count_space(char *str, char *result, int *i, int *j);
 char					*trim_whitespace(char *str);
 char					*rem_double(char *content);
