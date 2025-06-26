@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/26 14:07:59 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 17:30:29 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	main(int ac, char **argv, char **envp)
 	signal(SIGINT, handle_sig);
 	signal(SIGQUIT, SIG_IGN);
 	env = get_env(envp);
-//	update_exit_status(env, 0);
+	update_exit_status(env, 0);
 	program_run(env, line, cmd_list, list);
 	clean_all(env, 0, 0);
 }

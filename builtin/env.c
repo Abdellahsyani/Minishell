@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/03 16:51:56 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/06/26 17:46:23 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,13 @@ int	ft_env(t_env **env, char **argv)
 		return (1);
 	while (tmp)
 	{
-		if (tmp->value && strcmp(tmp->key, "?"))
-			printf("%s=%s\n", tmp->key, tmp->value);
+		if (tmp->value && ft_strcmp(tmp->key, "?"))
+		{
+			ft_putstr_fd(tmp->key, 2);
+			ft_putstr_fd("=", 2);
+			ft_putstr_fd(tmp->value, 2);
+			ft_putstr_fd("\n", 2);
+		}
 		tmp = tmp->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 10:40:13 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 17:47:32 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	delete_key_value(char *key, t_env **env)
 			if (cur->value)
 				free(cur->value);
 			free(cur);
-			break ;
+			return ;
 		}
 		prev = cur;
 		cur = cur->next;

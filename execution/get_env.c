@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/23 16:09:46 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 17:29:50 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ t_env	**get_env(char **list)
 	tmp = malloc(sizeof(t_env *));
 	if (!tmp)
 		return (NULL);
-	cur = new_node("?", "0");
+	cur = new_node(ft_key(*list), get_value(*list));
+	list++;
 	*tmp = cur;
 	while (*list)
 	{
