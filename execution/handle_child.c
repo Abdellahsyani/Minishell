@@ -106,7 +106,7 @@ void	handle_child(t_command *cmd, t_extra ptr)
 	if (cmd->argv != NULL && cmd->argv[0])
 	{
 		if (cmd->argv[0][0] == '\0')
-			ft_error(ptr.env, NULL, NULL, 127);
+			ft_error(ptr.env, NULL, "minishell: command not found\n", 127);
 		exec_cmd(cmd, ptr);
 	}
 	clean_all(ptr.env, 0, 0);
