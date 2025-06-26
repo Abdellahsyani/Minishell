@@ -16,7 +16,6 @@ static void	count_dollar(t_hold *var, char *content)
 {
 	var->coun = 0;
 	var->var = NULL;
-	var->i = 0;
 	var->len1 = 0;
 	var->len = 0;
 	var->var1 = NULL;
@@ -39,11 +38,11 @@ static void	count_dollar(t_hold *var, char *content)
 	if (!var->env_var)
 		return ;
 	var->env_var[0] = NULL;
+	var->i = 0;
 }
 
 static void	let_var_ready(t_hold *var, char *content, t_env **env_t)
 {
-	var->i = 0;
 	while (content[var->i])
 	{
 		if (content[var->i] == '$' && (ft_isalnum(content[var->i + 1])
@@ -144,6 +143,7 @@ char	*double_quote(char *content, t_env **env_t)
 			write(1, "$", 1);
 		var.i++;
 	}
+	var.i = 0;
 	count_dollar(&var, content);
 	let_var_ready(&var, content, env_t);
 	ft_get_var(&var, content);

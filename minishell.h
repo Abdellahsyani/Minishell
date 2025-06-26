@@ -118,7 +118,7 @@ typedef struct s_extra
 }						t_extra;
 
 /** expand functions **/
-int					expand_var(t_command *cmd, t_env **env);
+int						expand_var(t_command *cmd, t_env **env);
 char					*double_quote(char *str, t_env **env);
 char					*get_var(char *str, t_env **env, int i);
 char					*get_var1(char *str);
@@ -133,7 +133,7 @@ void					create_new_node(int count, t_command **cmd,
 							t_command **cur);
 void					add_lis(t_redi **list, t_redi *new_node);
 t_redi					*create_nod(void);
-void						pars_command(t_token *list, t_command **cmd_list,
+void					pars_command(t_token *list, t_command **cmd_list,
 							t_env **env);
 int						start_parsing(t_token *list, t_env **env);
 
@@ -157,8 +157,8 @@ void					free_2d(char **arr);
 void					ft_free_env(t_env **p);
 
 /******** helper functions ************/
-int	count_quotes(t_env **env);
-int	get_all_var(char *str, int *i);
+int						count_quotes(t_env **env);
+int						get_all_var(char *str, int *i);
 void					hanlde_allafter_var(t_command *cmd, char **spl,
 							t_env **env, int i);
 void					count_space(char *str, char *result, int *i, int *j);

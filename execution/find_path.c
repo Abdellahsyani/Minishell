@@ -40,8 +40,10 @@ char	*find_path(char *cmd, t_env **env)
 	if (is_regular_executable(cmd))
 		return (cmd);
 	cur = *env;
-	while (ft_strncmp(cur->key, "PATH", 4))
+	while (cur && ft_strncmp(cur->key, "PATH", 4))
 		cur = cur->next;
+	if (!cur)
+		return NULL;
 	paths = ft_split(cur->value, ':');
 	while (paths[++i])
 	{

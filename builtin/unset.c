@@ -51,6 +51,7 @@ void	delete_key_value(char *key, t_env **env)
 			if (cur->value)
 				free(cur->value);
 			free(cur);
+			break ;
 		}
 		prev = cur;
 		cur = cur->next;
