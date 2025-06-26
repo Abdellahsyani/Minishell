@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 15:12:20 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/21 18:36:00 by asyani           ###   ########.fr       */
+/*   Updated: 2025/06/26 13:51:41 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	pars_cmd2(t_token *c, t_command *c_cmd, t_command **cmd_l,
 	}
 }
 
-void	pars_command(t_token *list, t_command **cmd_list, t_env **env)
+int	pars_command(t_token *list, t_command **cmd_list, t_env **env)
 {
 	t_command	*current_cmd;
 	t_token		*current;
@@ -95,10 +95,11 @@ void	pars_command(t_token *list, t_command **cmd_list, t_env **env)
 	{
 		ft_putstr_fd("minishell: error: unexpected quote\n", 2);
 		update_exit_status(env, 2);
-		return ;
+		return (0);
 	}
 	(*env)->flag = 0;
 	current_cmd = NULL;
 	current = list;
 	pars_cmd2(current, current_cmd, cmd_list, env);
+	return (1);
 }

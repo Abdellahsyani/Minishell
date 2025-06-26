@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/24 20:42:19 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 13:51:53 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void					create_new_node(int count, t_command **cmd,
 							t_command **cur);
 void					add_lis(t_redi **list, t_redi *new_node);
 t_redi					*create_nod(void);
-void					pars_command(t_token *list, t_command **cmd_list,
+int					pars_command(t_token *list, t_command **cmd_list,
 							t_env **env);
 int						start_parsing(t_token *list, t_env **env);
 

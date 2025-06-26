@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:54:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/20 11:14:49 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 13:50:32 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_checknum_exit(char *str)
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
-	if (!ft_isdigit(str[i - 1]) && str[i] != ' ' && str[i])
+	if (i != 0 && !ft_isdigit(str[i - 1]) && str[i] != ' ' && str[i])
 		return (0);
 	while (str[i] == ' ')
 		i++;
