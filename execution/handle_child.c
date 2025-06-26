@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/25 17:12:41 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 14:54:50 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	handle_child(t_command *cmd, t_extra ptr)
 	closingfds(ptr.pipline, ptr.size);
 	if (cmd->argv != NULL && cmd->argv[0])
 	{
+		if (cmd->argv[0][0] == '\0')
+			ft_error(ptr.env, NULL, NULL, 127);
 		exec_cmd(cmd, ptr);
 	}
 	clean_all(ptr.env, 0, 0);

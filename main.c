@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/25 17:11:33 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/26 14:07:59 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	program_run(t_env **env, char *line, t_command *cmd_list, t_token *list)
 		line = trim_whitespace(line);
 		if (!line)
 			clean_all(env, 1, 1);
-		if (!*line && line)
+		if (!*line)
 			continue ;
 		norm_program(line, &list);
 		if (!norm1_p_run(list, &cmd_tmp, cmd_list, env))
