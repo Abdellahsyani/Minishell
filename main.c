@@ -17,7 +17,8 @@ void	norm_program(char *line, t_token **list)
 	t_token	*tmp;
 
 	tmp = NULL;
-	g_global->count_quote = 0;
+	g_global->count_single = 0;
+	g_global->count_double = 0;
 	if (*line)
 		add_history(line);
 	get_input(line, list);
@@ -29,13 +30,12 @@ int	norm1_p_run(t_token *list, t_command **tmp, t_command *cmd, t_env **env)
 {
 	if (start_parsing(list, env))
 	{
-		if (!pars_command(list, &cmd, env))
-			return (0);
+		pars_command(list, &cmd, env);
 		*tmp = cmd;
-		expand_var(cmd, env);
-		return (1);
+		if (!expand_var(cmd, env))
+			return (0);
 	}
-	return (0);
+	return (1);
 }
 
 void	program_run(t_env **env, char *line, t_command *cmd_list, t_token *list)

@@ -113,7 +113,7 @@ char	*get_var(char *str, t_env **env, int i)
 	get_last = NULL;
 	if (str[i] == '?')
 		return (get_status(&str[i], env, 0, 0));
-	if (str[0] == '$' && str[1] == '\0')
+	if (str[0] == '$' && (str[1] == '\0' || !ft_isalnum(str[1])))
 		return (ft_strdup("$"));
 	i = get_all_var(str, &i);
 	if ((str[i] && str[i] == '"' && str[i + 1]))

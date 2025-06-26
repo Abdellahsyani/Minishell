@@ -116,6 +116,7 @@ char	*single_quote(char *content)
 	{
 		if (content[i] == '\'')
 		{
+			g_global->count_single += 1;
 			i++;
 			continue ;
 		}

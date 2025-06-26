@@ -95,7 +95,7 @@ static void	c_alloc(t_command *cmd)
 		return ;
 }
 
-void	expand_var(t_command *cmd, t_env **env)
+int	expand_var(t_command *cmd, t_env **env)
 {
 	while (cmd)
 	{
@@ -117,6 +117,9 @@ void	expand_var(t_command *cmd, t_env **env)
 			break ;
 		}
 		fill_argvs(cmd, env);
+		if (!count_quotes(env))
+			return (0);
 		cmd = cmd->next;
 	}
+	return (1);
 }

@@ -77,7 +77,7 @@ void	hanlde_allafter_var(t_command *cmd, char **spl, t_env **env, int i)
 
 int	get_all_var(char *str, int *i)
 {
-	while (ft_isalpha(str[*i]) || str[*i] == '_' || ft_isdigit(str[*i]))
+	while (ft_isalnum(str[*i]) || str[*i] == '_')
 	{
 		if (ft_isdigit(str[1]))
 		{
@@ -87,4 +87,15 @@ int	get_all_var(char *str, int *i)
 		(*i)++;
 	}
 	return (*i);
+}
+
+int	count_quotes(t_env **env)
+{
+	if (g_global->count_single % 2 != 0 || g_global->count_double % 2 != 0)
+	{
+		ft_putstr_fd("minishell: error: unexpected quote\n", 2);
+		update_exit_status(env, 2);
+		return (0);
+	}
+	return (1);
 }

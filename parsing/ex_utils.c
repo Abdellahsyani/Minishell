@@ -23,9 +23,11 @@ static void	count_dollar(t_hold *var, char *content)
 	var->exp = NULL;
 	var->get_v = NULL;
 	var->counts = 0;
+	var->count = 0;
 	while (content[var->i])
 	{
-		if (content[var->i] == '$')
+		if (content[var->i] == '$' && (ft_isalnum(content[var->i + 1])
+				|| content[var->i + 1] == '?' || content[var->i + 1] == '_'))
 			var->coun++;
 		var->i++;
 	}
@@ -41,11 +43,11 @@ static void	count_dollar(t_hold *var, char *content)
 
 static void	let_var_ready(t_hold *var, char *content, t_env **env_t)
 {
-	var->count = 0;
 	var->i = 0;
 	while (content[var->i])
 	{
-		if (content[var->i] == '$')
+		if (content[var->i] == '$' && (ft_isalnum(content[var->i + 1])
+				|| content[var->i + 1] == '?' || content[var->i + 1] == '_'))
 		{
 			var->get_v = get_var1(&content[var->i]);
 			var->env_var[var->counts] = ft_strdup(var->get_v);
@@ -58,6 +60,7 @@ static void	let_var_ready(t_hold *var, char *content, t_env **env_t)
 		}
 		if (content[var->i] == '"')
 		{
+			g_global->count_double += 1;
 			var->i++;
 			continue ;
 		}
@@ -106,7 +109,8 @@ static void	fill_var(t_hold *var)
 	{
 		if (var->var[var->i] != '$')
 			var->var1[var->j] = var->var[var->i];
-		else
+		else if (var->var[var->i] == '$' && (ft_isalnum(var->var[var->i + 1])
+				|| var->var[var->i + 1] == '?' || var->var[var->i + 1] == '_'))
 		{
 			var->var1[var->j] = '\0';
 			var->var1 = ft_strjoins(var->var1, var->env[var->k]);
@@ -117,6 +121,8 @@ static void	fill_var(t_hold *var)
 			var->j += s;
 			continue ;
 		}
+		else
+			var->var1[var->j] = var->var[var->i];
 		var->j++;
 		var->i++;
 	}
@@ -133,7 +139,8 @@ char	*double_quote(char *content, t_env **env_t)
 		if (ft_isalnum(content[var.i + 1]) || content[var.i + 1] == '?'
 			|| content[var.i + 1] == '_')
 			break ;
-		if (content[var.i] == '$')
+		if (content[var.i] == '$' && (content[var.i + 1] == '\0'
+				|| content[var.i + 1] == '$'))
 			write(1, "$", 1);
 		var.i++;
 	}
