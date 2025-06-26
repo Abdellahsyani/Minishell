@@ -105,8 +105,7 @@ t_env	**get_env(char **list)
 	tmp = malloc(sizeof(t_env *));
 	if (!tmp)
 		return (NULL);
-	cur = new_node(ft_key(*list), get_value(*list));
-	list++;
+	cur = new_node("?", "0");
 	*tmp = cur;
 	while (*list)
 	{
