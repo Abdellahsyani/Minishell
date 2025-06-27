@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:46:01 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/25 12:32:57 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 19:43:19 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	set_pwd_env(t_env **env, char *key, char *value)
 
 	list = ft_find(*env, key);
 	if (list)
-		list->value = value;
+	{
+		gc_free_one(list->value);
+		list->value = ft_strdup(value);
+	}
 	else
 	{
 		printf("key not exist\n");
@@ -58,6 +61,7 @@ static int	cd_update_env(t_env **env, char *str, char *target)
 		return (1);
 	}
 	set_pwd_env(env, "PWD", new);
+	free(new);
 	return (0);
 }
 
@@ -65,7 +69,7 @@ static int	cd_change_directory(t_env **env, char *target)
 {
 	char	*cwd;
 
-	cwd = ft_get(env, "OLDPWD");
+	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
 		ft_putstr_fd("cd: error retrieving current directory: ", 2);
@@ -73,6 +77,7 @@ static int	cd_change_directory(t_env **env, char *target)
 		return (1);
 	}
 	set_pwd_env(env, "OLDPWD", cwd);
+	free(cwd);
 	if (chdir(target) != 0)
 	{
 		ft_putstr_fd(" No such file or directory\n", 2);
@@ -84,8 +89,12 @@ static int	cd_change_directory(t_env **env, char *target)
 int	ft_cd(char **args, t_env **env)
 {
 	char	*target;
+	int		i;
 
-	if (args[2])
+	i = 0;
+	while (args[i])
+		i++;
+	if (i > 2)
 	{
 		ft_putstr_fd(" too many arguments\n", 2);
 		update_exit_status(env, 1);

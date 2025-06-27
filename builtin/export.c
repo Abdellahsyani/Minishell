@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:52:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/27 11:08:35 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 19:34:47 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_export(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!strcmp(tmp->key, "_") || !strcmp(tmp->key, "?"))
+		if (!ft_strcmp(tmp->key, "_") || !ft_strcmp(tmp->key, "?"))
 		{
 			tmp = tmp->next;
 			continue ;
@@ -56,7 +56,7 @@ void	set_new_env(char *key, char *value, t_env **env)
 	}
 	else
 	{
-		create = malloc(sizeof(t_env));
+		create = gc_malloc(sizeof(t_env));
 		create->key = ft_strdup(key);
 		if (value)
 			create->value = ft_strdup(value);
