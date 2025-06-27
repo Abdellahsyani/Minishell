@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 13:37:06 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/27 11:09:10 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 15:17:40 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	norm1_p_run(t_token *list, t_command **tmp, t_command *cmd, t_env **env)
 		if (!expand_var(cmd, env))
 			return (0);
 	}
+	else
+		return (0);
 	return (1);
 }
 
