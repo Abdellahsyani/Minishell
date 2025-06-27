@@ -14,7 +14,7 @@
 
 static void	expand_vars(t_command *cmd, t_env **env, int *flag, int *j)
 {
-	int	i;
+	int		i;
 	char	*arg;
 
 	(*flag) = 0;
@@ -27,7 +27,7 @@ static void	expand_vars(t_command *cmd, t_env **env, int *flag, int *j)
 		else if (cmd->argv_t[i][0] == '"')
 			cmd->argv[*j] = double_quote(cmd->argv_t[i], env);
 		else if (cmd->argv_t[i][0] == '$' && (ft_isalnum(cmd->argv_t[i][1])
-			|| cmd->argv_t[i][1] == '_' || cmd->argv_t[i][1] == '?'))
+					|| cmd->argv_t[i][1] == '_' || cmd->argv_t[i][1] == '?'))
 		{
 			arg = get_var(cmd->argv_t[i], env, 1);
 			if (*arg)
