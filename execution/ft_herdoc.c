@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/25 17:17:24 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 11:12:02 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	write_to_herdoc(int fd, t_env **env, char *limiter)
 {
 	char	*delimiter;
 
-	g_global->env = env;
 	signal(SIGINT, handle_child_sig);
 	if (*limiter == '\0')
 		delimiter = ft_strjoin(limiter, "\n");

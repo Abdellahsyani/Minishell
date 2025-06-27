@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:01:58 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/26 14:59:43 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 11:12:42 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@ void	handle_sig(int signum)
 
 void	handle_child_sig(int signum)
 {
-	t_env	**tmp;
-
 	(void)signum;
 	write(1, "\n", 1);
-	tmp = g_global->env;
-	ft_free_env(tmp);
 	gc_free_all();
 	rl_clear_history();
 	exit(130);

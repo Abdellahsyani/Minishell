@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/26 17:29:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 10:53:17 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,35 +64,15 @@ char	*get_value(char *str)
 	return (value);
 }
 
-char	*ft_strdup1(const char *s1)
-{
-	char	*p;
-	int		i;
-
-	if (!s1)
-		return (NULL);
-	p = malloc(sizeof(char) * (ft_strlen(s1) + 1));
-	if (!p)
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		p[i] = s1[i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
-}
-
 t_env	*new_node(char *key, char *value)
 {
 	t_env	*new;
 
-	new = malloc(sizeof(t_env));
+	new = gc_malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
-	new->key = ft_strdup1(key);
-	new->value = ft_strdup1(value);
+	new->key = ft_strdup(key);
+	new->value = ft_strdup(value);
 	new->next = NULL;
 	return (new);
 }
@@ -102,11 +82,10 @@ t_env	**get_env(char **list)
 	t_env	**tmp;
 	t_env	*cur;
 
-	tmp = malloc(sizeof(t_env *));
+	tmp = gc_malloc(sizeof(t_env *));
 	if (!tmp)
 		return (NULL);
-	cur = new_node(ft_key(*list), get_value(*list));
-	list++;
+	cur = new_node("?", "0");
 	*tmp = cur;
 	while (*list)
 	{

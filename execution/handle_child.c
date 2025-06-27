@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/26 14:54:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 11:03:21 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
 			ft_error(ptr.env, cmd->argv[0], ": command not found\n", 127);
-		ft_free_env(ptr.env);
 		rl_clear_history();
 		execve(path, cmd->argv, ptr.envp);
 		perror("execve failed.");

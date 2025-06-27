@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:33:19 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/25 17:20:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 11:07:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,12 @@ char	*trim_whitespace(char *str)
 	return (p);
 }
 
-void	ft_free_env(t_env **p)
-{
-	t_env	*tmp;
-
-	while (*p)
-	{
-		tmp = *p;
-		(*p) = (*p)->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
-	free(p);
-}
-
 void	clean_all(t_env **env, int n, int flag)
 {
 	(void)flag;
-	ft_free_env(env);
+	(void)env;
 	gc_free_all();
+	env = NULL;
 	rl_clear_history();
 	exit(n);
 }

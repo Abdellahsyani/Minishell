@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:53:29 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/26 17:47:32 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 10:46:14 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	delete_key_value(char *key, t_env **env)
 	cur = *env;
 	if (!key)
 		return ;
-	while (cur && cur->next)
+	while (cur)
 	{
 		if (!ft_strcmp(cur->key, key))
 		{
@@ -47,10 +47,10 @@ void	delete_key_value(char *key, t_env **env)
 				*env = cur->next;
 			else
 				prev->next = cur->next;
-			free(cur->key);
+			gc_free_one(cur->key);
 			if (cur->value)
-				free(cur->value);
-			free(cur);
+				gc_free_one(cur->value);
+			gc_free_one(cur);
 			return ;
 		}
 		prev = cur;

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/26 13:51:53 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 11:11:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,6 @@ void					*token_type(t_token *list);
 /************** free functions  ******************/
 void					clean_all(t_env **env, int n, int flag);
 void					free_2d(char **arr);
-void					ft_free_env(t_env **p);
 
 /******** helper functions ************/
 int						count_quotes(t_env **env);

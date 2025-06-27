@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:30:46 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/23 18:25:44 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/27 11:12:20 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_gc
 	t_llist			*head;
 	int				count_single;
 	int				count_double;
-	struct s_env	**env;
 }					t_gc;
 
 extern t_gc			*g_global;
