@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 14:54:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/26 13:50:32 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 18:15:20 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	ft_exit(char **arg, int last_status, t_env **env)
 	if (i > 2)
 	{
 		ft_putstr_fd(" too many arguments\n", 2);
-		clean_all(env, 1, 0);
+		set_new_env("?", "1", env);
+		return ;
 	}
 	if (arg[1])
 	{
