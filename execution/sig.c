@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 11:01:58 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/28 09:37:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 19:56:22 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ char	*rm_newline(char *limit)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+void	check_null_path(t_env **env, char *str)
+{
+	if (access(str, F_OK) && slash(str))
+		ft_error(env, str, " : No such file or directory\n", 127);
+	else if (str[0] == '.' && str[1])
+		ft_error(env, str, ": Permission denied\n", 126);
+	else
+		ft_error(env, str, ": command not found\n", 127);
 }

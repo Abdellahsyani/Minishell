@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/28 15:42:08 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 19:55:11 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 	else
 	{
 		if (is_regular_executable(cmd->argv[0]) == 2 && slash(cmd->argv[0]))
-			ft_error(ptr.env, cmd->argv[0], " :is a directory\n", 126);
+			ft_error(ptr.env, cmd->argv[0], " : Is a directory\n", 126);
 		path = find_path(cmd->argv[0], ptr.env);
 		if (!path)
-			ft_error(ptr.env, cmd->argv[0], ": command not found\n", 127);
+			check_null_path(ptr.env, cmd->argv[0]);
 		rl_clear_history();
 		execve(path, cmd->argv, ptr.envp);
-		perror("execve failed.");
-		clean_all(ptr.env, 127, 0);
+		perror("execve failed");
+		clean_all(ptr.env, 126, 0);
 	}
 }
 
