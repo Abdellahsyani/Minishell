@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:08:28 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/27 17:43:39 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 09:50:26 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	wait_and_free(t_extra ptr)
 		}
 		else
 		{
-			write(1, "\n", 1);
+			if (i == ptr.size)
+				write(1, "\n", 1);
 			new_status = 128 + WTERMSIG(status);
 			update_exit_status(ptr.env, new_status);
 		}
