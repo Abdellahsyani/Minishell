@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 11:33:19 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/27 11:07:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 10:33:44 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ char	*trim_whitespace(char *str)
 
 void	clean_all(t_env **env, int n, int flag)
 {
-	(void)flag;
 	(void)env;
 	gc_free_all();
 	env = NULL;
 	rl_clear_history();
+	if (flag == 1)
+		write(1, "exit\n", 1);
 	exit(n);
 }
