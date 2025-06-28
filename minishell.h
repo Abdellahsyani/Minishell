@@ -156,7 +156,7 @@ void					clean_all(t_env **env, int n, int flag);
 void					free_2d(char **arr);
 
 /******** helper functions ************/
-void	check_null_path(t_env **env, char *str);
+void					check_null_path(t_env **env, char *str);
 int						count_quotes(t_env **env);
 int						get_all_var(char *str, int *i);
 void					hanlde_allafter_var(t_command *cmd, char **spl,
