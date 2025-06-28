@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 16:35:20 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/27 10:53:17 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 16:49:25 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,25 @@ t_env	**get_env(char **list)
 	t_env	**tmp;
 	t_env	*cur;
 
+	cur = NULL;
 	tmp = gc_malloc(sizeof(t_env *));
 	if (!tmp)
 		return (NULL);
 	cur = new_node("?", "0");
 	*tmp = cur;
-	while (*list)
+	if (!list || !*list)
 	{
-		cur->next = new_node(ft_key(*list), get_value(*list));
-		cur = cur->next;
-		list++;
+		cur->next = new_node("PWD", getcwd(NULL, 0));
+		cur->next->next = new_node("_", "env");
+	}
+	else
+	{
+		while (*list)
+		{
+			cur->next = new_node(ft_key(*list), get_value(*list));
+			cur = cur->next;
+			list++;
+		}
 	}
 	return (tmp);
 }

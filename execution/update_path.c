@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:07:16 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/24 18:47:14 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 16:21:58 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	update_path(char *arg, t_env **env)
 	char	*str;
 	int		l;
 
+	str = NULL;
 	tmp = ft_find(*env, "_");
 	value = ft_strdup(tmp->value);
 	l = ft_strlen(value);

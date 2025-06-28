@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 11:04:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/27 10:47:40 by abdo             ###   ########.fr       */
+/*   Updated: 2025/06/28 16:38:41 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,20 @@ int	ft_env(t_env **env, char **argv)
 	t_env	*tmp;
 
 	tmp = NULL;
-	(void)argv;
 	update_path(argv[0], env);
 	tmp = *env;
+	if (!env)
+		return (1);
 	if (!tmp)
 		return (1);
 	while (tmp)
 	{
 		if (tmp->value && ft_strcmp(tmp->key, "?"))
 		{
-			ft_putstr_fd(tmp->key, 2);
-			ft_putstr_fd("=", 2);
-			ft_putstr_fd(tmp->value, 2);
-			ft_putstr_fd("\n", 2);
+			ft_putstr_fd(tmp->key, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(tmp->value, 1);
+			ft_putstr_fd("\n", 1);
 		}
 		tmp = tmp->next;
 	}
