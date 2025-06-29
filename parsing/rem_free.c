@@ -12,6 +12,25 @@
 
 #include "../minishell.h"
 
+int rem_quotes(char *var, char *content, int *i, int *j)
+{
+	char	del;
+
+	if (content[*i] != '"' && content[*i] != '\'')
+		return (0);
+	del = content[(*i)++];
+	while (content[*i])
+	{
+		if (content[*i] == del)
+		{
+			(*i)++;
+			break;
+		}
+		var[(*j)++] = content[(*i)++];
+	}
+	return (1);
+}
+
 int	when_var(t_command *cmd, t_env **env, int *j, int *i)
 {
 	char	*arg;

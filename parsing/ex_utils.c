@@ -87,7 +87,7 @@ static void	ft_get_var(t_hold *var, char *content)
 	var->var = gc_malloc(sizeof(char) * (var->count + 1));
 	if (!var->var)
 		return ;
-	var->var = stcopy(var->var, content, '"');
+	var->var = stcopy(var->var, content);
 	var->i = 0;
 	var->k = 0;
 	var->j = 0;
