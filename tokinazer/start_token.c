@@ -39,8 +39,6 @@ int	handle_quotes(t_shell *mini, t_token **list, char *line)
 	(void)list;
 	if (line[mini->i] != '"' && line[mini->i] != '\'')
 		return (0);
-	if (mini->len > 0)
-		create_token(mini, list, line);
 	quote_type = line[mini->i];
 	start_i = mini->i;
 	mini->i++;
