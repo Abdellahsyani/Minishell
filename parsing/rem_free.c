@@ -10,7 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
+
+int	when_var(t_command *cmd, t_env **env, int *j, int *i)
+{
+	char	*arg;
+
+	arg = NULL;
+	arg = get_var(cmd->argv_t[(*i)], env, 1);
+	if (*arg)
+	{
+		cmd->argv[*j] = ft_strdup(arg);
+		return (1);
+	}
+	return (0);
+}
 
 char	*trim_whitespace(char *str)
 {
