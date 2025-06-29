@@ -29,14 +29,21 @@ static int	print_error(char *str, t_env **env)
 
 static int	is_consecutive_operator(t_token *list)
 {
-	if (!list || !list->next)
+	t_token	*tmp;
+
+	tmp = list;
+	if (!list)
 		return (1);
+	while (tmp)
+	{
+		if (tmp->type == pipe_line && !tmp->next)
+			return (0);
+		tmp = tmp->next;
+	}
 	while (list && list->type != word)
 	{
 		if (list->next && (list->type == list->next->type))
-		{
 			return (0);
-		}
 		list = list->next;
 	}
 	return (1);
