@@ -12,19 +12,27 @@
 
 #include "../minishell.h"
 
-int rem_quotes(char *var, char *content, int *i, int *j)
+int	rem_quotes(char *var, char *content, int *i, int *j)
 {
 	char	del;
 
 	if (content[*i] != '"' && content[*i] != '\'')
 		return (0);
 	del = content[(*i)++];
+	if (del == '"')
+		g_global->count_double += 1;
+	else
+		g_global->count_single += 1;
 	while (content[*i])
 	{
 		if (content[*i] == del)
 		{
+			if (del == '"')
+				g_global->count_double += 1;
+			else
+				g_global->count_single += 1;
 			(*i)++;
-			break;
+			break ;
 		}
 		var[(*j)++] = content[(*i)++];
 	}
@@ -57,8 +65,8 @@ char	*trim_whitespace(char *str)
 	while (*str == ' ' || *str == '\t' || *str == '\n')
 		str++;
 	len = ft_strlen(str);
-	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t' || str[len
-				- 1] == '\n'))
+	while (len > 0 && (str[len - 1] == ' ' || str[len - 1] == '\t'
+			|| str[len - 1] == '\n'))
 		str[--len] = '\0';
 	p = ft_strdup(str);
 	free(str1);
