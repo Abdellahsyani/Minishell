@@ -104,23 +104,9 @@ char	*get_var1(char *str)
 
 char	*single_quote(char *content)
 {
-	int		i;
-	int		count;
 	char	*var;
 
-	i = 0;
-	count = 0;
 	var = NULL;
-	while (content[i])
-	{
-		if (content[i] == '\'')
-		{
-			i++;
-			continue ;
-		}
-		i++;
-		count++;
-	}
 	var = stcopy(var, content);
 	return (var);
 }

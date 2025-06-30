@@ -62,6 +62,21 @@ static int	h_export(t_command *cmd, t_env **env)
 	return (1);
 }
 
+int	split_string(t_val *val, char *arg)
+{
+	while (arg[val.i)
+	{
+		if (arg[val.i] == '"')
+			fill_string(&arg[val.i]);
+		else if (arg[val.i] == '\'')
+			fill_string(&arg[val.i]);
+		else if (arg[val.i] == '$')
+			fill_string(&arg[val.i]);
+		else
+			var_copy();
+	}
+}
+
 static void	fill_argvs(t_command *cmd, t_env **env)
 {
 	int	i;
