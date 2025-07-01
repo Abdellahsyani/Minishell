@@ -128,7 +128,7 @@ char					*copy_var(char *content, t_env **env, int i);
 /***** parsing functions *****/
 char					*split_part(t_token **cur, char *content, t_env **env,
 							int i);
-void					add_to_argv(t_command *cmd, char *str);
+void					add_to_argv(t_command *cmd, char *str, int count);
 void					create_new_node(int count, t_command **cmd,
 							t_command **cur);
 void					add_lis(t_redi **list, t_redi *new_node);
