@@ -6,18 +6,20 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:55:21 by abhimi            #+#    #+#             */
-/*   Updated: 2025/07/01 13:50:50 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:54:47 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_clean_exit(t_env **env, char *line, int n)
+void	ft_clean_exit(t_env **env, char *line, int n, int fd)
 {
 	char	*err;
 
 	err = "minishell: warning: here-document at\
 	line 1 delimited by end-of-file\n";
+	if (fd != -1)
+		close(fd);
 	if (n == 1)
 		ft_putstr_fd(err, 2);
 	if (n == 2)
@@ -40,13 +42,13 @@ void	write_in_file(int fd, t_env **env, char *limiter)
 	{
 		line = readline(">");
 		if (!line)
-			ft_clean_exit(env, line, 1);
+			ft_clean_exit(env, line, 1, fd);
 		new_limiter = rm_newline(limiter);
 		if (ft_strccmp(new_limiter, line, ft_strlen(new_limiter)) == 0)
-			ft_clean_exit(env, line, 0);
+			ft_clean_exit(env, line, 0, fd);
 		gc_free_one(new_limiter);
 		if (!*line && limiter[0] == '\n')
-			ft_clean_exit(env, line, 0);
+			ft_clean_exit(env, line, 0, fd);
 		if (!*line)
 			continue ;
 		helper_herdoc(line, fd, env);
@@ -116,7 +118,7 @@ void	ft_herdoc(t_command **cmd, t_extra *ptr)
 				tmp->fd = ft_handle_herdoc(in->file, ptr->env, &ptr->flag_sig);
 				count++;
 				if (count > 16)
-					ft_clean_exit(ptr->env, NULL, 2);
+					ft_clean_exit(ptr->env, NULL, 2, tmp->fd);
 			}
 			in = in->next;
 		}
