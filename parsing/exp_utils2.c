@@ -12,25 +12,23 @@
 
 #include "../minishell.h"
 
-char	*stcopy(char *var, char *content, char del)
+char	*stcopy(char *var, char *content)
 {
 	int	i;
-	int	count;
+	int	j;
 
 	i = 0;
-	count = 0;
+	j = 0;
+	var = gc_malloc(sizeof(char) * (ft_strlen(content) + 1));
+	if (!var)
+		return (NULL);
 	while (content[i])
 	{
-		if (content[i] == del)
-		{
-			i++;
+		if (rem_quotes(var, content, &i, &j))
 			continue ;
-		}
-		var[count] = content[i];
-		count++;
-		i++;
+		var[j++] = content[i++];
 	}
-	var[count] = '\0';
+	var[j] = '\0';
 	return (var);
 }
 
@@ -106,26 +104,9 @@ char	*get_var1(char *str)
 
 char	*single_quote(char *content)
 {
-	int		i;
-	int		count;
 	char	*var;
 
-	i = 0;
-	count = 0;
-	while (content[i])
-	{
-		if (content[i] == '\'')
-		{
-			g_global->count_single += 1;
-			i++;
-			continue ;
-		}
-		i++;
-		count++;
-	}
-	var = gc_malloc(sizeof(char) * (count + 1));
-	if (!var)
-		return (NULL);
-	var = stcopy(var, content, '\'');
+	var = NULL;
+	var = stcopy(var, content);
 	return (var);
 }

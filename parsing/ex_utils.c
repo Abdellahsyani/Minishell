@@ -59,7 +59,6 @@ static void	let_var_ready(t_hold *var, char *content, t_env **env_t)
 		}
 		if (content[var->i] == '"')
 		{
-			g_global->count_double += 1;
 			var->i++;
 			continue ;
 		}
@@ -84,16 +83,13 @@ static void	ft_get_var(t_hold *var, char *content)
 		var->len += ft_strlen(var->env_var[var->i]);
 		var->i++;
 	}
-	var->var = gc_malloc(sizeof(char) * (var->count + 1));
-	if (!var->var)
-		return ;
-	var->var = stcopy(var->var, content, '"');
+	var->var = stcopy(var->var, content);
 	var->i = 0;
 	var->k = 0;
 	var->j = 0;
 	var->var1 = NULL;
 	var->size_all = 0;
-	var->size_all = var->count + var->len1 - (var->len + var->coun);
+	var->size_all = ft_strlen(content) + var->len1 - (var->len + var->coun);
 	var->var1 = gc_malloc(sizeof(char) * (var->size_all + 1));
 	if (!var->var1)
 		return ;
@@ -138,8 +134,7 @@ char	*double_quote(char *content, t_env **env_t)
 		if (ft_isalnum(content[var.i + 1]) || content[var.i + 1] == '?'
 			|| content[var.i + 1] == '_')
 			break ;
-		if (content[var.i] == '$' && (content[var.i + 1] == '\0'
-				|| content[var.i + 1] == '$'))
+		if (content[var.i] == '$' && content[var.i + 1] == '\0')
 			write(1, "$", 1);
 		var.i++;
 	}

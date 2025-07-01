@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 10:51:37 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/21 18:49:11 by asyani           ###   ########.fr       */
+/*   Updated: 2025/07/01 00:42:45 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,18 @@ static void	fill_argvs(t_command *cmd, t_env **env)
 	i = 0;
 	while (cmd->argv_t[i])
 	{
+		if (checks_token(cmd->argv_t[i]) == 1)
+		{
+			cmd->argv[i] = split_args(cmd->argv_t[i], env);
+			i++;
+			continue ;
+		}
 		if (cmd->argv_t[i][0] == '\'')
 			cmd->argv[i] = single_quote(cmd->argv_t[i]);
 		else if (cmd->argv_t[i][0] == '"')
 			cmd->argv[i] = double_quote(cmd->argv_t[i], env);
 		else if (cmd->argv_t[i][0] == '$' && (ft_isalnum(cmd->argv_t[i][1])
-					|| cmd->argv_t[i][1] == '_' || cmd->argv_t[i][1] == '?'))
+				|| cmd->argv_t[i][1] == '_' || cmd->argv_t[i][1] == '?'))
 			cmd->argv[i] = get_var(cmd->argv_t[i], env, 1);
 		else
 			cmd->argv[i] = copy_var(cmd->argv_t[i], env, 0);
@@ -106,7 +112,7 @@ int	expand_var(t_command *cmd, t_env **env)
 		}
 		c_alloc(cmd);
 		if (cmd->argv_t[0][0] == '$' || (cmd->argv_t[0][0] == '"'
-				&& cmd->argv_t[0][1] == '$'))
+			&& cmd->argv_t[0][1] == '$'))
 		{
 			h_export(cmd, env);
 			if (cmd->next)

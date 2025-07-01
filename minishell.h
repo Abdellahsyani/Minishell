@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/06/27 11:11:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/07/01 00:44:46 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,9 @@ void					clean_all(t_env **env, int n, int flag);
 void					free_2d(char **arr);
 
 /******** helper functions ************/
+int						rem_quotes(char *var, char *content, int *i, int *j);
+char					*split_args(char *content, t_env **env);
+int						checks_token(const char *str);
 int						when_var(t_command *cmd, t_env **env, int *j, int *i);
 void					check_null_path(t_env **env, char *str);
 int						count_quotes(t_env **env);
@@ -165,7 +168,7 @@ void					hanlde_allafter_var(t_command *cmd, char **spl,
 void					count_space(char *str, char *result, int *i, int *j);
 char					*trim_whitespace(char *str);
 char					*rem_double(char *content);
-char					*stcopy(char *var, char *content, char del);
+char					*stcopy(char *var, char *content);
 char					*get_status(char *str, t_env **env, int i, int j);
 void					failure_alloc(t_command *cmd, char *ex);
 char					*ft_strjoins(char *s1, char *s2);

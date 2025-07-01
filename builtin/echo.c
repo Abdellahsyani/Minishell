@@ -72,7 +72,7 @@ int	ft_echo(char **arg)
 		while (arg[i])
 		{
 			ft_putstr_fd(arg[i], 1);
-			if (arg[i + 1] && arg[i][0] != '$')
+			if (arg[i + 1] && arg[i][0] != '$' && arg[i][0] != '\0')
 				ft_putstr_fd(" ", 1);
 			i++;
 		}
