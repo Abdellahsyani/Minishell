@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 11:57:42 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/28 16:18:33 by abdo             ###   ########.fr       */
+/*   Updated: 2025/07/01 14:39:16 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	**built_pipline(t_command **cmd, t_env **env, int size)
 	tube = NULL;
 	fd = -1;
 	tmp = *cmd;
+
 	if (size == 0 && is_builtin(tmp) && tmp->argv)
 	{
 		exec_builtins(cmd, env, fd);

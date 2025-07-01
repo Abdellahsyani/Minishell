@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 00:41:19 by asyani            #+#    #+#             */
-/*   Updated: 2025/07/01 00:45:45 by asyani           ###   ########.fr       */
+/*   Updated: 2025/07/01 15:22:33 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ char	*split_args(char *content, t_env **env)
 			var = get_simple(content, &i);
 			join = ft_strjoin(join, var);
 		}
+		if (content[i] == '\0')
+			break;
 		i++;
 	}
 	return (join);
