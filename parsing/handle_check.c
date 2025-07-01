@@ -131,7 +131,7 @@ char	*split_args(char *content, t_env **env)
 			join = ft_strjoin(join, var);
 		}
 		if (content[i] == '\0')
-			break;
+			break ;
 		i++;
 	}
 	return (join);

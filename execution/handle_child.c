@@ -26,7 +26,8 @@ int	output_handle1(t_redi *tmp, t_extra ptr)
 	}
 	while (tmp)
 	{
-		if ((tmp->type == redir_output || tmp->type == redir_o_app) && pass_out(tmp, &fd) == 1)
+		if ((tmp->type == redir_output
+				|| tmp->type == redir_o_app) && pass_out(tmp, &fd) == 1)
 		{
 			dup2(fd, 1);
 			close(fd);
@@ -73,6 +74,7 @@ void	exec_cmd(t_command *cmd, t_extra ptr)
 {
 	int		status;
 	char	*path;
+
 	if (is_builtin(cmd))
 	{
 		status = ft_exec_builtin(cmd->argv[0], cmd->argv, ptr.env);

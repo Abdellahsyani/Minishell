@@ -55,7 +55,6 @@ int	**built_pipline(t_command **cmd, t_env **env, int size)
 	tube = NULL;
 	fd = -1;
 	tmp = *cmd;
-
 	if (size == 0 && is_builtin(tmp) && tmp->argv)
 	{
 		exec_builtins(cmd, env, fd);
