@@ -12,6 +12,33 @@
 
 #include "../minishell.h"
 
+int	checks_token(const char *str)
+{
+	int		i;
+	int		found_single;
+	char	in_quote;
+
+	i = 0;
+	found_single = 0;
+	found_double = 0;
+	in_quote = 0;
+	while (str[i])
+	{
+		if (!in_quote && (str[i] == '"' || str[i] == '\''))
+		{
+			in_quote = str[i];
+			if (in_quote == '"')
+				found_double = 1;
+			else
+				found_single = 1;
+		}
+		else if (in_quote && str[i] == in_quote)
+			in_quote = 0;
+		i++;
+	}
+	return (found_single && found_double);
+}
+
 int	rem_quotes(char *var, char *content, int *i, int *j)
 {
 	char	del;

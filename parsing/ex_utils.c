@@ -134,8 +134,7 @@ char	*double_quote(char *content, t_env **env_t)
 		if (ft_isalnum(content[var.i + 1]) || content[var.i + 1] == '?'
 			|| content[var.i + 1] == '_')
 			break ;
-		if (content[var.i] == '$' && (content[var.i + 1] == '\0'
-				|| content[var.i + 1] == '$'))
+		if (content[var.i] == '$' && content[var.i + 1] == '\0')
 			write(1, "$", 1);
 		var.i++;
 	}
