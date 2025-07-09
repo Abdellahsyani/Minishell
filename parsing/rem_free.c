@@ -16,6 +16,7 @@ int	checks_token(const char *str)
 {
 	int		i;
 	int		found_single;
+	int		found_double;
 	char	in_quote;
 
 	i = 0;

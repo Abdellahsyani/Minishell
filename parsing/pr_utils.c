@@ -27,13 +27,19 @@ void	add_lis(t_redi **list, t_redi *new_node)
 	}
 }
 
-void	add_to_argv(t_command *cmd, char *str)
+void	add_to_argv(t_command *cmd, char *str, int count)
 {
 	int	i;
 
 	i = 0;
-	if (!cmd || !str || !cmd->argv_t)
+	if (!cmd || !str)
 		return ;
+	if (!cmd->argv_t)
+	{
+		cmd->argv_t = gc_malloc(sizeof(char *) * (count + 1));
+		if (!cmd->argv_t)
+			return ;
+	}
 	while (cmd->argv_t[i] != NULL)
 		i++;
 	cmd->argv_t[i] = ft_strdup(str);

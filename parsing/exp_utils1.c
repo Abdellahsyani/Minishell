@@ -77,7 +77,7 @@ static char	*norm_whitespace(char *str, char *var_quote, char *get_last, int i)
 		result_len = get_space_size(str, temp_i);
 		if (str && str[ft_strlen(str) - 1] == ' ' && get_last)
 			result_len += 1;
-		result = gc_malloc(sizeof(char) * result_len + 1);
+		result = gc_malloc(sizeof(char) * (result_len + 2));
 		result = fill_nonspace(str, i, result, 0);
 		if (var_quote)
 			result = ft_strjoin(result, var_quote);

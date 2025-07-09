@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 15:49:49 by abhimi            #+#    #+#             */
-/*   Updated: 2025/06/28 19:55:11 by abdo             ###   ########.fr       */
+/*   Updated: 2025/07/01 17:50:12 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	output_handle1(t_redi *tmp, t_extra ptr)
 	}
 	while (tmp)
 	{
-		if (pass_out(tmp, &fd) == 1)
+		if ((tmp->type == redir_output
+				|| tmp->type == redir_o_app) && pass_out(tmp, &fd) == 1)
 		{
 			dup2(fd, 1);
 			close(fd);

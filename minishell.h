@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 09:36:59 by asyani            #+#    #+#             */
-/*   Updated: 2025/07/01 00:44:46 by asyani           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:06:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char					*copy_var(char *content, t_env **env, int i);
 /***** parsing functions *****/
 char					*split_part(t_token **cur, char *content, t_env **env,
 							int i);
-void					add_to_argv(t_command *cmd, char *str);
+void					add_to_argv(t_command *cmd, char *str, int count);
 void					create_new_node(int count, t_command **cmd,
 							t_command **cur);
 void					add_lis(t_redi **list, t_redi *new_node);
@@ -224,7 +224,6 @@ void					handle_sig(int signum);
 void					handle_child_sig(int signum);
 void					handle_child(t_command *cmd, t_extra ptr);
 void					init_extra(t_extra *ptr, t_env **env);
-char					*ft_strdup1(const char *s1);
 int						**allocate_tube(int size);
 
 #endif

@@ -54,7 +54,7 @@ static void	check_args(t_token *current, t_command **cmd, t_command **list)
 	if (*cmd == NULL)
 		create_new_node(count, list, cmd);
 	if (current->type == word)
-		add_to_argv(*cmd, current->content);
+		add_to_argv(*cmd, current->content, count);
 }
 
 static void	pars_cmd2(t_token *c, t_command *c_cmd, t_command **cmd_l,
