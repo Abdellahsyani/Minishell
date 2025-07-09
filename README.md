@@ -2,6 +2,7 @@
 
 ## 📘 Description
 
+
 Minishell is a simplified shell implementation written in C. It aims to replicate a subset of the behavior of common UNIX shells (like bash), while deepening the understanding of process management, parsing, and signal handling at the system level.
 
 This project is part of the 42 curriculum, and this implementation includes **only the mandatory part**, following the subject's requirements strictly.
